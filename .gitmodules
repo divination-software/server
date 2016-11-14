@@ -1,0 +1,3 @@
+[submodule "public/client"]
+	path = public/client
+	url = https://github.com/divination-software/client.git
