@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const BoardSchema = new Schema({
   name: {type: String}
-  simulation: {type: String, required: true},
+  simulation: {type: [Schema.Types.ObjectId], ref: 'Simulation' },
   date: {type: Date, default: Date.now()}
 });
 
