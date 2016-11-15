@@ -10,7 +10,7 @@ const Navbar = (props) => {
       </h1>
       <ul>
         <li><Link to="/landing">Landing</Link></li>
-        <li><a href="/javascript/examples/grapheditor/www/index.html">Board</a></li>
+        <li><a href="/www/index.html">Board</a></li>
       </ul>
     </div>
   );

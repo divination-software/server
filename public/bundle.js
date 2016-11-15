@@ -29146,7 +29146,7 @@
 	        null,
 	        _react2.default.createElement(
 	          'a',
-	          { href: '/javascript/examples/grapheditor/www/index.html' },
+	          { href: '/www/index.html' },
 	          'Board'
 	        )
 	      )
