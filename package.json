@@ -27,10 +27,15 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.16.3",
+    "chai": "^3.5.0",
     "css-loader": "^0.25.0",
-    "style-loader": "^0.13.1"
+    "mocha": "^3.1.2",
+    "sinon": "^1.17.6",
+    "style-loader": "^0.13.1",
+    "supertest": "^2.0.1"
   },
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
