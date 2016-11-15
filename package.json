@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "TEST=false nodemon index.js",
+    "dev": "TEST=false MONGODB_URL='mongodb://localhost/divination' nodemon index.js",
+    "test": "TEST=true mocha specs"
   },
   "repository": {
     "type": "git",
@@ -39,6 +40,7 @@
     "react-router": "^3.0.0",
     "react-router-redux": "^4.0.7",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "socket.io": "^1.5.1"
   }
 }
