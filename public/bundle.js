@@ -29119,7 +29119,7 @@
 	      params = props.params;
 	
 	  if (window.location.pathname === '/board') {
-	    return _react2.default.createElement('div', null);
+	    return _react2.default.createElement('div', { className: 'nav-absolute' });
 	  }
 	  return _react2.default.createElement(
 	    'div',
@@ -29200,7 +29200,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".nav {\n  width: 100%;\n  height: 60px;\n  -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n  -moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n  box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n}\n\n.nav-title {\n  display: inline;\n  margin: 0;\n  margin-left: 20px;\n  padding: 0;\n  font-size: 30px;\n  line-height: 60px;\n}\n\n.nav-title-span {\n  font-size: 20px;\n  line-height: 60px;\n  font-style: italic;\n}\n\n.nav ul {\n  float: right;\n  height:60px;\n  display: inline-block;\n  list-style-type: none;\n  margin: 0;\n  margin-right:20px;\n  padding: 0;\n}\n\n.nav ul li {\n  display: inline;\n  line-height:60px;\n  margin-left:20px;\n}\n\n.nav ul li a {\n  text-decoration: none;\n}\n\n.nav ul li a:visited {\n  color: inherit;\n}\n", ""]);
+	exports.push([module.id, ".nav {\n  width: 100%;\n  height: 60px;\n  -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n  -moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n  box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n}\n\n.nav-absolute {\n  position: absolute;\n}\n\n.nav-title {\n  display: inline;\n  margin: 0;\n  margin-left: 20px;\n  padding: 0;\n  font-size: 30px;\n  line-height: 60px;\n}\n\n.nav-title-span {\n  font-size: 20px;\n  line-height: 60px;\n  font-style: italic;\n}\n\n.nav ul {\n  float: right;\n  height:60px;\n  display: inline-block;\n  list-style-type: none;\n  margin: 0;\n  margin-right:20px;\n  padding: 0;\n}\n\n.nav ul li {\n  display: inline;\n  line-height:60px;\n  margin-left:20px;\n}\n\n.nav ul li a {\n  text-decoration: none;\n}\n\n.nav ul li a:visited {\n  color: inherit;\n}\n", ""]);
 	
 	// exports
 
@@ -29643,7 +29643,7 @@
 	
 	
 	// module
-	exports.push([module.id, "html {\n  height:100%;\n  width:100%;\n}\n\nbody {\n  margin: 0;\n  padding: 0;\n  height: 100%;\n  width:100%;\n  font-family: sans-serif;\n}\n\n.App {\n  text-align: center;\n}\n\n.App-logo {\n  animation: loading infinite 2s linear;\n  height: 80px;\n}\n\n.App-header {\n  background-color: #222;\n  height: 150px;\n  padding: 20px;\n  color: white;\n}\n\n.App-intro {\n  font-size: large;\n}\n\n@keyframes loading {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n\n.board {\n  width: 100%;\n  height: 100%;\n  border:none;\n  outline:none;\n}\n\niframe:focus {\n    outline: none;\n}\n\niframe[seamless] {\n    display: block;\n}\n\n#root {\n  height:100%;\n}\n.main-app-container {\n  height: 100%;\n}\n", ""]);
+	exports.push([module.id, "html {\n  height:100%;\n  width:100%;\n  margin:0;\n  padding:0;\n}\n\nbody {\n  margin: 0;\n  padding: 0;\n  height: 100%;\n  width:100%;\n  font-family: sans-serif;\n}\n\n.App {\n  text-align: center;\n}\n\n.App-logo {\n  animation: loading infinite 2s linear;\n  height: 80px;\n}\n\n.App-header {\n  background-color: #222;\n  height: 150px;\n  padding: 20px;\n  color: white;\n}\n\n.App-intro {\n  font-size: large;\n}\n\n@keyframes loading {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n\n.board {\n  width: 100%;\n  height: 100%;\n  border:none;\n  outline:none;\n  margin-bottom: -5px;\n}\n\niframe:focus {\n    outline: none;\n}\n\niframe[seamless] {\n    display: block;\n}\n\n#root {\n  height:100%;\n}\n.main-app-container {\n  height: 100%;\n}\n", ""]);
 	
 	// exports
 

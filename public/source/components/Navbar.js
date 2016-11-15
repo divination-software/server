@@ -4,7 +4,7 @@ import '../styles/nav.css';
 const Navbar = (props) => {
   const { Link, params } = props;
   if (window.location.pathname === '/board') {
-    return <div></div>
+    return <div className='nav-absolute'></div>
   }
   return (
     <div className="nav">
