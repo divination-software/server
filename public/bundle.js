@@ -72,19 +72,19 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _Board = __webpack_require__(278);
+	var _Board = __webpack_require__(282);
 	
 	var _Board2 = _interopRequireDefault(_Board);
 	
-	var _index = __webpack_require__(279);
+	var _index = __webpack_require__(283);
 	
 	var _index2 = _interopRequireDefault(_index);
 	
-	var _NotFoundView = __webpack_require__(281);
+	var _NotFoundView = __webpack_require__(285);
 	
 	var _NotFoundView2 = _interopRequireDefault(_NotFoundView);
 	
-	__webpack_require__(282);
+	__webpack_require__(286);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -106,7 +106,8 @@
 	      _reactRouter.Route,
 	      { path: '/', component: _App2.default },
 	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _Board2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: '*', component: _NotFoundView2.default })
+	      _react2.default.createElement(_reactRouter.Route, { path: '*', component: _NotFoundView2.default }),
+	      _react2.default.createElement(_reactRouter.Route, { path: '404', component: _NotFoundView2.default })
 	    )
 	  )
 	), document.getElementById('root'));
@@ -29098,7 +29099,7 @@
 /* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -29108,43 +29109,45 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	__webpack_require__(278);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Navbar = function Navbar(props) {
 	  var Link = props.Link;
 	
 	  return _react2.default.createElement(
-	    "div",
-	    { className: "nav" },
+	    'div',
+	    { className: 'nav' },
 	    _react2.default.createElement(
-	      "h1",
-	      { className: "nav-title" },
-	      " Divination",
+	      'h1',
+	      { className: 'nav-title' },
+	      ' Divination',
 	      _react2.default.createElement(
-	        "span",
-	        { className: "nav-title-span" },
-	        "Simulation Software "
+	        'span',
+	        { className: 'nav-title-span' },
+	        'Simulation Software '
 	      )
 	    ),
 	    _react2.default.createElement(
-	      "ul",
+	      'ul',
 	      null,
 	      _react2.default.createElement(
-	        "li",
+	        'li',
 	        null,
 	        _react2.default.createElement(
 	          Link,
-	          { to: "/landing" },
-	          "Landing"
+	          { to: '/landing' },
+	          'Landing'
 	        )
 	      ),
 	      _react2.default.createElement(
-	        "li",
+	        'li',
 	        null,
 	        _react2.default.createElement(
-	          Link,
-	          { to: "/" },
-	          "Board"
+	          'a',
+	          { href: '/www/index.html' },
+	          'Board'
 	        )
 	      )
 	    )
@@ -29161,120 +29164,20 @@
 /* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Board = function Board() {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    'IM A BOARD YOOOOO'
-	  );
-	};
-	
-	exports.default = Board;
-
-/***/ },
-/* 279 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _counter = __webpack_require__(280);
-	
-	var _counter2 = _interopRequireDefault(_counter);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = { counter: _counter2.default };
-
-/***/ },
-/* 280 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = counter;
-	
-	var _ActionTypes = __webpack_require__(276);
-	
-	function counter() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-	  var action = arguments[1];
-	
-	  switch (action.type) {
-	    case _ActionTypes.INCREMENT_COUNTER:
-	      return state + 1;
-	    case _ActionTypes.DECREMENT_COUNTER:
-	      return state - 1;
-	    default:
-	      return state;
-	  }
-	}
-
-/***/ },
-/* 281 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = NotFoundView;
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function NotFoundView() {
-	  return _react2.default.createElement(
-	    "div",
-	    { className: "view-container" },
-	    _react2.default.createElement(
-	      "div",
-	      null,
-	      "Sorry, we couldnt find what you were looking for."
-	    )
-	  );
-	}
-
-/***/ },
-/* 282 */
-/***/ function(module, exports, __webpack_require__) {
-
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(283);
+	var content = __webpack_require__(279);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(285)(content, {});
+	var update = __webpack_require__(281)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./index.css", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./index.css");
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./nav.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./nav.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -29284,21 +29187,21 @@
 	}
 
 /***/ },
-/* 283 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(284)();
+	exports = module.exports = __webpack_require__(280)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "html {\n  height:100%;\n  width:100%;\n}\n\nbody {\n  margin: 0;\n  padding: 0;\n  height: 100%;\n  width:100%;\n  font-family: sans-serif;\n}\n\n.App {\n  text-align: center;\n}\n\n.App-logo {\n  animation: loading infinite 2s linear;\n  height: 80px;\n}\n\n.App-header {\n  background-color: #222;\n  height: 150px;\n  padding: 20px;\n  color: white;\n}\n\n.App-intro {\n  font-size: large;\n}\n\n@keyframes loading {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n\n.nav {\n  width: 100%;\n  height: 60px;\n  -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n  -moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n  box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n}\n\n.nav-title {\n  display: inline;\n  margin: 0;\n  margin-left: 20px;\n  padding: 0;\n  font-size: 30px;\n  line-height: 60px;\n}\n\n.nav-title-span {\n  font-size: 20px;\n  line-height: 60px;\n  font-style: italic;\n}\n\n.nav ul {\n  float: right;\n  height:60px;\n  display: inline-block;\n  list-style-type: none;\n  margin: 0;\n  margin-right:20px;\n  padding: 0;\n}\n\n.nav ul li {\n  display: inline;\n  line-height:60px;\n  margin-left:20px;\n}\n\n.nav ul li a {\n  text-decoration: none;\n}\n\n.nav ul li a:visited {\n  color: inherit;\n}", ""]);
+	exports.push([module.id, ".nav {\n  width: 100%;\n  height: 60px;\n  -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n  -moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n  box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n}\n\n.nav-title {\n  display: inline;\n  margin: 0;\n  margin-left: 20px;\n  padding: 0;\n  font-size: 30px;\n  line-height: 60px;\n}\n\n.nav-title-span {\n  font-size: 20px;\n  line-height: 60px;\n  font-style: italic;\n}\n\n.nav ul {\n  float: right;\n  height:60px;\n  display: inline-block;\n  list-style-type: none;\n  margin: 0;\n  margin-right:20px;\n  padding: 0;\n}\n\n.nav ul li {\n  display: inline;\n  line-height:60px;\n  margin-left:20px;\n}\n\n.nav ul li a {\n  text-decoration: none;\n}\n\n.nav ul li a:visited {\n  color: inherit;\n}\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 284 */
+/* 280 */
 /***/ function(module, exports) {
 
 	/*
@@ -29354,7 +29257,7 @@
 
 
 /***/ },
-/* 285 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -29603,6 +29506,146 @@
 		if(oldSrc)
 			URL.revokeObjectURL(oldSrc);
 	}
+
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Board = function Board() {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    'IM A BOARD YOOOOO'
+	  );
+	};
+	
+	exports.default = Board;
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _counter = __webpack_require__(284);
+	
+	var _counter2 = _interopRequireDefault(_counter);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = { counter: _counter2.default };
+
+/***/ },
+/* 284 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = counter;
+	
+	var _ActionTypes = __webpack_require__(276);
+	
+	function counter() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case _ActionTypes.INCREMENT_COUNTER:
+	      return state + 1;
+	    case _ActionTypes.DECREMENT_COUNTER:
+	      return state - 1;
+	    default:
+	      return state;
+	  }
+	}
+
+/***/ },
+/* 285 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = NotFoundView;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function NotFoundView() {
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "view-container" },
+	    _react2.default.createElement(
+	      "div",
+	      null,
+	      "Sorry, we couldnt find what you were looking for."
+	    )
+	  );
+	}
+
+/***/ },
+/* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(287);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(281)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./index.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./index.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(280)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "html {\n  height:100%;\n  width:100%;\n}\n\nbody {\n  margin: 0;\n  padding: 0;\n  height: 100%;\n  width:100%;\n  font-family: sans-serif;\n}\n\n.App {\n  text-align: center;\n}\n\n.App-logo {\n  animation: loading infinite 2s linear;\n  height: 80px;\n}\n\n.App-header {\n  background-color: #222;\n  height: 150px;\n  padding: 20px;\n  color: white;\n}\n\n.App-intro {\n  font-size: large;\n}\n\n@keyframes loading {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n", ""]);
+	
+	// exports
 
 
 /***/ }

@@ -1,0 +1,37 @@
+html {
+  height:100%;
+  width:100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width:100%;
+  font-family: sans-serif;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: loading infinite 2s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes loading {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
