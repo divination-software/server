@@ -2,7 +2,10 @@ import React, { PropTypes } from 'react';
 import '../styles/nav.css';
 
 const Navbar = (props) => {
-  const { Link } = props;
+  const { Link, params } = props;
+  if (window.location.pathname === '/board') {
+    return <div></div>
+  }
   return (
     <div className="nav">
       <h1 className="nav-title"> Divination
@@ -10,7 +13,7 @@ const Navbar = (props) => {
       </h1>
       <ul>
         <li><Link to="/landing">Landing</Link></li>
-        <li><a href="/www/index.html">Board</a></li>
+        <li><Link to="/board">Board</Link></li>
       </ul>
     </div>
   );

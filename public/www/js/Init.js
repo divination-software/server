@@ -1,5 +1,6 @@
 // urlParams is null when used for embedding
 window.urlParams = window.urlParams || {};
+window.SERVER_URL = 'http://localhost:3000';
 
 // Public global variables
 window.MAX_REQUEST_SIZE = window.MAX_REQUEST_SIZE  || 10485760;

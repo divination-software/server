@@ -1993,8 +1993,16 @@ ExportDialog.showXmlOption = true;
  */
 ExportDialog.saveLocalFile = function(data, filename, format)
 {
-	new mxXmlRequest(SAVE_URL, 'xml=' + encodeURIComponent(data) + '&filename=' +
-		encodeURIComponent(filename) + '&format=' + format).simulate(document, '_blank');
+	fetch(window.SERVER_URL + '/api/board', {
+	  method: 'post',
+	  credentials: 'same-origin', // here's the magical line that fixed everything
+	  headers: {
+	    'Content-Type': 'application/json',
+	  },
+	  body: JSON.stringify({simulation: data}),
+	})
+	// new mxXmlRequest(SAVE_URL, 'xml=' + encodeURIComponent(data) + '&filename=' +
+	// 	encodeURIComponent(filename) + '&format=' + format).simulate(document, '_blank');
 };
 
 /**
@@ -2044,7 +2052,7 @@ var EditDataDialog = function(ui, cell)
     if (value === 'Process' || value === 'Source') {
       obj.setAttribute('Delay', 0);
     }
-    
+
 		value = obj;
 	}
 
