@@ -1,5 +1,4 @@
 import React from 'react';
 
-const Board = () => (<div>IM A BOARD YOOOOO</div>);
-
+const Board = () => (<iframe className='board' src="/www/index.html"></iframe>);
 export default Board;

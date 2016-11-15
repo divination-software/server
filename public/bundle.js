@@ -76,6 +76,10 @@
 	
 	var _Board2 = _interopRequireDefault(_Board);
 	
+	var _Landing = __webpack_require__(288);
+	
+	var _Landing2 = _interopRequireDefault(_Landing);
+	
 	var _index = __webpack_require__(283);
 	
 	var _index2 = _interopRequireDefault(_index);
@@ -105,9 +109,10 @@
 	    _react2.default.createElement(
 	      _reactRouter.Route,
 	      { path: '/', component: _App2.default },
-	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _Board2.default }),
+	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _Landing2.default }),
+	      _react2.default.createElement(_reactRouter.Route, { path: '/board', component: _Board2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '*', component: _NotFoundView2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: '404', component: _NotFoundView2.default })
+	      _react2.default.createElement(_reactRouter.Route, { path: '/404', component: _NotFoundView2.default })
 	    )
 	  )
 	), document.getElementById('root'));
@@ -28975,13 +28980,9 @@
 	        'div',
 	        { className: 'main-app-container' },
 	        _react2.default.createElement(_Navbar2.default, { Link: _reactRouter.Link }),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.Children.map(children, function (child) {
-	            return _react2.default.cloneElement(child, { counter: counter, actions: actions });
-	          })
-	        )
+	        _react2.default.Children.map(children, function (child) {
+	          return _react2.default.cloneElement(child, { counter: counter, actions: actions });
+	        })
 	      );
 	    }
 	  }]);
@@ -29114,8 +29115,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Navbar = function Navbar(props) {
-	  var Link = props.Link;
+	  var Link = props.Link,
+	      params = props.params;
 	
+	  if (window.location.pathname === '/board') {
+	    return _react2.default.createElement('div', { className: 'nav-absolute' });
+	  }
 	  return _react2.default.createElement(
 	    'div',
 	    { className: 'nav' },
@@ -29145,8 +29150,8 @@
 	        'li',
 	        null,
 	        _react2.default.createElement(
-	          'a',
-	          { href: '/www/index.html' },
+	          Link,
+	          { to: '/board' },
 	          'Board'
 	        )
 	      )
@@ -29195,7 +29200,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".nav {\n  width: 100%;\n  height: 60px;\n  -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n  -moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n  box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n}\n\n.nav-title {\n  display: inline;\n  margin: 0;\n  margin-left: 20px;\n  padding: 0;\n  font-size: 30px;\n  line-height: 60px;\n}\n\n.nav-title-span {\n  font-size: 20px;\n  line-height: 60px;\n  font-style: italic;\n}\n\n.nav ul {\n  float: right;\n  height:60px;\n  display: inline-block;\n  list-style-type: none;\n  margin: 0;\n  margin-right:20px;\n  padding: 0;\n}\n\n.nav ul li {\n  display: inline;\n  line-height:60px;\n  margin-left:20px;\n}\n\n.nav ul li a {\n  text-decoration: none;\n}\n\n.nav ul li a:visited {\n  color: inherit;\n}\n", ""]);
+	exports.push([module.id, ".nav {\n  width: 100%;\n  height: 60px;\n  -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n  -moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n  box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);\n}\n\n.nav-absolute {\n  position: absolute;\n}\n\n.nav-title {\n  display: inline;\n  margin: 0;\n  margin-left: 20px;\n  padding: 0;\n  font-size: 30px;\n  line-height: 60px;\n}\n\n.nav-title-span {\n  font-size: 20px;\n  line-height: 60px;\n  font-style: italic;\n}\n\n.nav ul {\n  float: right;\n  height:60px;\n  display: inline-block;\n  list-style-type: none;\n  margin: 0;\n  margin-right:20px;\n  padding: 0;\n}\n\n.nav ul li {\n  display: inline;\n  line-height:60px;\n  margin-left:20px;\n}\n\n.nav ul li a {\n  text-decoration: none;\n}\n\n.nav ul li a:visited {\n  color: inherit;\n}\n", ""]);
 	
 	// exports
 
@@ -29525,13 +29530,8 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Board = function Board() {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    'IM A BOARD YOOOOO'
-	  );
+	  return _react2.default.createElement('iframe', { className: 'board', src: '/www/index.html' });
 	};
-	
 	exports.default = Board;
 
 /***/ },
@@ -29643,10 +29643,35 @@
 	
 	
 	// module
-	exports.push([module.id, "html {\n  height:100%;\n  width:100%;\n}\n\nbody {\n  margin: 0;\n  padding: 0;\n  height: 100%;\n  width:100%;\n  font-family: sans-serif;\n}\n\n.App {\n  text-align: center;\n}\n\n.App-logo {\n  animation: loading infinite 2s linear;\n  height: 80px;\n}\n\n.App-header {\n  background-color: #222;\n  height: 150px;\n  padding: 20px;\n  color: white;\n}\n\n.App-intro {\n  font-size: large;\n}\n\n@keyframes loading {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n", ""]);
+	exports.push([module.id, "html {\n  height:100%;\n  width:100%;\n  margin:0;\n  padding:0;\n}\n\nbody {\n  margin: 0;\n  padding: 0;\n  height: 100%;\n  width:100%;\n  font-family: sans-serif;\n}\n\n.App {\n  text-align: center;\n}\n\n.App-logo {\n  animation: loading infinite 2s linear;\n  height: 80px;\n}\n\n.App-header {\n  background-color: #222;\n  height: 150px;\n  padding: 20px;\n  color: white;\n}\n\n.App-intro {\n  font-size: large;\n}\n\n@keyframes loading {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n\n.board {\n  width: 100%;\n  height: 100%;\n  border:none;\n  outline:none;\n  margin-bottom: -5px;\n}\n\niframe:focus {\n    outline: none;\n}\n\niframe[seamless] {\n    display: block;\n}\n\n#root {\n  height:100%;\n}\n.main-app-container {\n  height: 100%;\n}\n", ""]);
 	
 	// exports
 
+
+/***/ },
+/* 288 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Landing = function Landing() {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    'IM A LANDING PAGE BOII'
+	  );
+	};
+	exports.default = Landing;
 
 /***/ }
 /******/ ]);

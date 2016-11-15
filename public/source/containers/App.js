@@ -20,14 +20,12 @@ class App extends Component {
     return (
       <div className="main-app-container">
         <Navbar Link={Link} />
-        <div>
           {/* Here's a trick: we pass those props into the children by mapping
             and cloning the element, followed by passing props in. Notice that
             those props have been unpacked above! */}
           {React.Children.map(children, child =>
             React.cloneElement(child, { counter, actions }),
           )}
-        </div>
       </div>
     );
   }

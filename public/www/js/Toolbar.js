@@ -158,6 +158,10 @@ Toolbar.prototype.init = function()
 
 	var insertMenu = this.addMenu('', mxResources.get('insert') + ' (' + mxResources.get('doubleClickTooltip') + ')', true, 'insert', null, true);
 	this.addDropDownArrow(insertMenu, 'geSprite-plus', 38, 48, -4, -3, 36, -8);
+
+	this.addSeparator();
+	var elts = this.addItems(['zoomIn']);
+	elts[0].setAttribute('title', 'Run Simulation');
 };
 
 /**
@@ -430,7 +434,6 @@ Toolbar.prototype.createTextToolbar = function()
 	}
 
 	this.addSeparator();
-
 	// KNOWN: All table stuff does not work with undo/redo
 	// KNOWN: Lost focus after click on submenu with text (not icon) in quirks and IE8. This is because the TD seems
 	// to catch the focus on click in these browsers. NOTE: Workaround in mxPopupMenu for icon items (without text).
