@@ -76,19 +76,19 @@
 	
 	var _Board2 = _interopRequireDefault(_Board);
 	
-	var _Landing = __webpack_require__(288);
+	var _Landing = __webpack_require__(283);
 	
 	var _Landing2 = _interopRequireDefault(_Landing);
 	
-	var _index = __webpack_require__(283);
+	var _index = __webpack_require__(284);
 	
 	var _index2 = _interopRequireDefault(_index);
 	
-	var _NotFoundView = __webpack_require__(285);
+	var _NotFoundView = __webpack_require__(286);
 	
 	var _NotFoundView2 = _interopRequireDefault(_NotFoundView);
 	
-	__webpack_require__(286);
+	__webpack_require__(287);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29523,15 +29523,68 @@
 	  value: true
 	});
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _Loading = __webpack_require__(289);
+	
+	var _Loading2 = _interopRequireDefault(_Loading);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Board = function Board() {
-	  return _react2.default.createElement('iframe', { className: 'board', src: '/www/index.html' });
-	};
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Board = function (_Component) {
+	  _inherits(Board, _Component);
+	
+	  function Board(props) {
+	    _classCallCheck(this, Board);
+	
+	    var _this = _possibleConstructorReturn(this, (Board.__proto__ || Object.getPrototypeOf(Board)).call(this, props));
+	
+	    _this.state = {
+	      loading: true
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(Board, [{
+	    key: 'handleLoad',
+	    value: function handleLoad() {
+	      console.log('supppp');
+	      this.setState({ loading: false });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      if (this.state.loading === true) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(_Loading2.default, null),
+	          _react2.default.createElement('iframe', { style: { display: 'none' }, className: 'board', onLoad: function onLoad(e) {
+	              return _this2.handleLoad();
+	            }, src: '/www/index.html' })
+	        );
+	      }
+	      return _react2.default.createElement('iframe', { className: 'board', onLoad: function onLoad(e) {
+	          return _this2.handleLoad();
+	        }, src: '/www/index.html' });
+	    }
+	  }]);
+	
+	  return Board;
+	}(_react.Component);
+	
 	exports.default = Board;
 
 /***/ },
@@ -29544,7 +29597,32 @@
 	  value: true
 	});
 	
-	var _counter = __webpack_require__(284);
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Landing = function Landing() {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    'IM A LANDING PAGE BOII'
+	  );
+	};
+	exports.default = Landing;
+
+/***/ },
+/* 284 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _counter = __webpack_require__(285);
 	
 	var _counter2 = _interopRequireDefault(_counter);
 	
@@ -29553,7 +29631,7 @@
 	exports.default = { counter: _counter2.default };
 
 /***/ },
-/* 284 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29580,7 +29658,7 @@
 	}
 
 /***/ },
-/* 285 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29609,13 +29687,13 @@
 	}
 
 /***/ },
-/* 286 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(287);
+	var content = __webpack_require__(288);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(281)(content, {});
@@ -29635,7 +29713,7 @@
 	}
 
 /***/ },
-/* 287 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(280)();
@@ -29643,16 +29721,16 @@
 	
 	
 	// module
-	exports.push([module.id, "html {\n  height:100%;\n  width:100%;\n  margin:0;\n  padding:0;\n}\n\nbody {\n  margin: 0;\n  padding: 0;\n  height: 100%;\n  width:100%;\n  font-family: sans-serif;\n}\n\n.App {\n  text-align: center;\n}\n\n.App-logo {\n  animation: loading infinite 2s linear;\n  height: 80px;\n}\n\n.App-header {\n  background-color: #222;\n  height: 150px;\n  padding: 20px;\n  color: white;\n}\n\n.App-intro {\n  font-size: large;\n}\n\n@keyframes loading {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n\n.board {\n  width: 100%;\n  height: 100%;\n  border:none;\n  outline:none;\n  margin-bottom: -5px;\n}\n\niframe:focus {\n    outline: none;\n}\n\niframe[seamless] {\n    display: block;\n}\n\n#root {\n  height:100%;\n}\n.main-app-container {\n  height: 100%;\n}\n", ""]);
+	exports.push([module.id, "html {\n  height:100%;\n  width:100%;\n  margin:0;\n  padding:0;\n}\n\nbody {\n  margin: 0;\n  padding: 0;\n  height: 100%;\n  width:100%;\n  font-family: sans-serif;\n}\n\n.App {\n  text-align: center;\n}\n\n.loading {\n  animation: loading infinite 1.2s linear;\n  font-size: 60px !important;\n  line-height: 100vh;\n  width: 100%;\n  text-align: center;\n  transition: all 1s ease;\n}\n\n.App-header {\n  background-color: #222;\n  height: 150px;\n  padding: 20px;\n  color: white;\n}\n\n.App-intro {\n  font-size: large;\n}\n\n@keyframes loading {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n\n.board {\n  width: 100%;\n  height: 100%;\n  border:none;\n  outline:none;\n  margin-bottom: -5px;\n}\n\niframe:focus {\n    outline: none;\n}\n\niframe[seamless] {\n    display: block;\n}\n\n#root {\n  height:100%;\n}\n.main-app-container {\n  height: 100%;\n}\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 288 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -29664,14 +29742,14 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Landing = function Landing() {
+	var Loading = function Loading() {
 	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    'IM A LANDING PAGE BOII'
+	    "i",
+	    { className: "material-icons loading" },
+	    "refresh"
 	  );
 	};
-	exports.default = Landing;
+	exports.default = Loading;
 
 /***/ }
 /******/ ]);
