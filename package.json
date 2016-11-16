@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "TEST=false nodemon index.js",
-    "dev": "TEST=false MONGODB_URL='mongodb://localhost/divination' nodemon index.js",
-    "test": "TEST=true mocha specs"
+    "start": "NODE_ENV=production nodemon index.js",
+    "dev": "NODE_ENV=dev URL='https://localhost:3000' MONGODB_URL='mongodb://localhost/divination' nodemon index.js",
+    "test": "NODE_ENV=test mocha specs"
   },
   "repository": {
     "type": "git",

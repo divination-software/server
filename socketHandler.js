@@ -1,3 +1,4 @@
 module.exports = (socket) => {
-  //TODO Handle Sockets
+  // TODO Handle Sockets
+  console.log('Socket Connected');
 }
