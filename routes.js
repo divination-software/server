@@ -1,4 +1,4 @@
-var boardController = require('./boardController');
+var boardController = require('./controllers/boardController');
 var path = require('path');
 
 module.exports = function (app, express) {
