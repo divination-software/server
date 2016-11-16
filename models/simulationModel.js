@@ -3,9 +3,11 @@ const Board = require('../schemas/Board');
 const Simulation = require('../schemas/Simulation');
 
 module.exports = {
-  getBoards: (userId) => {
-    return User.findOne({_id: userId}, 'boards')
-      .populate('boards')
-      .exec();
+  saveSimulation: (userId, simulation, boardId) => {
+
+  },
+
+  getSimulation: (simId) => {
+    return Simulation.findOne({_id: simId}).exec();
   }
 }
