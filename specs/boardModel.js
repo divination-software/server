@@ -10,7 +10,10 @@ var boardId;
 
 describe('Board Model', function() {
   before(function(done){
-    User.remove({}).exec()
+    Board.remove({}).exec()
+    .then(function() {
+      return User.remove({}).exec()
+    })
     .then(function(){
       const newBoard = new Board({name: 'Im a board'})
       return newBoard.save()
