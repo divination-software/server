@@ -1,0 +1,14 @@
+version: '2'
+services:
+  web:
+    image: 053116275671.dkr.ecr.us-west-1.amazonaws.com/divination-software/server:latest
+    cpu_shares: 10
+    mem_limit: 300288000
+    ports:
+    - "3000:3000"
+    links:
+    - mongo
+  mongo:
+    cpu_shares: 10
+    mem_limit: 200288000
+    image: mongo:3
