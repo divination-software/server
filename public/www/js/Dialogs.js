@@ -1937,10 +1937,11 @@ var ExportDialog = function(editorUi)
 					ExportDialog.saveRequest(data, name, format,
 						function(newTitle, base64)
 						{
+							console.log('IM SAVED')
 							// Base64 not used in this example
-							return new mxXmlRequest(EXPORT_URL, 'format=' + format + '&base64=' + (base64 || '0') +
-								((newTitle != null) ? '&filename=' + encodeURIComponent(newTitle) : '') +
-								bg + '&w=' + w + '&h=' + h + '&border=' + b + '&' + param);
+							// return new mxXmlRequest(EXPORT_URL, 'format=' + format + '&base64=' + (base64 || '0') +
+							// 	((newTitle != null) ? '&filename=' + encodeURIComponent(newTitle) : '') +
+							// 	bg + '&w=' + w + '&h=' + h + '&border=' + b + '&' + param);
 						});
 				}
 				else
@@ -2006,6 +2007,7 @@ ExportDialog.saveLocalFile = function(data, filename, format)
  */
 ExportDialog.saveRequest = function(data, filename, format, fn)
 {
+	console.log(data)
 	fn(filename).simulate(document, '_blank');
 };
 

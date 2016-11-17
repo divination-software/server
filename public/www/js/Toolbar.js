@@ -7,6 +7,7 @@
 function Toolbar(editorUi, container)
 {
 	this.editorUi = editorUi;
+	this.editorUi.toggleFormatPanel();
 	this.container = container;
 	this.staticElements = [];
 	this.init();
