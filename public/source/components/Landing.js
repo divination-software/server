@@ -1,4 +1,4 @@
 import React from 'react';
 
-const Landing = () => (<div>IM A LANDING PAGE BOII</div>);
+const Landing = () => (<button onClick={e => console.log('Login Clicked')}>Login</button>);
 export default Landing;

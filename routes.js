@@ -1,9 +1,14 @@
-var boardController = require('./controllers/boardController');
-var path = require('path');
+const boardController = require('./controllers/boardController');
+const path = require('path');
+const passport = require('passport');
 
 module.exports = function (app, express) {
-  //Handle Auth and login/signup
   app.post('/api/board', boardController.boardInit);
+
+  //Handle Auth and login/signup
+  app.post('/api/users/login', passport.authenticate('local'), function(req, res) {
+    res.sendStatus(201);
+  });
 
   app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, './public/index.html'))

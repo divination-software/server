@@ -1,17 +1,15 @@
-var bodyParser = require('body-parser');
-
+const bodyParser = require('body-parser');
+const passport = require('passport');
 
 module.exports = function (app, express) {
-
+  // Serve static assets
   app.use(express.static(__dirname + '/public'));
-  //Allow Cors
-  app.use(function(req, res, next) {
-	  res.header('Access-Control-Allow-Origin', '*');
-	  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-	  res.header('Access-Control-Allow-Headers', 'Content-Type');
-	  next();
-  })
+
   // Parse Post Bodys
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
+
+  // Initialize Authentication
+  app.use(passport.initialize());
+  app.use(passport.session());
 };

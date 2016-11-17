@@ -1993,7 +1993,7 @@ ExportDialog.showXmlOption = true;
  */
 ExportDialog.saveLocalFile = function(data, filename, format)
 {
-	fetch(window.SERVER_URL + '/api/board', {
+	fetch(window.location.origin + '/api/board', {
 	  method: 'post',
 	  credentials: 'same-origin', // here's the magical line that fixed everything
 	  headers: {
