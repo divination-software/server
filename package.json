@@ -6,7 +6,8 @@
   "scripts": {
     "start": "NODE_ENV=production nodemon index.js",
     "dev": "NODE_ENV=dev URL='https://localhost:3000' MONGODB_URL='mongodb://localhost/divination' nodemon index.js",
-    "test": "NODE_ENV=test mocha specs"
+    "test": "NODE_ENV=test mocha specs",
+    "populate": "MONGODB_URL='mongodb://localhost/divination' node testData"
   },
   "repository": {
     "type": "git",
@@ -34,11 +35,15 @@
     "supertest": "^2.0.1"
   },
   "dependencies": {
+    "axios": "^0.15.2",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "express-session": "^1.14.2",
     "mongoose": "^4.6.7",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",

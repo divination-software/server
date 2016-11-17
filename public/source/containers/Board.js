@@ -9,7 +9,6 @@ export default class Board extends Component {
     }
   }
   handleLoad() {
-    console.log('supppp');
     this.setState({loading: false});
   }
   render() {

@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bluebird = require('bluebird');
-const socketHandler = require('./socketHandler');
+const passport = require('passport');
 const fs = require('fs');
+const socketHandler = require('./socketHandler');
 
 // App init
 const app = express();
@@ -17,7 +18,8 @@ if (process.env.NODE_ENV === 'production') {
   httpPort = 3000;
   process.env.URL = 'https://localhost:8080';
 }
-// Configure server with all the middleware and routing
+// Configure server with middleware, routing, and auth
+require('./auth.js')(passport);
 require('./middleware.js')(app, express);
 require('./routes.js')(app, express);
 
