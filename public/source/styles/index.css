@@ -17,9 +17,13 @@ body {
   text-align: center;
 }
 
-.App-logo {
-  animation: loading infinite 2s linear;
-  height: 80px;
+.loading {
+  animation: loading infinite 1.2s linear;
+  font-size: 60px !important;
+  line-height: 100vh;
+  width: 100%;
+  text-align: center;
+  transition: all 1s ease;
 }
 
 .App-header {
