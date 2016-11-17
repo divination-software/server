@@ -21,7 +21,7 @@ module.exports = function(passport) {
             }
           })
           .catch(err => {
-            done(err);
+            done(err, false);
           })
   }));
   passport.serializeUser(function(user, done) {
@@ -34,7 +34,7 @@ module.exports = function(passport) {
         done(null, user);
       })
       .catch(err => {
-        done(err, null);
+        done(err, null, { message: err });
       });
   });
 }

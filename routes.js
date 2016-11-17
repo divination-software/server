@@ -7,8 +7,14 @@ module.exports = function (app, express) {
 
   //Handle Auth and login/signup
   app.post('/api/users/login', passport.authenticate('local'), function(req, res) {
-    res.sendStatus(201);
+    console.log(req.user)
+    res.status(201).send(req.user);
   });
+
+  app.get('/api', function(req, res){
+    console.log('req.user', req.user)
+    res.sendStatus(200)
+  })
 
   app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, './public/index.html'))

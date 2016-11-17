@@ -10,6 +10,7 @@ module.exports = function (app, express) {
   app.use(bodyParser.json());
 
   // Initialize Authentication
+  app.use(require('express-session')({secret: 'divinationsimulation', resave: false, saveUninitialized: false}));
   app.use(passport.initialize());
   app.use(passport.session());
 };
