@@ -9,14 +9,9 @@ const app = express();
 var httpsPort;
 var httpPort;
 // Set ports and env variables
-if (process.env.NODE_ENV === 'production') {
-  httpsPort = 443;
-  httpPort = 80;
-} else if (process.env.NODE_ENV === 'dev') {
-  httpsPort = 8080;
-  httpPort = 3000;
-  process.env.URL = 'https://localhost:8080';
-}
+httpsPort = process.env.HTTPS_PORT;
+httpPort = process.env.HTTP_PORT;
+
 // Configure server with all the middleware and routing
 require('./middleware.js')(app, express);
 require('./routes.js')(app, express);
