@@ -5,10 +5,11 @@ services:
     cpu_shares: 10
     mem_limit: 300288000
     ports:
-    - "3000:3000"
+    - "80:8080"
+    - "443:443"
     links:
     - mongo
   mongo:
+    image: mongo:3
     cpu_shares: 10
     mem_limit: 200288000
-    image: mongo:3

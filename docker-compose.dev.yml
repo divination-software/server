@@ -1,10 +1,6 @@
 version: '2'
 services:
   web:
-    build: .
+    image: divination-software/server:dev_latest
     ports:
-    - "3000:3000"
-    links:
-    - mongo
-  mongo:
-    image: mongo:3
+    - "8080:8080"

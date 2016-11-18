@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-dev": "nodemon index.js",
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "NODE_ENV=production MONGODB_URL='mongodb://mongo/divination' HTTPS_PORT=443 HTTP_PORT=80 node index.js",
+    "dev": "NODE_ENV=dev URL='https://localhost:8080' MONGODB_URL='mongodb://localhost/divination' HTTPS_PORT=8080 HTTP_PORT=3000 nodemon index.js",
+    "start-test-container": "NODE_ENV=dev URL='https://localhost:8080' MONGODB_URL='mongodb://mongo/divination' HTTPS_PORT=8080 HTTP_PORT=3000 node index.js",
+    "test": "NODE_ENV=test mocha specs"
   },
   "repository": {
     "type": "git",
@@ -26,10 +27,15 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.16.3",
+    "chai": "^3.5.0",
     "css-loader": "^0.25.0",
-    "style-loader": "^0.13.1"
+    "mocha": "^3.1.2",
+    "sinon": "^1.17.6",
+    "style-loader": "^0.13.1",
+    "supertest": "^2.0.1"
   },
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
@@ -41,6 +47,6 @@
     "react-router-redux": "^4.0.7",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
-    "webpack": "^1.13.3"
+    "socket.io": "^1.5.1"
   }
 }

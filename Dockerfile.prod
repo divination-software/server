@@ -1,0 +1,10 @@
+FROM node:boron
+
+MAINTAINER divination-software
+
+COPY . /var/www
+WORKDIR /var/www
+
+RUN npm install
+
+ENTRYPOINT ["npm", "start"]
