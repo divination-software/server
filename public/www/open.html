@@ -15,9 +15,13 @@
     axios.get('/api/simulation/' + simId)
     .then( response => {
       reader.onload = function(e) {
-        console.log(e.target.result)
+        window.parent.parent.boardData = {
+          xml: e.target.result,
+          name: boardName
+        }
         window.parent.openFile.setData(e.target.result, boardName)
-        window.parent.open(window.parent.location.href);
+        window.parent.document.location.reload();
+        // window.parent.document.location.href = window.parent.location.href;
       }
       reader.readAsText(new Blob([response.data.simulation]));
     })

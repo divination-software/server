@@ -25,7 +25,10 @@ Actions.prototype.init = function()
 	};
 
 	// File actions
-	this.addAction('new...', function() { window.location.reload()});
+	this.addAction('new...', function() {
+		window.parent.boardData = null; 
+		window.location.reload()
+	});
 	this.addAction('open...', function()
 	{
 		window.openNew = false;
