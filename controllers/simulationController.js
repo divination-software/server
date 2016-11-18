@@ -13,5 +13,17 @@ module.exports = {
       res.sendStatus(400);
       console.log(err);
     })
+  },
+
+  getSim: (req, res) => {
+    const simId = req.params.simId;
+    simulationModel.getSimulation(simId)
+    .then( sim => {
+      res.status(200).send(sim);
+    })
+    .catch(err => {
+      res.sendStatus(400);
+      console.log(err);
+    })
   }
 }

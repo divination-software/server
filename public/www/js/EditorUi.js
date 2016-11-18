@@ -1995,8 +1995,9 @@ EditorUi.prototype.onBeforeUnload = function()
 /**
  * Opens the current diagram via the window.opener if one exists.
  */
-EditorUi.prototype.open = function()
+EditorUi.prototype.open = function(xml, filename)
 {
+	console.log(xml, filename)
 	// Cross-domain window access is not allowed in FF, so if we
 	// were opened from another domain then this will fail.
 	try

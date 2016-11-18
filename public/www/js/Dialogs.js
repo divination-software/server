@@ -1500,9 +1500,9 @@ var EditDiagramDialog = function(editorUi)
 				editorUi.hideDialog();
 				window.openFile = null;
 			});
-
+			console.log('new', data)
 			window.openFile.setData(data, null);
-			window.open(editorUi.getUrl());
+			// window.open(editorUi.getUrl());
 		}
 		else if (select.value == 'replace')
 		{
