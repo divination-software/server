@@ -3,24 +3,35 @@ const Board = require('../schemas/Board');
 const Simulation = require('../schemas/Simulation');
 
 module.exports = {
-  saveSimulation: (userId, simulation, board) => {
+
+  saveSimulation: (userId, simulation, name) => {
     const newSimulation = new Simulation(simulation)
+    var boardId;
     return newSimulation.save()
     .then(sim => {
       return Board.findOneAndUpdate(
-        {name: board.name},
+        {name: name, userId: userId },
         {
           simulation: sim._id,
-          name: board.name,
+          name: name,
+          userId: userId,
           date: Date.now()
         },
         {upsert: true, new: true}
       ).exec();
     })
     .then(board => {
+      boardId = board._id;
       return User.findOneAndUpdate(
-        {_id: userId, boards: {$ne: board._id}},
-        { $push: { 'boards': board._id } },
+        {_id: userId},
+        { $pull: { boards: boardId} },
+        {new: true}
+      ).exec()
+    })
+    .then(success => {
+      return User.findOneAndUpdate(
+        {_id: userId},
+        { $push: { boards: boardId } },
         {new: true}
       ).exec()
     })
@@ -33,7 +44,3 @@ module.exports = {
     return Simulation.findOne({_id: simId}).exec();
   }
 };
-
-const addBoardToUser = function(userId, boardId) {
-  console.log(userId, boardId)
-}

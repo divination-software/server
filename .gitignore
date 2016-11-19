@@ -2,3 +2,9 @@ node_modules
 
 client-cert.pem
 client-key.pem
+node_modules
+client-cert.pem
+client-key.pem
+.DS_Store
+public/bundle.js
+public/bundle.js.map

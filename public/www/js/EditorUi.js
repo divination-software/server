@@ -1995,26 +1995,29 @@ EditorUi.prototype.onBeforeUnload = function()
 /**
  * Opens the current diagram via the window.opener if one exists.
  */
-EditorUi.prototype.open = function()
+EditorUi.prototype.open = function(xml, filename)
 {
 	// Cross-domain window access is not allowed in FF, so if we
 	// were opened from another domain then this will fail.
+
+	console.log(window.parent.boardData)
+
 	try
 	{
-		if (window.opener != null && window.opener.openFile != null)
+		if (window.parent.boardData != null)
 		{
-			window.opener.openFile.setConsumer(mxUtils.bind(this, function(xml, filename)
-			{
+			// window.opener.openFile.setConsumer(mxUtils.bind(this, function(xml, filename)
+			// {
 				try
 				{
-					var doc = mxUtils.parseXml(xml);
+					var doc = mxUtils.parseXml(window.parent.boardData.xml);
 					this.editor.setGraphXml(doc.documentElement);
 					this.editor.setModified(false);
 					this.editor.undoManager.clear();
 
 					if (filename != null)
 					{
-						this.editor.setFilename(filename);
+						this.editor.setFilename(window.parent.boardData.name);
 						this.updateDocumentTitle();
 					}
 
@@ -2024,7 +2027,7 @@ EditorUi.prototype.open = function()
 				{
 					mxUtils.alert(mxResources.get('invalidOrMissingFile') + ': ' + e.message);
 				}
-			}));
+			// }));
 		}
 	}
 	catch(e)
@@ -3174,8 +3177,13 @@ EditorUi.prototype.save = function(name)
 			{
 				if (xml.length < MAX_REQUEST_SIZE)
 				{
-					new mxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(name) +
-						'&xml=' + encodeURIComponent(xml)).simulate(document, '_blank');
+					axios.post('/api/simulation/save', {
+						name: name,
+						simulation: xml
+					})
+					//to save route
+					// new mxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(name) +
+					// 	'&xml=' + encodeURIComponent(xml)).simulate(document, '_blank');
 				}
 				else
 				{

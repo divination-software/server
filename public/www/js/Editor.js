@@ -15,7 +15,10 @@ Editor = function(chromeless, themes, model, graph)
 
 	this.getOrCreateFilename = function()
 	{
-		return this.filename || mxResources.get('drawing', [Editor.pageCounter]) + '.xml';
+		if (window.parent.boardData) {
+			var name = window.parent.boardData.name;
+		}
+		return this.filename || name || mxResources.get('drawing', [Editor.pageCounter]);
 	};
 
 	this.getFilename = function()

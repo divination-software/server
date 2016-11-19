@@ -1,4 +1,7 @@
 import React from 'react';
 
-const Loading = () => (<i className="material-icons loading">refresh</i>);
-export default Loading;
+const Landing = (props) => {
+  console.log(props.loginActions)
+  return (<button onClick={e => props.loginActions.login() }>Login</button>);
+}
+export default Landing;

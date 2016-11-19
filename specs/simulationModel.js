@@ -41,7 +41,7 @@ describe('Simulation Model', function() {
 
   describe('saveSimulation', function(){
     before(function(done){
-      simulationModel.saveSimulation(testUserId, testSim, {name:'Pizza'})
+      simulationModel.saveSimulation(testUserId, testSim, 'Pizza')
       .then(function(user){
         boardId = user.boards[0];
         done();
@@ -70,14 +70,7 @@ describe('Simulation Model', function() {
       })
     })
     it('should overwrite a boards simulation if a boardId is given', function(done) {
-      simulationModel.saveSimulation(testUserId, { simulation:'Yoooooooo' }, {_id:boardId, name:'Pizza'})
-      .then(function() {
-        return Board.findOne({_id: boardId}).exec()
-      })
-      .then(function(board){
-        expect(board.name).to.equal('Pizza');
-        return User.findOne({_id: testUserId}).exec()
-      })
+      simulationModel.saveSimulation(testUserId, { simulation:'Yoooooooo' }, 'Pizza')
       .then(function(user){
         expect(user.boards[0]).to.eql(boardId);
         done();
