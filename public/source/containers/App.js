@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import * as CounterActions from '../actions/CounterActions';
+import * as LoginActions from '../actions/LoginActions';
+import * as ConnectActions from '../actions/ConnectActions';
 import Navbar from '../components/Navbar';
 
 /**
@@ -11,12 +13,12 @@ import Navbar from '../components/Navbar';
  * component to make the Redux store available to the rest of the app.
  */
 class App extends Component {
-  componentWillMount() {
-    // I need a filler;
+  componentDidMount() {
+    this.props.connectActions.connect();
   }
   render() {
     // we can use ES6's object destructuring to effectively 'unpack' our props
-    const { counter, actions, children } = this.props;
+    const { counter, loginActions, children, user } = this.props;
     return (
       <div className="main-app-container">
         <Navbar Link={Link} />
@@ -24,7 +26,7 @@ class App extends Component {
             and cloning the element, followed by passing props in. Notice that
             those props have been unpacked above! */}
           {React.Children.map(children, child =>
-            React.cloneElement(child, { counter, actions }),
+            React.cloneElement(child, { counter, user, loginActions }),
           )}
       </div>
     );
@@ -33,7 +35,8 @@ class App extends Component {
 
 App.propTypes = {
   counter: PropTypes.number.isRequired,
-  actions: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  loginActions: PropTypes.object.isRequired,
   children: PropTypes.element.isRequired,
 };
 
@@ -45,6 +48,7 @@ App.propTypes = {
 function mapStateToProps(state) {
   return {
     counter: state.counter,
+    user: state.user,
   };
 }
 
@@ -58,7 +62,9 @@ function mapStateToProps(state) {
  */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(CounterActions, dispatch),
+    counterActions: bindActionCreators(CounterActions, dispatch),
+    loginActions: bindActionCreators(LoginActions, dispatch),
+    connectActions: bindActionCreators(ConnectActions, dispatch),
   };
 }
 

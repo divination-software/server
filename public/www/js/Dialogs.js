@@ -1500,9 +1500,9 @@ var EditDiagramDialog = function(editorUi)
 				editorUi.hideDialog();
 				window.openFile = null;
 			});
-
+			console.log('new', data)
 			window.openFile.setData(data, null);
-			window.open(editorUi.getUrl());
+			// window.open(editorUi.getUrl());
 		}
 		else if (select.value == 'replace')
 		{
@@ -1937,10 +1937,11 @@ var ExportDialog = function(editorUi)
 					ExportDialog.saveRequest(data, name, format,
 						function(newTitle, base64)
 						{
+							console.log('IM SAVED')
 							// Base64 not used in this example
-							return new mxXmlRequest(EXPORT_URL, 'format=' + format + '&base64=' + (base64 || '0') +
-								((newTitle != null) ? '&filename=' + encodeURIComponent(newTitle) : '') +
-								bg + '&w=' + w + '&h=' + h + '&border=' + b + '&' + param);
+							// return new mxXmlRequest(EXPORT_URL, 'format=' + format + '&base64=' + (base64 || '0') +
+							// 	((newTitle != null) ? '&filename=' + encodeURIComponent(newTitle) : '') +
+							// 	bg + '&w=' + w + '&h=' + h + '&border=' + b + '&' + param);
 						});
 				}
 				else
@@ -1993,14 +1994,7 @@ ExportDialog.showXmlOption = true;
  */
 ExportDialog.saveLocalFile = function(data, filename, format)
 {
-	fetch(window.SERVER_URL + '/api/board', {
-	  method: 'post',
-	  credentials: 'same-origin', // here's the magical line that fixed everything
-	  headers: {
-	    'Content-Type': 'application/json',
-	  },
-	  body: JSON.stringify({simulation: data}),
-	})
+	axios.post('/api/board/run', {simulation: data})
 	// new mxXmlRequest(SAVE_URL, 'xml=' + encodeURIComponent(data) + '&filename=' +
 	// 	encodeURIComponent(filename) + '&format=' + format).simulate(document, '_blank');
 };
@@ -2013,6 +2007,7 @@ ExportDialog.saveLocalFile = function(data, filename, format)
  */
 ExportDialog.saveRequest = function(data, filename, format, fn)
 {
+	console.log(data)
 	fn(filename).simulate(document, '_blank');
 };
 

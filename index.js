@@ -1,18 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bluebird = require('bluebird');
-const socketHandler = require('./socketHandler');
+const passport = require('passport');
 const fs = require('fs');
+const socketHandler = require('./socketHandler');
+const ioInfo = require('./ioInfo');
 
 // App init
 const app = express();
-var httpsPort;
-var httpPort;
-// Set ports and env variables
-httpsPort = process.env.HTTPS_PORT;
-httpPort = process.env.HTTP_PORT;
 
-// Configure server with all the middleware and routing
+var httpsPort = process.env.HTTPS_PORT;
+var httpPort = process.env.HTTP_PORT;
+// Configure server with middleware, routing, and auth
+require('./auth.js')(passport);
 require('./middleware.js')(app, express);
 require('./routes.js')(app, express);
 
@@ -26,8 +26,8 @@ var options = {
 }
 const server = require('https').createServer(options, app);
 
-// Connect socket
-const io = require('socket.io').listen(server);
+// Connect socket.io
+ioInfo.connect(server);
 mongoose.Promise = bluebird;
 
 // Connect to mongoDB unless testing
@@ -36,7 +36,7 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 // Handle Socket Connections
-io.on('connection', socketHandler);
+ioInfo.io.on('connection', socketHandler);
 
 // On connection , listen to port
 mongoose.connection.on('connected', () => {
