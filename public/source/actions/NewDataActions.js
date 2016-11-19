@@ -23,6 +23,7 @@ export function listenForData() {
   return (dispatch, getState) => {
     const { socket } = getState();
     socket.on('newData', (data) => {
+      console.log('newData');
       dispatch(newData(data));
     })
   };

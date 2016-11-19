@@ -17,26 +17,8 @@ import DataComponent from '../components/DataComponent';
 class App extends Component {
   componentDidMount() {
     this.props.connectActions.connect();
-    setTimeout(()=>{
-      console.log('newData')
-      this.props.newDataActions.newData('YOOOOOOOOOOO');
-    },500)
-    setTimeout(()=>{
-      console.log('newData')
-      console.log(this.props.newData);
-    },1200)
+    this.props.newDataActions.listenForData();
   }
-  // getNewData() {
-  //   const { newData, newDataActions } = this.props;
-  //   console.log(newData.data);
-  //   if (newData.checked === false && newData.data) {
-  //     return <Notification click={newDataActions.dataCheck}/>
-  //   } else if (newData.checked === true) {
-  //     return <DataShow data={newData.data} close={newDataActions.dataClose}/>
-  //   } else {
-  //     return <div></div>
-  //   }
-  // }
   render() {
     // we can use ES6's object destructuring to effectively 'unpack' our props
     const { counter, loginActions, children, user, newData, newDataActions } = this.props;
