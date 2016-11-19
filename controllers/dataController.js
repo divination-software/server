@@ -7,11 +7,9 @@ module.exports = {
     const boardName = req.body.boardName;
     const data = req.body.data;
     if (boardName) {
-      dataModel.saveData(userId, data, boardName);
+      dataModel.saveData(userId, data, boardName)
     }
-    if (ioInfo.socketUsers[userId]) {
-      ioInfo.io.to(userId).emit('newData', {data: data, name: boardName});
-    }
+    ioInfo.io.to(userId).emit('newData', {data: data, name: boardName});
     if (!data || !userId) {
       res.sendStatus(400);
     }
