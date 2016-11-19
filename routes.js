@@ -1,5 +1,6 @@
 const boardController = require('./controllers/boardController');
 const simController = require('./controllers/simulationController');
+const dataController = require('./controllers/dataController');
 const path = require('path');
 const passport = require('passport');
 
@@ -10,9 +11,10 @@ module.exports = function (app, express) {
   });
 
   // Board Routes
-  app.post('/api/board', boardController.boardInit);
+  app.post('/api/board/run', boardController.run);
   app.get('/api/board', boardController.getBoards);
-
+  // Handle Sim Data
+  app.post('/api/data/results', dataController.handleResults)
   // Simualtion routes
   app.post('/api/simulation/save', simController.save);
   app.get('/api/simulation/:simId', simController.getSim);

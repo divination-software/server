@@ -1994,7 +1994,7 @@ ExportDialog.showXmlOption = true;
  */
 ExportDialog.saveLocalFile = function(data, filename, format)
 {
-	axios.post('/api/board', {simulation: data})
+	axios.post('/api/board/run', {simulation: data})
 	// new mxXmlRequest(SAVE_URL, 'xml=' + encodeURIComponent(data) + '&filename=' +
 	// 	encodeURIComponent(filename) + '&format=' + format).simulate(document, '_blank');
 };

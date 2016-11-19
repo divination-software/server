@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production nodemon index.js",
-    "dev": "NODE_ENV=dev URL='https://localhost:3000' MONGODB_URL='mongodb://localhost/divination' nodemon index.js",
+    "dev": "NODE_ENV=dev URL='https://localhost:3000' PYTHON_URL='http://localhost:5000' MONGODB_URL='mongodb://localhost/divination' nodemon index.js",
     "test": "NODE_ENV=test mocha specs",
     "populate": "MONGODB_URL='mongodb://localhost/divination' node testData"
   },
@@ -51,6 +51,8 @@
     "react-router-redux": "^4.0.7",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
-    "socket.io": "^1.5.1"
+    "request": "^2.79.0",
+    "socket.io": "^1.5.1",
+    "socket.io-client": "^1.5.1"
   }
 }

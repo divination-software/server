@@ -28,7 +28,8 @@ export function checkLogin() {
 }
 
 export function login(email, password) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { socket } = getState()
     axios.post('/api/users/login', {
       email: 'test@gmail.com',
       password: 'test'
@@ -39,6 +40,7 @@ export function login(email, password) {
       } else if (response.status === 401) {
         dispatch(loginFailed('Password is incorrect'));
       } else {
+        socket.emit('loggedIn', response.data._id);
         dispatch(loginSuccess(response.data));
       }
     })
