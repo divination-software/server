@@ -25,10 +25,13 @@ Actions.prototype.init = function()
 	};
 
 	// File actions
-	this.addAction('new...', function() { window.open(ui.getUrl()); });
+	this.addAction('new...', function() {
+		window.parent.boardData = null; 
+		window.location.reload()
+	});
 	this.addAction('open...', function()
 	{
-		window.openNew = true;
+		window.openNew = false;
 		window.openKey = 'open';
 
 		ui.openFile();
