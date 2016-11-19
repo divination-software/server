@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import * as CounterActions from '../actions/CounterActions';
 import * as LoginActions from '../actions/LoginActions';
+import * as ConnectActions from '../actions/ConnectActions';
 import Navbar from '../components/Navbar';
 
 /**
@@ -12,8 +13,8 @@ import Navbar from '../components/Navbar';
  * component to make the Redux store available to the rest of the app.
  */
 class App extends Component {
-  componentWillMount() {
-    // I need a filler;
+  componentDidMount() {
+    this.props.connectActions.connect();
   }
   render() {
     // we can use ES6's object destructuring to effectively 'unpack' our props
@@ -47,7 +48,7 @@ App.propTypes = {
 function mapStateToProps(state) {
   return {
     counter: state.counter,
-    user: state.user
+    user: state.user,
   };
 }
 
@@ -63,6 +64,7 @@ function mapDispatchToProps(dispatch) {
   return {
     counterActions: bindActionCreators(CounterActions, dispatch),
     loginActions: bindActionCreators(LoginActions, dispatch),
+    connectActions: bindActionCreators(ConnectActions, dispatch),
   };
 }
 
