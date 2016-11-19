@@ -8,3 +8,6 @@ export const DECREMENT_COUNTER = 'DECREMENT_COUNTER';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const SOCKET_CONNECT = 'SOCKET_CONNECT';
+export const NEW_DATA = 'NEW_DATA';
+export const DATA_CHECK = 'DATA_CHECK';
+export const DATA_CLOSE = 'DATA_CLOSE';
