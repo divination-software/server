@@ -1,14 +1,31 @@
 version: '2'
+
 services:
   web:
     image: 053116275671.dkr.ecr.us-west-1.amazonaws.com/divination-software/server:latest
     cpu_shares: 10
     mem_limit: 300288000
+    # networks:
+    #   - staging-network
     ports:
-    - "443:443"
+      - "443:443"
     links:
-    - mongo
+      - mongo
+      - sim
   mongo:
     image: mongo:3
     cpu_shares: 10
-    mem_limit: 200288000
+    mem_limit: 100288000
+    # networks:
+    #   - staging-network
+  sim:
+    image: 053116275671.dkr.ecr.us-west-1.amazonaws.com/divination-software/sim:latest
+    cpu_shares: 10
+    mem_limit: 300288000
+    # networks:
+    #   - staging-network
+    ports:
+      - "8443:8443"
+# networks:
+#   staging-network:
+#     driver: bridge
