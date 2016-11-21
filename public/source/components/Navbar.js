@@ -7,7 +7,7 @@ const Navbar = (props) => {
     return <div className='nav-absolute'></div>
   }
   return (
-    <div className="nav">
+    <div className="nav br">
       <h1 className="nav-title"> Divination
         <span className="nav-title-span">Simulation Software </span>
       </h1>
