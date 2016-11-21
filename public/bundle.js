@@ -72,23 +72,23 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _Board = __webpack_require__(356);
+	var _Board = __webpack_require__(360);
 	
 	var _Board2 = _interopRequireDefault(_Board);
 	
-	var _Landing = __webpack_require__(358);
+	var _Landing = __webpack_require__(362);
 	
 	var _Landing2 = _interopRequireDefault(_Landing);
 	
-	var _index = __webpack_require__(359);
+	var _index = __webpack_require__(363);
 	
 	var _index2 = _interopRequireDefault(_index);
 	
-	var _NotFoundView = __webpack_require__(363);
+	var _NotFoundView = __webpack_require__(368);
 	
 	var _NotFoundView2 = _interopRequireDefault(_NotFoundView);
 	
-	__webpack_require__(364);
+	__webpack_require__(369);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -28470,9 +28470,17 @@
 	
 	var ConnectActions = _interopRequireWildcard(_ConnectActions);
 	
-	var _Navbar = __webpack_require__(351);
+	var _NewDataActions = __webpack_require__(351);
+	
+	var NewDataActions = _interopRequireWildcard(_NewDataActions);
+	
+	var _Navbar = __webpack_require__(352);
 	
 	var _Navbar2 = _interopRequireDefault(_Navbar);
+	
+	var _DataComponent = __webpack_require__(357);
+	
+	var _DataComponent2 = _interopRequireDefault(_DataComponent);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -28502,6 +28510,7 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this.props.connectActions.connect();
+	      this.props.newDataActions.listenForData();
 	    }
 	  }, {
 	    key: 'render',
@@ -28511,11 +28520,14 @@
 	          counter = _props.counter,
 	          loginActions = _props.loginActions,
 	          children = _props.children,
-	          user = _props.user;
+	          user = _props.user,
+	          newData = _props.newData,
+	          newDataActions = _props.newDataActions;
 	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'main-app-container' },
+	        _react2.default.createElement(_DataComponent2.default, { newData: newData, newDataActions: newDataActions }),
 	        _react2.default.createElement(_Navbar2.default, { Link: _reactRouter.Link }),
 	        _react2.default.Children.map(children, function (child) {
 	          return _react2.default.cloneElement(child, { counter: counter, user: user, loginActions: loginActions });
@@ -28530,45 +28542,29 @@
 	App.propTypes = {
 	  counter: _react.PropTypes.number.isRequired,
 	  user: _react.PropTypes.object.isRequired,
+	  newData: _react.PropTypes.object.isRequired,
+	  newDataActions: _react.PropTypes.object.isRequired,
 	  loginActions: _react.PropTypes.object.isRequired,
 	  children: _react.PropTypes.element.isRequired
 	};
 	
-	/**
-	 * Keep in mind that 'state' isn't the state of local object, but your single
-	 * state in this Redux application. 'counter' is a property within our store/state
-	 * object. By mapping it to props, we can pass it to the child component Counter.
-	 */
 	function mapStateToProps(state) {
 	  return {
 	    counter: state.counter,
-	    user: state.user
+	    user: state.user,
+	    newData: state.newData
 	  };
 	}
 	
-	/**
-	 * Turns an object whose values are 'action creators' into an object with the same
-	 * keys but with every action creator wrapped into a 'dispatch' call that we can invoke
-	 * directly later on. Here we imported the actions specified in 'CounterActions.js' and
-	 * used the bindActionCreators function Redux provides us.
-	 *
-	 * More info: http://redux.js.org/docs/api/bindActionCreators.html
-	 */
 	function mapDispatchToProps(dispatch) {
 	  return {
 	    counterActions: (0, _redux.bindActionCreators)(CounterActions, dispatch),
 	    loginActions: (0, _redux.bindActionCreators)(LoginActions, dispatch),
-	    connectActions: (0, _redux.bindActionCreators)(ConnectActions, dispatch)
+	    connectActions: (0, _redux.bindActionCreators)(ConnectActions, dispatch),
+	    newDataActions: (0, _redux.bindActionCreators)(NewDataActions, dispatch)
 	  };
 	}
 	
-	/**
-	 * 'connect' is provided to us by the bindings offered by 'react-redux'. It simply
-	 * connects a React component to a Redux store. It never modifies the component class
-	 * that is passed into it, it actually returns a new connected componet class for use.
-	 *
-	 * More info: https://github.com/rackt/react-redux
-	 */
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
 
 /***/ },
@@ -28639,6 +28635,9 @@
 	var LOGIN_SUCCESS = exports.LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 	var LOGIN_FAIL = exports.LOGIN_FAIL = 'LOGIN_FAIL';
 	var SOCKET_CONNECT = exports.SOCKET_CONNECT = 'SOCKET_CONNECT';
+	var NEW_DATA = exports.NEW_DATA = 'NEW_DATA';
+	var DATA_CHECK = exports.DATA_CHECK = 'DATA_CHECK';
+	var DATA_CLOSE = exports.DATA_CLOSE = 'DATA_CLOSE';
 
 /***/ },
 /* 270 */
@@ -38706,12 +38705,59 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.newData = newData;
+	exports.dataCheck = dataCheck;
+	exports.dataClose = dataClose;
+	exports.listenForData = listenForData;
+	
+	var _ActionTypes = __webpack_require__(269);
+	
+	function newData(data) {
+	  return {
+	    type: _ActionTypes.NEW_DATA,
+	    data: data
+	  };
+	};
+	
+	function dataCheck() {
+	  return {
+	    type: _ActionTypes.DATA_CHECK
+	  };
+	};
+	
+	function dataClose() {
+	  return {
+	    type: _ActionTypes.DATA_CLOSE
+	  };
+	};
+	
+	function listenForData() {
+	  return function (dispatch, getState) {
+	    var _getState = getState(),
+	        socket = _getState.socket;
+	
+	    socket.on('newData', function (data) {
+	      console.log('newData');
+	      dispatch(newData(data));
+	    });
+	  };
+	};
+
+/***/ },
+/* 352 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(352);
+	__webpack_require__(353);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -38767,16 +38813,16 @@
 	exports.default = Navbar;
 
 /***/ },
-/* 352 */
+/* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(353);
+	var content = __webpack_require__(354);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(355)(content, {});
+	var update = __webpack_require__(356)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -38793,10 +38839,10 @@
 	}
 
 /***/ },
-/* 353 */
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(354)();
+	exports = module.exports = __webpack_require__(355)();
 	// imports
 	
 	
@@ -38807,7 +38853,7 @@
 
 
 /***/ },
-/* 354 */
+/* 355 */
 /***/ function(module, exports) {
 
 	/*
@@ -38863,7 +38909,7 @@
 
 
 /***/ },
-/* 355 */
+/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -39115,7 +39161,129 @@
 
 
 /***/ },
-/* 356 */
+/* 357 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _DataShow = __webpack_require__(358);
+	
+	var _DataShow2 = _interopRequireDefault(_DataShow);
+	
+	var _Notification = __webpack_require__(359);
+	
+	var _Notification2 = _interopRequireDefault(_Notification);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var DataComponent = function DataComponent(props) {
+	  var newData = props.newData,
+	      newDataActions = props.newDataActions;
+	
+	  if (newData.checked === false && newData.data) {
+	    return _react2.default.createElement(_Notification2.default, { click: newDataActions.dataCheck });
+	  } else if (newData.checked === true) {
+	    return _react2.default.createElement(_DataShow2.default, { data: newData.data, close: newDataActions.dataClose });
+	  } else {
+	    return _react2.default.createElement('div', null);
+	  }
+	};
+	
+	exports.default = DataComponent;
+
+/***/ },
+/* 358 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var DataShow = function DataShow(props) {
+	  var data = props.data,
+	      close = props.close;
+	
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'div',
+	      { onClick: function onClick(e) {
+	          return close();
+	        }, className: 'overlay' },
+	      ' '
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'content' },
+	      _react2.default.createElement(
+	        'h1',
+	        null,
+	        data.name
+	      ),
+	      _react2.default.createElement(
+	        'p',
+	        null,
+	        data.data
+	      )
+	    )
+	  );
+	};
+	
+	exports.default = DataShow;
+
+/***/ },
+/* 359 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var DataShow = function DataShow(props) {
+	  var click = props.click;
+	
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'notification', onClick: function onClick(e) {
+	        return click();
+	      } },
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      'Click to View Simulation Results!'
+	    )
+	  );
+	};
+	
+	exports.default = DataShow;
+
+/***/ },
+/* 360 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39130,7 +39298,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Loading = __webpack_require__(357);
+	var _Loading = __webpack_require__(361);
 	
 	var _Loading2 = _interopRequireDefault(_Loading);
 	
@@ -39188,7 +39356,7 @@
 	exports.default = Board;
 
 /***/ },
-/* 357 */
+/* 361 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39216,7 +39384,7 @@
 	exports.default = Landing;
 
 /***/ },
-/* 358 */
+/* 362 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39232,7 +39400,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Landing = function Landing(props) {
-	  console.log(props.loginActions);
 	  return _react2.default.createElement(
 	    'button',
 	    { onClick: function onClick(e) {
@@ -39244,7 +39411,7 @@
 	exports.default = Landing;
 
 /***/ },
-/* 359 */
+/* 363 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39253,24 +39420,28 @@
 	  value: true
 	});
 	
-	var _socket = __webpack_require__(360);
+	var _socket = __webpack_require__(364);
 	
 	var _socket2 = _interopRequireDefault(_socket);
 	
-	var _counter = __webpack_require__(361);
+	var _counter = __webpack_require__(365);
 	
 	var _counter2 = _interopRequireDefault(_counter);
 	
-	var _user = __webpack_require__(362);
+	var _user = __webpack_require__(366);
 	
 	var _user2 = _interopRequireDefault(_user);
 	
+	var _newData = __webpack_require__(367);
+	
+	var _newData2 = _interopRequireDefault(_newData);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = { counter: _counter2.default, user: _user2.default, socket: _socket2.default };
+	exports.default = { counter: _counter2.default, user: _user2.default, socket: _socket2.default, newData: _newData2.default };
 
 /***/ },
-/* 360 */
+/* 364 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39292,7 +39463,7 @@
 	}
 
 /***/ },
-/* 361 */
+/* 365 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39319,7 +39490,7 @@
 	}
 
 /***/ },
-/* 362 */
+/* 366 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39346,19 +39517,62 @@
 	      state.user = action.user;
 	      state.message = null;
 	      state.signedIn = true;
-	      return state;
+	      return Object.assign({}, state);
 	    case _ActionTypes.LOGIN_FAIL:
 	      state.user = null;
 	      state.message = action.message;
 	      state.signedIn = false;
-	      return state;
+	      return Object.assign({}, state);
 	    default:
 	      return state;
 	  }
 	}
 
 /***/ },
-/* 363 */
+/* 367 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = newData;
+	
+	var _ActionTypes = __webpack_require__(269);
+	
+	var defaultState = {
+	  data: null,
+	  checked: false,
+	  closed: true
+	};
+	
+	function newData() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case _ActionTypes.NEW_DATA:
+	      state.data = action.data;
+	      state.checked = false;
+	      state.closed = true;
+	      return Object.assign({}, state);
+	    case _ActionTypes.DATA_CHECK:
+	      state.checked = true;
+	      state.closed = false;
+	      return Object.assign({}, state);
+	    case _ActionTypes.DATA_CLOSE:
+	      state.data = null;
+	      state.checked = false;
+	      state.closed = true;
+	      return Object.assign({}, state);
+	    default:
+	      return state;
+	  }
+	}
+
+/***/ },
+/* 368 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -39387,16 +39601,16 @@
 	}
 
 /***/ },
-/* 364 */
+/* 369 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(365);
+	var content = __webpack_require__(370);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(355)(content, {});
+	var update = __webpack_require__(356)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -39413,15 +39627,15 @@
 	}
 
 /***/ },
-/* 365 */
+/* 370 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(354)();
+	exports = module.exports = __webpack_require__(355)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "html {\n  height:100%;\n  width:100%;\n  margin:0;\n  padding:0;\n}\n\nbody {\n  margin: 0;\n  padding: 0;\n  height: 100%;\n  width:100%;\n  font-family: sans-serif;\n}\n\n.App {\n  text-align: center;\n}\n\n.loading {\n  animation: loading infinite 1.2s linear;\n  font-size: 60px !important;\n  line-height: 100vh;\n  width: 100%;\n  text-align: center;\n  transition: all 1s ease;\n}\n\n.App-header {\n  background-color: #222;\n  height: 150px;\n  padding: 20px;\n  color: white;\n}\n\n.App-intro {\n  font-size: large;\n}\n\n@keyframes loading {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n\n.board {\n  width: 100%;\n  height: 100%;\n  border:none;\n  outline:none;\n  margin-bottom: -5px;\n}\n\niframe:focus {\n    outline: none;\n}\n\niframe[seamless] {\n    display: block;\n}\n\n#root {\n  height:100%;\n}\n.main-app-container {\n  height: 100%;\n}\n", ""]);
+	exports.push([module.id, "html {\n  height:100%;\n  width:100%;\n  margin:0;\n  padding:0;\n}\n\nbody {\n  margin: 0;\n  padding: 0;\n  height: 100%;\n  width:100%;\n  font-family: sans-serif;\n}\n\n.App {\n  text-align: center;\n}\n\n.loading {\n  animation: loading infinite 1.2s linear;\n  font-size: 60px !important;\n  line-height: 100vh;\n  width: 100%;\n  text-align: center;\n  transition: all 1s ease;\n}\n\n.App-header {\n  background-color: #222;\n  height: 150px;\n  padding: 20px;\n  color: white;\n}\n\n.App-intro {\n  font-size: large;\n}\n\n@keyframes loading {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n\n.board {\n  width: 100%;\n  height: 100%;\n  border:none;\n  outline:none;\n  margin-bottom: -5px;\n}\n\niframe:focus {\n    outline: none;\n}\n\niframe[seamless] {\n    display: block;\n}\n\n#root {\n  height:100%;\n}\n.main-app-container {\n  height: 100%;\n}\n\n.notification {\n  width: 350px;\n  height: 60px;\n  position: fixed;\n  border: 1px solid gray;\n  bottom: 0;\n  transition: all 2s;\n  right: 0;\n}\n\n.overlay {\n    position          : fixed;\n    top               : 0;\n    left              : 0;\n    right             : 0;\n    bottom            : 0;\n    background-color   : rgba(0, 0, 0, 0.1);\n    z-index:99;\n  }\n.content {\n  position                   : fixed;\n  text-align: center;\n  display: block;\n  box-sizing: border-box;\n  width: 50%;\n  margin-top: 200px;\n  margin-left: 25%;\n  overflow                   : auto;\n  outline                    : none;\n  padding                    : 20px;\n  z-index: 100;\n  color: black;\n  box-shadow: 2px 2px 6px rgba(0, 0, 0, .6);\n  border:none;\n  border-radius: 4px;\n  background: white;\n}\n", ""]);
 	
 	// exports
 

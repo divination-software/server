@@ -1,6 +1,6 @@
 version: '2'
 services:
-  server:
+  web:
     image: divination-software/server:dev
     networks:
       - staging-network
@@ -11,7 +11,7 @@ services:
     networks:
       - staging-network
   sim:
-    image: divination-software/sim:latest
+    image: divination-software/sim:dev
     ports:
       - "8443:8443"
     networks:
