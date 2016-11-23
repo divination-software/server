@@ -1,25 +1,24 @@
 version: '2'
-
 services:
   web:
     image: divinationsoftware/server
     networks:
-      - prod-network
+      - staging-network
     ports:
       - "443:443"
   mongo:
     image: mongo:3
     volumes:
-      - './mongo_db_data_prod:/data/db'
-      - './mongo_db_config_prod:/data/configdb'
+      - './mongo_db_data:/data/db'
+      - './mongo_db_config:/data/configdb'
     networks:
-      - prod-network
+      - staging-network
   sim:
     image: divinationsoftware/sim
     ports:
       - "8443:8443"
     networks:
-      - prod-network
+      - staging-network
 networks:
-  prod-network:
+  staging-network:
     driver: bridge
