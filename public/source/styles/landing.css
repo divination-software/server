@@ -1,0 +1,29 @@
+.landingImage {
+  background-image: url('https://images.unsplash.com/photo-1474696100102-01b8519f06f3?dpr=2&auto=format&fit=crop&w=767&h=511&q=80&cs=tinysrgb&crop=');
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  background-size: cover;
+  width:100%;
+  padding-top:20vh;
+  height:70vh;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, .6);
+}
+
+.landingInfo {
+  position:relative;
+  background-color: rgba(0,0,0,.6);
+  width:60%;
+  margin-right: auto;
+  margin-left: auto;
+  height:50vh;
+  color:white;
+  border-radius: 5px;
+  padding-top:2px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, .8);
+}
+
+.landingInfo h3 {
+  text-align: center;
+  font-size: 36px;
+}

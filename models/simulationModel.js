@@ -3,6 +3,7 @@ const Board = require('../schemas/Board');
 const Simulation = require('../schemas/Simulation');
 
 module.exports = {
+
   saveSimulation: (userId, simulation, name) => {
     const newSimulation = new Simulation(simulation)
     var boardId;

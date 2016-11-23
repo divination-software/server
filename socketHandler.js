@@ -1,8 +1,11 @@
+const ioInfo = require('./ioInfo');
+
 module.exports = (socket) => {
-  // TODO Handle Sockets
-  console.log(socket);
+  socket.on('loggedIn', function(userId){
+    socket.join(userId);
+  })
 
   socket.on('disconnect', function(data) {
-    console.log(data, ' ---- Socket disconnect ----');
+    console.log(' ---- Socket disconnect ----');
   })
 }

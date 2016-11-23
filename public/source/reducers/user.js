@@ -12,12 +12,12 @@ export default function user(state = defaultState, action) {
       state.user = action.user;
       state.message = null;
       state.signedIn = true;
-      return state;
+      return Object.assign({}, state);
     case LOGIN_FAIL:
       state.user = null;
       state.message = action.message;
       state.signedIn = false;
-      return state;
+      return Object.assign({}, state);
     default:
       return state;
   }
