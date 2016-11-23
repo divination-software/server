@@ -6,8 +6,8 @@ module.exports = function (app, express) {
   app.use(express.static(__dirname + '/public'));
 
   // Parse Post Bodys
-  app.use(bodyParser.urlencoded({extended: true}));
-  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+  app.use(bodyParser.json({limit: '50mb'}));
 
   // Initialize Authentication
   app.use(require('express-session')({secret: 'divinationsimulation', resave: false, saveUninitialized: false}));
