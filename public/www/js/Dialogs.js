@@ -2047,10 +2047,66 @@ var EditDataDialog = function(ui, cell)
     // "Source" or "Action"
     if (typeString === 'shape=process' || typeString === 'shape=source') {
       obj.setAttribute('type', 'delay');
+
+  /*
+  var matches = cell.style.match(/shape=([^;]+);/);
+  var validNodeTypes = [
+    'source',
+    'process',
+    'exit',
+    'decision',
+    'modify',
+    'record',
+    'separate',
+    'batch',
+    'resource',
+  ]
+  var nodeType = null;
+  if (validNodeTypes.includes(matches[1])) {
+    nodeType = matches[1];
+  }
+
+  var attributeTypes = {};
+  var addDialogField = function (obj, name, type, placeholder) {
+    if (obj.hasAttribute(name)) {
+      console.error('Attribute re-assignment in Dialog generation!', name, 'is already defined.');
+    } else {
+      placeholder = placeholder || '';
+      obj.setAttribute(name, placeholder);
+      attributeTypes[name] = type;
+    }
+  };
+
+  var fieldTypes = {
+    text: 'text',
+    textArea: 'textarea',
+  };
+
+  // Converts the value to an XML node
+  if (!mxUtils.isNode(value))
+  {
+    var doc = mxUtils.createXmlDocument();
+    var obj = doc.createElement('object');
+    obj.setAttribute('label', value || '');
+
+    console.log(nodeType);
+
+    // Build custom menus for each type of node.
+    if (nodeType) {
+      if (nodeType === 'source') {
+        addDialogField(obj, 'Delay', fieldTypes.text, 0);
+      } else if (nodeType === 'process') {
+        addDialogField(obj, 'Delay', fieldTypes.text, 0);
+      } else if (nodeType === 'resource') {
+        addDialogField(obj, 'Name', fieldTypes.text, 'ayyy lmao');
+        addDialogField(obj, 'Naaaayme', fieldTypes.textArea, 'ayyy lmao');
+      }
+Add Resource shape; Add QOL functions for dialog
+*/
     }
 
-		value = obj;
-	}
+    value = obj;
+  }
 
 	// Creates the dialog contents
 	var form = new mxForm('properties');
@@ -2113,23 +2169,35 @@ var EditDataDialog = function(ui, cell)
 		text.parentNode.appendChild(removeAttr);
 	};
 
-	var addTextArea = function(index, name, value)
-	{
-		names[index] = name;
-		texts[index] = form.addTextarea(names[count] + ':', value, 2);
-		texts[index].style.width = '100%';
+  var addTextArea = function(index, name, value) {
+    names[index] = name;
+    texts[index] = form.addTextarea(names[count] + ':', value, 2);
+    texts[index].style.width = '100%';
 
-		addRemoveButton(texts[index], name);
-	};
+    addRemoveButton(texts[index], name);
+  };
 
-	for (var i = 0; i < attrs.length; i++)
-	{
-		if (attrs[i].nodeName != 'label' && attrs[i].nodeName != 'placeholders')
-		{
-			addTextArea(count, attrs[i].nodeName, attrs[i].nodeValue);
-			count++;
-		}
-	}
+  var addText = function(index, name, value) {
+    names[index] = name;
+    texts[index] = form.addText(names[count] + ':', value);
+    texts[index].style.width = '100%';
+
+    addRemoveButton(texts[index], name);
+  };
+
+  for (var i = 0; i < attrs.length; i++)
+  {
+    if (attrs[i].nodeName != 'label' && attrs[i].nodeName != 'placeholders')
+    {
+      var attributeType = attributeTypes[attrs[i].nodeName];
+      if (attributeType === 'text') {
+        addText(count, attrs[i].nodeName, attrs[i].nodeValue);
+      } else if (attributeType === 'textarea') {
+        addTextArea(count, attrs[i].nodeName, attrs[i].nodeValue);
+      }
+      count++;
+    }
+  }
 
 	div.appendChild(form.table);
 
@@ -2137,6 +2205,7 @@ var EditDataDialog = function(ui, cell)
 	newProp.style.whiteSpace = 'nowrap';
 	newProp.style.marginTop = '6px';
 
+    /*
 	var nameInput = document.createElement('input');
 	nameInput.setAttribute('placeholder', mxResources.get('enterPropertyName'));
 	nameInput.setAttribute('type', 'text');
@@ -2451,8 +2520,9 @@ if (ui.editor.cancelFirst)
 		buttons.appendChild(cancelBtn);
 	}
 
-		div.appendChild(buttons);
-		this.container = div;
+  div.appendChild(buttons);
+  */
+  this.container = div;
 };
 
 /**

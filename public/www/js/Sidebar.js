@@ -878,41 +878,42 @@ Sidebar.prototype.addSearchPalette = function(expand)
  */
 Sidebar.prototype.addModulePalette = function(expand)
 {
-	var fns = [
-		this.createVertexTemplateEntry('shape=source;whiteSpace=wrap;html=1;', 120, 80, 'Source', 'Source'),
-		this.createVertexTemplateEntry('shape=process;whiteSpace=wrap;html=1;', 120, 80, 'Process', 'Process', null, null, 'rect rectangle box'),
-		this.createVertexTemplateEntry('shape=exit;whiteSpace=wrap,html=1;', 120, 80, 'Exit', 'Exit'),
-		this.createVertexTemplateEntry('shape=decision;whiteSpace=wrap,html=1;', 80, 80, 'Decision', 'Decision'),
-		this.createVertexTemplateEntry('shape=modify;whiteSpace=wrap,html=1;', 120, 80, 'Modify', 'Modify'),
-		this.createVertexTemplateEntry('shape=record;whiteSpace=wrap,html=1;', 120, 80, 'Record', 'Record'),
-		this.createVertexTemplateEntry('shape=separate;whiteSpace=wrap,html=1;', 120, 80, 'Separate', 'Separate'),
-		this.createVertexTemplateEntry('shape=batch;whiteSpace=wrap,html=1;', 120, 80, 'Batch', 'Batch'),
-		// 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),
- 	// 	this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;', 120, 80, '', 'Ellipse', null, null, 'circle oval ellipse state'),
-	 	// Explicit strokecolor/fillcolor=none is a workaround to maintain transparent background regardless of current style
+  var fns = [
+    this.createVertexTemplateEntry('shape=source;whiteSpace=wrap;html=1;', 120, 80, 'Source', 'Source'),
+    this.createVertexTemplateEntry('shape=process;whiteSpace=wrap;html=1;', 120, 80, 'Process', 'Process'),
+    this.createVertexTemplateEntry('shape=exit;whiteSpace=wrap,html=1;', 120, 80, 'Exit', 'Exit'),
+    this.createVertexTemplateEntry('shape=decision;whiteSpace=wrap,html=1;', 80, 80, 'Decision', 'Decision'),
+    this.createVertexTemplateEntry('shape=modify;whiteSpace=wrap,html=1;', 120, 80, 'Modify', 'Modify'),
+    this.createVertexTemplateEntry('shape=record;whiteSpace=wrap,html=1;', 120, 80, 'Record', 'Record'),
+    this.createVertexTemplateEntry('shape=separate;whiteSpace=wrap,html=1;', 120, 80, 'Separate', 'Separate'),
+    this.createVertexTemplateEntry('shape=batch;whiteSpace=wrap,html=1;', 120, 80, 'Batch', 'Batch'),
 
- 	// 	this.createVertexTemplateEntry('shape=ext;double=1;whiteSpace=wrap;html=1;', 120, 60, '', 'Double Rectangle', null, null, 'rect rectangle box double'),
-		// 	this.createVertexTemplateEntry('shape=ext;double=1;rounded=1;whiteSpace=wrap;html=1;', 120, 60, '', 'Double Rounded Rectangle', null, null, 'rounded rect rectangle box double'),
-		// 	this.createVertexTemplateEntry('ellipse;shape=doubleEllipse;whiteSpace=wrap;html=1;', 120, 80, '', 'Double Ellipse', null, null, 'circle oval ellipse start end state double'),
-		// 	this.createVertexTemplateEntry('rhombus;whiteSpace=wrap;html=1;', 80, 80, '', 'Diamond', null, null, 'diamond rhombus if condition decision conditional question test'),
-		// 	this.createVertexTemplateEntry('shape=parallelogram;whiteSpace=wrap;html=1;', 120, 60, '', 'Parallelogram'),
-		// 	this.createVertexTemplateEntry('triangle;whiteSpace=wrap;html=1;', 60, 80, '', 'Triangle', null, null, 'triangle logic inverter buffer'),
-		// 	this.createVertexTemplateEntry('shape=cylinder;whiteSpace=wrap;html=1;', 60, 80, '', 'Cylinder', null, null, 'cylinder data database'),
-		// 	this.createVertexTemplateEntry('shape=hexagon;perimeter=hexagonPerimeter;whiteSpace=wrap;html=1;', 120, 80, '', 'Hexagon', null, null, 'hexagon preparation'),
-		// 	this.createVertexTemplateEntry('shape=process;whiteSpace=wrap;html=1;', 120, 60, '', 'Process', null, null, 'process task'),
-		// 	this.createVertexTemplateEntry('ellipse;shape=cloud;whiteSpace=wrap;html=1;', 120, 80, '', 'Cloud', null, null, 'cloud network'),
-		// 	this.createVertexTemplateEntry('shape=document;whiteSpace=wrap;html=1;', 120, 80, '', 'Document'),
-		// 	this.createVertexTemplateEntry('shape=internalStorage;whiteSpace=wrap;html=1;', 80, 80, '', 'Internal Storage'),
-		// 	this.createVertexTemplateEntry('shape=cube;whiteSpace=wrap;html=1;', 120, 80, '', 'Cube'),
-		// 	this.createVertexTemplateEntry('shape=trapezoid;whiteSpace=wrap;html=1;', 120, 60, '', 'Trapezoid'),
-		// 	this.createVertexTemplateEntry('shape=tape;whiteSpace=wrap;html=1;', 120, 100, '', 'Tape'),
-		// 	this.createVertexTemplateEntry('shape=note;whiteSpace=wrap;html=1;', 80, 100, '', 'Note'),
-	    // this.createVertexTemplateEntry('shape=card;whiteSpace=wrap;html=1;', 80, 100, '', 'Card'),
-		// 	this.createEdgeTemplateEntry('endArrow=classic;html=1;', 50, 50, '', 'Connection'),
-		// 	this.createEdgeTemplateEntry('endArrow=classic;startArrow=classic;html=1;', 50, 50, '', 'Connection')
-	 ];
+    // this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),
+    // this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;', 120, 80, '', 'Ellipse', null, null, 'circle oval ellipse state'),
+    // Explicit strokecolor/fillcolor=none is a workaround to maintain transparent background regardless of current style
 
-	this.addPaletteFunctions('Modules', 'Modules', (expand != null) ? expand : true, fns);
+    // this.createVertexTemplateEntry('shape=ext;double=1;whiteSpace=wrap;html=1;', 120, 60, '', 'Double Rectangle', null, null, 'rect rectangle box double'),
+    // this.createVertexTemplateEntry('shape=ext;double=1;rounded=1;whiteSpace=wrap;html=1;', 120, 60, '', 'Double Rounded Rectangle', null, null, 'rounded rect rectangle box double'),
+    // this.createVertexTemplateEntry('ellipse;shape=doubleEllipse;whiteSpace=wrap;html=1;', 120, 80, '', 'Double Ellipse', null, null, 'circle oval ellipse start end state double'),
+    // this.createVertexTemplateEntry('rhombus;whiteSpace=wrap;html=1;', 80, 80, '', 'Diamond', null, null, 'diamond rhombus if condition decision conditional question test'),
+    // this.createVertexTemplateEntry('shape=parallelogram;whiteSpace=wrap;html=1;', 120, 60, '', 'Parallelogram'),
+    // this.createVertexTemplateEntry('triangle;whiteSpace=wrap;html=1;', 60, 80, '', 'Triangle', null, null, 'triangle logic inverter buffer'),
+    // this.createVertexTemplateEntry('shape=cylinder;whiteSpace=wrap;html=1;', 60, 80, '', 'Cylinder', null, null, 'cylinder data database'),
+    // this.createVertexTemplateEntry('shape=hexagon;perimeter=hexagonPerimeter;whiteSpace=wrap;html=1;', 120, 80, '', 'Hexagon', null, null, 'hexagon preparation'),
+    // this.createVertexTemplateEntry('shape=process;whiteSpace=wrap;html=1;', 120, 60, '', 'Process', null, null, 'process task'),
+    // this.createVertexTemplateEntry('ellipse;shape=cloud;whiteSpace=wrap;html=1;', 120, 80, '', 'Cloud', null, null, 'cloud network'),
+    // this.createVertexTemplateEntry('shape=document;whiteSpace=wrap;html=1;', 120, 80, '', 'Document'),
+    // this.createVertexTemplateEntry('shape=internalStorage;whiteSpace=wrap;html=1;', 80, 80, '', 'Internal Storage'),
+    // this.createVertexTemplateEntry('shape=cube;whiteSpace=wrap;html=1;', 120, 80, '', 'Cube'),
+    // this.createVertexTemplateEntry('shape=trapezoid;whiteSpace=wrap;html=1;', 120, 60, '', 'Trapezoid'),
+    // this.createVertexTemplateEntry('shape=tape;whiteSpace=wrap;html=1;', 120, 100, '', 'Tape'),
+    // this.createVertexTemplateEntry('shape=note;whiteSpace=wrap;html=1;', 80, 100, '', 'Note'),
+    // this.createVertexTemplateEntry('shape=card;whiteSpace=wrap;html=1;', 80, 100, '', 'Card'),
+    // this.createEdgeTemplateEntry('endArrow=classic;html=1;', 50, 50, '', 'Connection'),
+    // this.createEdgeTemplateEntry('endArrow=classic;startArrow=classic;html=1;', 50, 50, '', 'Connection')
+  ];
+
+  this.addPaletteFunctions('Modules', 'Modules', (expand != null) ? expand : true, fns);
 };
 
 /**
@@ -920,16 +921,18 @@ Sidebar.prototype.addModulePalette = function(expand)
  */
 Sidebar.prototype.addResourcePalette = function(expand)
 {
-	var fns = [
-   	 	this.createVertexTemplateEntry('text;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;', 100, 40, 'Title', 'Title', null, null, 'text heading title'),
-	 	this.createVertexTemplateEntry('text;html=1;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;', 190, 120,
-			'<h1>Heading</h1><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>',
-			'Textbox', null, null, 'text textbox textarea'),
-	 	this.createVertexTemplateEntry('text;html=1;whiteSpace=wrap;verticalAlign=middle;overflow=hidden;', 100, 80,
- 			'<ul><li>Value 1</li><li>Value 2</li><li>Value 3</li></ul>', 'Unordered List'),
-	 	];
+  var fns = [
+    this.createVertexTemplateEntry('shape=resource;whiteSpace=wrap;html=1;', 120, 80, 'Resource', 'Resource'),
 
-	this.addPaletteFunctions('Resources', 'Resources', (expand != null) ? expand : true, fns);
+    //this.createVertexTemplateEntry('text;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;', 100, 40, 'Title', 'Title', null, null, 'text heading title'),
+    //this.createVertexTemplateEntry('text;html=1;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;', 190, 120,
+    //'<h1>Heading</h1><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>',
+    //'Textbox', null, null, 'text textbox textarea'),
+    //this.createVertexTemplateEntry('text;html=1;whiteSpace=wrap;verticalAlign=middle;overflow=hidden;', 100, 80,
+    //'<ul><li>Value 1</li><li>Value 2</li><li>Value 3</li></ul>', 'Unordered List'),
+  ];
+
+  this.addPaletteFunctions('Resources', 'Resources', (expand != null) ? expand : true, fns);
 };
 /**
  * Adds the container palette to the sidebar.
