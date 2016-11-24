@@ -7,7 +7,7 @@ module.exports = {
     const boardName = req.body.data.board_name;
     const data = req.body.data.statistics;
     if (boardName) {
-      dataModel.saveData(userId, data, boardName);
+      dataModel.saveData(userId, JSON.stringify(data), boardName);
     }
     ioInfo.io.to(userId).emit('newData', {data: data, name: boardName});
     if (!data || !userId) {
