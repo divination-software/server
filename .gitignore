@@ -11,6 +11,7 @@ public/bundle.js.map
 server.key
 server.crt
 
+# ref: https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore
 # Logs
 logs
 *.log
