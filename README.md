@@ -35,7 +35,7 @@
 1. Run webpack to build the final bundle of browser's resources.
 1. Create server image by running this command:
     ```sh
-    docker build -f Dockerfile.dev -t divination-software/server:dev .
+    docker build -f Dockerfile.dev -t divinationsoftware/server:dev .
     ```
 1. Create sim image by running the Dockerfile in sim's application folder if you haven't done it.
 1. Run this command:
