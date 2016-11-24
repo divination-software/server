@@ -2034,6 +2034,7 @@ var EditDataDialog = function(ui, cell)
 	div.style.overflow = 'auto';
 
 	var value = graph.getModel().getValue(cell);
+	var typeString = (cell.style.split(';')[0]);
 
 	// Converts the value to an XML node
 	if (!mxUtils.isNode(value))
@@ -2044,8 +2045,8 @@ var EditDataDialog = function(ui, cell)
 
     // Inject the metadata property for each type of template needed
     // "Source" or "Action"
-    if (value === 'Process' || value === 'Source') {
-      obj.setAttribute('Delay', 0);
+    if (typeString === 'shape=process' || typeString === 'shape=source') {
+      obj.setAttribute('type', 'delay');
     }
 
 		value = obj;
@@ -2321,8 +2322,125 @@ var EditDataDialog = function(ui, cell)
   //
 	// 	buttons.appendChild(replace);
 	// }
+	// Define Nodes
 
-	if (ui.editor.cancelFirst)
+	if (typeString === 'shape=process' || typeString === 'shape=source') {
+		var div = document.createElement('div');
+		var form = new mxForm('properties');
+		var applyBtn = mxUtils.button('Apply', function() {
+			graph.getModel().setValue(cell, value);
+		  ui.hideDialog();
+		});
+		applyBtn.className = 'geBtn gePrimaryBtn';
+		// Nodes to be added or removed
+		var activeNodes = {
+			type: false,
+			delayType: false,
+			resource: false,
+			value: false,
+			min: false,
+			max: false,
+			mid: false,
+		};
+
+		var resourceHandler = function(e) {
+			value.setAttribute('resource', e.target.value);
+		};
+		var resourceNode = document.createElement('tr');
+		resourceNode.innerHTML = `<td>Delay Type</td>
+		<td><select onchange="resourceHandler(event)">
+		<option value="Constant">Constant</option>
+		<option value="Uniform">Uniform</option>
+		<option value="Triangular">Triangular</option>
+		<option value="Exponential">Exponential</option>
+		</select>
+		</td>`;
+
+		function typeHandler(e) {
+			console.log('TYPE CLICKED')
+			value.setAttribute('type', e.target.value);
+		};
+
+		var typeNode = document.createElement('tr');
+		typeNode.innerHTML = `<td>Type</td>
+		<td>
+		<select id="type">
+		<option value="Delay">Delay</option>
+		<option value="SiezeDelay">Sieze Delay</option>
+		<option value="Sieze">Sieze</option>
+		<option value="SiezeDelayRelease">Sieze Delay Release</option>
+		</select>
+		</td>`;
+		var typeSelector = typeNode.childNodes[2].childNodes[1];
+		typeSelector.addEventListener("change", typeHandler);
+
+
+		var delayTypeHandler = function(e) {
+			value.setAttribute('delayType', e.target.value);
+		}
+		var delayTypeNode = document.createElement('tr');
+		delayTypeNode.innerHTML = `<td>Delay Type</td>
+		<td><select onchange="delayTypeHandler(event)">
+		<option value="Constant">Constant</option>
+		<option value="Uniform">Uniform</option>
+		<option value="Triangular">Triangular</option>
+		<option value="Exponential">Exponential</option>
+		</select>
+		</td>`;
+
+		var valueHandler = function(e) {
+			value.setAttribute('val', e.target.value);
+		}
+		var valueNode = document.createElement('tr');
+		var valVal = value.getAttribute('val') || 0;
+		valueNode.innerHTML = `<td>Value</td>
+		<td><input onchange="valueHandler(event)" type="number"/></td`;
+
+
+		var minHandler = function(e) {
+			value.setAttribute('min', e.target.value);
+		}
+		var minNode = document.createElement('tr');
+		var minVal = value.getAttribute('min') || 0;
+		minNode.innerHTML = `<td>Value</td>
+		<td><input onchange="minHandler(event)" type="number"/></td`;
+
+
+		var maxHandler = function(e) {
+			value.setAttribute('max', e.target.value);
+		}
+		var maxNode = document.createElement('tr');
+		var maxVal = value.getAttribute('max') || 0;
+		maxNode.innerHTML = `<td>Value</td>
+		<td><input onchange="maxHandler(event)" type="number"/></td`;
+
+
+		var midHandler = function(e) {
+			value.setAttribute('mid', e.target.value);
+		}
+		var midNode = document.createElement('tr');
+		var midVal = value.getAttribute('mid') || 0;
+		midNode.innerHTML = `<td>Value</td>
+		<td><input type="number"/></td`;
+
+		if (typeString === 'shape=process') {
+			form.table.appendChild(typeNode)
+			activeNodes.typeNode = true;
+		} else {
+
+		}
+
+		console.log(value.getAttribute('type'))
+		div.appendChild(form.table);
+		buttons.appendChild(cancelBtn);
+		buttons.appendChild(applyBtn);
+		div.appendChild(buttons);
+		updateAddBtn();
+		this.container = div;
+		return;
+	}
+
+if (ui.editor.cancelFirst)
 	{
 		buttons.appendChild(cancelBtn);
 		buttons.appendChild(applyBtn);
@@ -2333,8 +2451,8 @@ var EditDataDialog = function(ui, cell)
 		buttons.appendChild(cancelBtn);
 	}
 
-	div.appendChild(buttons);
-	this.container = div;
+		div.appendChild(buttons);
+		this.container = div;
 };
 
 /**
