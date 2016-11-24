@@ -2047,6 +2047,8 @@ var EditDataDialog = function(ui, cell)
     // "Source" or "Action"
     if (typeString === 'shape=process' || typeString === 'shape=source') {
       obj.setAttribute('type', 'delay');
+			obj.setAttribute('delayType', 'constant');
+			obj.setAttribute('val', 0);
     }
 
 		value = obj;
@@ -2334,20 +2336,19 @@ var EditDataDialog = function(ui, cell)
 		applyBtn.className = 'geBtn gePrimaryBtn';
 		// Nodes to be added or removed
 		var activeNodes = {
-			type: false,
+			type: true,
 			delayType: false,
 			resource: false,
-			value: false,
-			min: false,
-			max: false,
-			mid: false,
+			val: false,
+			tri: false,
+			uni: false,
 		};
 
 		var resourceHandler = function(e) {
 			value.setAttribute('resource', e.target.value);
 		};
 		var resourceNode = document.createElement('tr');
-		resourceNode.innerHTML = `<td>Delay Type</td>
+		resourceNode.innerHTML = `<td>Resource</td>
 		<td><select onchange="resourceHandler(event)">
 		<option value="Constant">Constant</option>
 		<option value="Uniform">Uniform</option>
@@ -2359,75 +2360,133 @@ var EditDataDialog = function(ui, cell)
 		function typeHandler(e) {
 			console.log('TYPE CLICKED')
 			value.setAttribute('type', e.target.value);
+			if (e.target.value !== 'delay') {
+				
+			}
 		};
 
+		var dType = value.getAttribute('type') || 'delay';
 		var typeNode = document.createElement('tr');
 		typeNode.innerHTML = `<td>Type</td>
 		<td>
 		<select id="type">
-		<option value="Delay">Delay</option>
-		<option value="SiezeDelay">Sieze Delay</option>
-		<option value="Sieze">Sieze</option>
-		<option value="SiezeDelayRelease">Sieze Delay Release</option>
+		<option value="delay">Delay</option>
+		<option value="siezeDelay">Sieze Delay</option>
+		<option value="sieze">Sieze</option>
+		<option value="siezeDelayRelease">Sieze Delay Release</option>
 		</select>
 		</td>`;
 		var typeSelector = typeNode.childNodes[2].childNodes[1];
+		var defaultTypes = {
+			delay: 1,
+			siezeDelay: 3,
+			sieze: 5,
+			siezeDelayRelease: 7
+		};
+		var toBeSelected = typeSelector.childNodes[defaultTypes[dType]];
+		toBeSelected.setAttribute('selected', 'selected');
 		typeSelector.addEventListener("change", typeHandler);
 
 
 		var delayTypeHandler = function(e) {
 			value.setAttribute('delayType', e.target.value);
+			renderDelays(e.target.value);
 		}
+		var dDelay = value.getAttribute('delayType') || 'constant';
 		var delayTypeNode = document.createElement('tr');
 		delayTypeNode.innerHTML = `<td>Delay Type</td>
-		<td><select onchange="delayTypeHandler(event)">
-		<option value="Constant">Constant</option>
-		<option value="Uniform">Uniform</option>
-		<option value="Triangular">Triangular</option>
-		<option value="Exponential">Exponential</option>
+		<td><select>
+		<option value="constant">Constant</option>
+		<option value="uniform">Uniform</option>
+		<option value="triangular">Triangular</option>
+		<option value="exponential">Exponential</option>
 		</select>
 		</td>`;
-
-		var valueHandler = function(e) {
-			value.setAttribute('val', e.target.value);
+		var defaultDelays = {
+			constant: 1,
+			uniform: 3,
+			triangular: 5,
+			exponential: 7
 		}
-		var valueNode = document.createElement('tr');
-		var valVal = value.getAttribute('val') || 0;
-		valueNode.innerHTML = `<td>Value</td>
-		<td><input onchange="valueHandler(event)" type="number"/></td`;
+		var dTypeSelector = delayTypeNode.childNodes[2].childNodes[0];
 
+		var toBeSelected = dTypeSelector.childNodes[defaultDelays[dDelay]];
+		toBeSelected.setAttribute('selected', 'selected');
+		dTypeSelector.addEventListener("change", delayTypeHandler);
 
 		var minHandler = function(e) {
 			value.setAttribute('min', e.target.value);
 		}
-		var minNode = document.createElement('tr');
-		var minVal = value.getAttribute('min') || 0;
-		minNode.innerHTML = `<td>Value</td>
-		<td><input onchange="minHandler(event)" type="number"/></td`;
-
-
+		var valHandler = function(e) {
+			value.setAttribute('val', e.target.value);
+		}
 		var maxHandler = function(e) {
 			value.setAttribute('max', e.target.value);
 		}
-		var maxNode = document.createElement('tr');
-		var maxVal = value.getAttribute('max') || 0;
-		maxNode.innerHTML = `<td>Value</td>
-		<td><input onchange="maxHandler(event)" type="number"/></td`;
-
-
 		var midHandler = function(e) {
 			value.setAttribute('mid', e.target.value);
 		}
-		var midNode = document.createElement('tr');
-		var midVal = value.getAttribute('mid') || 0;
-		midNode.innerHTML = `<td>Value</td>
+
+
+		var valNode = document.createElement('tr');
+		valNode.innerHTML = `<td>Value</td>
 		<td><input type="number"/></td`;
+
+		var triNode = document.createElement('tr');
+		triNode.innerHTML = `<td>Mid</td>
+		<td><input type="number"/></td
+		<td>Mid</td>
+		<td><input type="number"/></td
+		<td>Max</td>
+		<td><input type="number"/></td`;
+
+		var uniNode = document.createElement('tr');
+		uniNode.innerHTML = `<td>Min</td>
+		<td><input type="number"/></td
+		<td>Max</td>
+		<td><input type="number"/></td`;
+
+		function renderDelays(type) {
+			console.log(type);
+			console.log(activeNodes);
+			if (!activeNodes.delayType) {
+				form.table.appendChild(delayTypeNode);
+				activeNodes.delayType = true;
+			}
+
+			if (type === 'constant' || type === 'exponential') {
+				console.log(activeNodes.val)
+				if (activeNodes.uni) { form.table.removeChild(uniNode); }
+				if (activeNodes.tri) { form.table.removeChild(triNode); }
+				activeNodes.uni = false;
+				activeNodes.tri = false;
+				if (!activeNodes.val) { form.table.appendChild(valNode); }
+				activeNodes.val = true;
+			} else if (type === 'uniform') {
+				if (activeNodes.val) { form.table.removeChild(valNode); }
+				if (activeNodes.tri) { form.table.removeChild(triNode); }
+				activeNodes.tri = false;
+				activeNodes.val = false;
+				if (!activeNodes.uni) { form.table.appendChild(uniNode); }
+				activeNodes.uni = true;
+			} else if (type === 'triangular') {
+				if (activeNodes.uni) { form.table.removeChild(uniNode); }
+				if (activeNodes.val) { form.table.removeChild(valNode); }
+				activeNodes.uni = false;
+				activeNodes.val = false;
+				if (!activeNodes.tri) { console.log('supsup'); form.table.appendChild(triNode); }
+				activeNodes.tri = true;
+			}
+		}
 
 		if (typeString === 'shape=process') {
 			form.table.appendChild(typeNode)
-			activeNodes.typeNode = true;
+			activeNodes.type = true;
+			if (dType !== 'sieze') {
+				renderDelays(dDelay);
+			}
 		} else {
-
+			renderDelays(dDelay);
 		}
 
 		console.log(value.getAttribute('type'))
