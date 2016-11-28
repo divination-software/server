@@ -2034,8 +2034,6 @@ var EditDataDialog = function(ui, cell)
   div.style.overflow = 'auto';
 
   var value = graph.getModel().getValue(cell);
-  var typeString = (cell.style.split(';')[0]);
-
   var matches = cell.style.match(/shape=([^;]+);/);
   var validNodeTypes = [
     'source',
@@ -2185,7 +2183,7 @@ var EditDataDialog = function(ui, cell)
   buttons.style.textAlign = 'right';
 
   // Define Nodes
-  if (typeString === 'shape=process' || typeString === 'shape=source') {
+  if (nodeType === 'process' || nodeType === 'source') {
     var div = document.createElement('div');
     var form = new mxForm('properties');
     var applyBtn = mxUtils.button('Apply', function() {
@@ -2284,7 +2282,7 @@ var EditDataDialog = function(ui, cell)
     midNode.innerHTML = `<td>Value</td>
     <td><input type="number"/></td`;
 
-    if (typeString === 'shape=process') {
+    if (nodeType === 'process') {
       form.table.appendChild(typeNode)
       activeNodes.typeNode = true;
     } else {
@@ -2296,7 +2294,6 @@ var EditDataDialog = function(ui, cell)
     buttons.appendChild(cancelBtn);
     buttons.appendChild(applyBtn);
     div.appendChild(buttons);
-    updateAddBtn();
     this.container = div;
     return;
   }
