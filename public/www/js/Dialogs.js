@@ -2093,14 +2093,6 @@ var EditDataDialog = function(ui, cell)
     value = obj;
   }
 
-
-
-
-
-
-
-
-
   // Creates the dialog contents
   var form = new mxForm('properties');
   form.table.style.width = '100%';
@@ -2111,18 +2103,30 @@ var EditDataDialog = function(ui, cell)
   var texts = [];
   var count = 0;
 
-  var addTextArea = function(index, name, value)
-  {
+  var addTextArea = function(index, name, value) {
     names[index] = name;
     texts[index] = form.addTextarea(names[count] + ':', value, 2);
     texts[index].style.width = '100%';
   };
 
+  var addText = function(index, name, value) {
+    names[index] = name;
+    texts[index] = form.addText(names[count] + ':', value);
+    texts[index].style.width = '100%';
+  };
+
+
+
   for (var i = 0; i < attrs.length; i++)
   {
     if (attrs[i].nodeName != 'label' && attrs[i].nodeName != 'placeholders')
     {
-      addTextArea(count, attrs[i].nodeName, attrs[i].nodeValue);
+      var attributeType = attributeTypes[attrs[i].nodeName];
+      if (attributeType === 'text') {
+        addText(count, attrs[i].nodeName, attrs[i].nodeValue);
+      } else if (attributeType === 'textarea') {
+        addTextArea(count, attrs[i].nodeName, attrs[i].nodeValue);
+      }
       count++;
     }
   }
@@ -2137,7 +2141,7 @@ var EditDataDialog = function(ui, cell)
     }
     else
     {
-      nameInput.focus();
+      //nameInput.focus();
     }
   };
 
