@@ -2326,7 +2326,7 @@ var EditDataDialog = function(ui, cell)
 	// }
 	// Define Nodes
 
-	if (typeString === 'shape=process' || typeString === 'shape=source') {
+	if (typeString === 'shape=process' || typeString === 'shape=source' || typeString === 'shape=decision') {
 		var div = document.createElement('div');
 		var form = new mxForm('properties');
 		var applyBtn = mxUtils.button('Apply', function() {
@@ -2334,6 +2334,19 @@ var EditDataDialog = function(ui, cell)
 		  ui.hideDialog();
 		});
 		applyBtn.className = 'geBtn gePrimaryBtn';
+
+		// Decision Node
+		var decisionHandler = function(e) {
+			value.setAttribute("decision", e.target.value);
+			console.log("decision ", e.target.value);
+		}
+		var decisionNode = document.createElement('tr');
+		decisionNode.innerHTML = `<td>If</td>
+		<td><input type="text"/></td>
+		<td>Enter a probability for sources to flow to the top</td>
+		<td>Else the source will flow to the bottom node</td>`;
+		decisionNode.childNodes[2].childNodes[0].addEventListener("change", decisionHandler);
+
 		// Nodes to be added or removed
 		var activeNodes = {
 			type: true,
@@ -2358,10 +2371,9 @@ var EditDataDialog = function(ui, cell)
 		</td>`;
 
 		function typeHandler(e) {
-			console.log('TYPE CLICKED')
 			value.setAttribute('type', e.target.value);
 			if (e.target.value !== 'delay') {
-
+				// TODO render resource
 			}
 		};
 
@@ -2500,8 +2512,11 @@ var EditDataDialog = function(ui, cell)
 			if (dType !== 'sieze') {
 				renderDelays(dDelay);
 			}
-		} else {
+		} else if (typeString === 'shape=source'){
 			renderDelays(dDelay);
+		} else if (typeString === 'shape=decision') {
+			form.table.appendChild(decisionNode);
+			decisionNode.childNodes[2].childNodes[0].value = value.getAttribute("decision") || "";
 		}
 
 		div.appendChild(form.table);
