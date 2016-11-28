@@ -840,6 +840,20 @@
 
 	mxCellRenderer.prototype.defaultShapes['separate'] = SeparateShape;
 
+	// Process shape
+	function ResourceShape()
+	{
+		mxRectangleShape.call(this);
+	};
+	mxUtils.extend(ResourceShape, mxRectangleShape);
+	ResourceShape.prototype.isHtmlAllowed = function()
+	{
+		return false;
+	};
+
+	mxCellRenderer.prototype.defaultShapes['resource'] = ResourceShape;
+
+
   // END Discrete Event Simulation Shapes
 
 	// Step shape
