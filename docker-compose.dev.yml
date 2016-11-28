@@ -1,6 +1,22 @@
 version: '2'
+
 services:
   web:
-    image: divination-software/server:dev_latest
+    image: divinationsoftware/server:dev
+    networks:
+      - dev-network
     ports:
-    - "8080:8080"
+      - "8080:8080"
+  mongo:
+    image: mongo:3
+    networks:
+      - dev-network
+  sim:
+    image: divinationsoftware/sim
+    ports:
+      - "8443:8443"
+    networks:
+      - dev-network
+networks:
+  dev-network:
+    driver: bridge

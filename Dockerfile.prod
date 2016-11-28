@@ -5,6 +5,9 @@ MAINTAINER divination-software
 COPY . /var/www
 WORKDIR /var/www
 
+ENV MONGODB_URL='mongodb://mongo/divination'
+ENV PYTHON_URL='https://sim:8443'
+
 RUN npm install
 
 ENTRYPOINT ["npm", "start"]
