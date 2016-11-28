@@ -2361,9 +2361,11 @@ var EditDataDialog = function(ui, cell)
 			console.log('TYPE CLICKED')
 			value.setAttribute('type', e.target.value);
 			if (e.target.value !== 'delay') {
-				
+
 			}
 		};
+
+		// process type
 
 		var dType = value.getAttribute('type') || 'delay';
 		var typeNode = document.createElement('tr');
@@ -2387,6 +2389,8 @@ var EditDataDialog = function(ui, cell)
 		toBeSelected.setAttribute('selected', 'selected');
 		typeSelector.addEventListener("change", typeHandler);
 
+
+		// Delay Type
 
 		var delayTypeHandler = function(e) {
 			value.setAttribute('delayType', e.target.value);
@@ -2414,6 +2418,8 @@ var EditDataDialog = function(ui, cell)
 		toBeSelected.setAttribute('selected', 'selected');
 		dTypeSelector.addEventListener("change", delayTypeHandler);
 
+		// Delay Values
+
 		var minHandler = function(e) {
 			value.setAttribute('min', e.target.value);
 		}
@@ -2430,37 +2436,41 @@ var EditDataDialog = function(ui, cell)
 
 		var valNode = document.createElement('tr');
 		valNode.innerHTML = `<td>Value</td>
-		<td><input type="number"/></td`;
+		<td><input type="number"/></td>`;
+		valNode.childNodes[2].childNodes[0].addEventListener("change", valHandler);
 
 		var triNode = document.createElement('tr');
-		triNode.innerHTML = `<td>Mid</td>
-		<td><input type="number"/></td
+		triNode.innerHTML = `<td>Min</td>
+		<td><input type="number"/></td>
 		<td>Mid</td>
-		<td><input type="number"/></td
+		<td><input type="number"/></td>
 		<td>Max</td>
-		<td><input type="number"/></td`;
+		<td><input type="number"/></td>`;
+		triNode.childNodes[2].childNodes[0].addEventListener("change", minHandler);
+		triNode.childNodes[6].childNodes[0].addEventListener("change", midHandler);
+		triNode.childNodes[10].childNodes[0].addEventListener("change", maxHandler);
 
 		var uniNode = document.createElement('tr');
 		uniNode.innerHTML = `<td>Min</td>
-		<td><input type="number"/></td
+		<td><input type="number"/></td>
 		<td>Max</td>
-		<td><input type="number"/></td`;
+		<td><input type="number"/></td>`;
+		uniNode.childNodes[2].childNodes[0].addEventListener("change", minHandler);
+		uniNode.childNodes[6].childNodes[0].addEventListener("change", maxHandler);
 
 		function renderDelays(type) {
-			console.log(type);
-			console.log(activeNodes);
 			if (!activeNodes.delayType) {
 				form.table.appendChild(delayTypeNode);
 				activeNodes.delayType = true;
 			}
 
 			if (type === 'constant' || type === 'exponential') {
-				console.log(activeNodes.val)
 				if (activeNodes.uni) { form.table.removeChild(uniNode); }
 				if (activeNodes.tri) { form.table.removeChild(triNode); }
 				activeNodes.uni = false;
 				activeNodes.tri = false;
 				if (!activeNodes.val) { form.table.appendChild(valNode); }
+				valNode.childNodes[2].childNodes[0].value = value.getAttribute('val') || 0;
 				activeNodes.val = true;
 			} else if (type === 'uniform') {
 				if (activeNodes.val) { form.table.removeChild(valNode); }
@@ -2468,13 +2478,18 @@ var EditDataDialog = function(ui, cell)
 				activeNodes.tri = false;
 				activeNodes.val = false;
 				if (!activeNodes.uni) { form.table.appendChild(uniNode); }
+				uniNode.childNodes[2].childNodes[0].value = value.getAttribute('min') || 0;
+				uniNode.childNodes[6].childNodes[0].value = value.getAttribute('max') || 0;
 				activeNodes.uni = true;
 			} else if (type === 'triangular') {
 				if (activeNodes.uni) { form.table.removeChild(uniNode); }
 				if (activeNodes.val) { form.table.removeChild(valNode); }
 				activeNodes.uni = false;
 				activeNodes.val = false;
-				if (!activeNodes.tri) { console.log('supsup'); form.table.appendChild(triNode); }
+				if (!activeNodes.tri) { form.table.appendChild(triNode); }
+				triNode.childNodes[2].childNodes[0].value = value.getAttribute('mid') || 0;
+				triNode.childNodes[6].childNodes[0].value = value.getAttribute('min') || 0;
+				triNode.childNodes[10].childNodes[0].value = value.getAttribute('max') || 0;
 				activeNodes.tri = true;
 			}
 		}
@@ -2489,7 +2504,6 @@ var EditDataDialog = function(ui, cell)
 			renderDelays(dDelay);
 		}
 
-		console.log(value.getAttribute('type'))
 		div.appendChild(form.table);
 		buttons.appendChild(cancelBtn);
 		buttons.appendChild(applyBtn);
