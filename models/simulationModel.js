@@ -4,7 +4,7 @@ const Simulation = require('../schemas/Simulation');
 
 module.exports = {
 
-  saveSimulation: (userId, simulation, name) => {
+  saveSimulation: (userId, simulation, name, resources) => {
     const newSimulation = new Simulation(simulation)
     var boardId;
     return newSimulation.save()
@@ -15,6 +15,7 @@ module.exports = {
           simulation: sim._id,
           name: name,
           userId: userId,
+          resources: resources,
           date: Date.now()
         },
         {upsert: true, new: true}

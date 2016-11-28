@@ -3177,9 +3177,11 @@ EditorUi.prototype.save = function(name)
 			{
 				if (xml.length < MAX_REQUEST_SIZE)
 				{
+					var resources = window.parent.boardData.resources || {};
 					axios.post('/api/simulation/save', {
 						name: name,
-						simulation: xml
+						simulation: xml,
+						resources: resources
 					})
 					//to save route
 					// new mxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(name) +
