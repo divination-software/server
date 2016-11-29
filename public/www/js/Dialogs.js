@@ -1876,6 +1876,7 @@ var ExportDialog = function(editorUi)
 
         if (xml.length < MAX_REQUEST_SIZE)
         {
+
           editorUi.hideDialog();
           ExportDialog.saveLocalFile(xml, name, format);
         }
