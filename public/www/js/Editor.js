@@ -15,7 +15,7 @@ Editor = function(chromeless, themes, model, graph)
 
 	this.getOrCreateFilename = function()
 	{
-		if (window.parent.boardData) {
+		if (window.parent.boardData && window.parent.boardData.name) {
 			var name = window.parent.boardData.name;
 		}
 		return this.filename || name || mxResources.get('drawing', [Editor.pageCounter]);
