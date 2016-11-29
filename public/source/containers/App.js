@@ -36,7 +36,7 @@ class App extends Component {
         <Auth auth={auth} user={user} loginActions={loginActions} />
         <Navbar Link={Link} />
           {React.Children.map(children, child =>
-            React.cloneElement(child, { counter, user, loginActions }),
+            React.cloneElement(child, { user, loginActions }),
           )}
       </div>
     );
