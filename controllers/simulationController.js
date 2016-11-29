@@ -4,8 +4,9 @@ module.exports = {
   save: (req, res) => {
     const userId = req.user._id;
     const simulation = req.body.simulation;
+    const resources = req.body.resources;
     const name = req.body.name;
-    simulationModel.saveSimulation(userId, { simulation: simulation }, name)
+    simulationModel.saveSimulation(userId, { simulation: simulation }, name, resources)
     .then(success => {
       res.sendStatus(201)
     })

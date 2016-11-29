@@ -17,7 +17,8 @@
       reader.onload = function(e) {
         window.parent.parent.boardData = {
           xml: e.target.result,
-          name: boardName
+          name: boardName,
+          resources: response.data.resources
         }
         window.parent.openFile.setData(e.target.result, boardName)
         window.parent.document.location.reload();
