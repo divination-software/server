@@ -2022,535 +2022,635 @@ ExportDialog.getExportParameter = function(ui, format)
   return null;
 };
 
+var resourceCount = 0;
+
 /**
  * Constructs a new metadata dialog.
  */
-var EditDataDialog = function(ui, cell)
-{
-	var div = document.createElement('div');
-	var graph = ui.editor.graph;
-
-	div.style.height = '310px';
-	div.style.overflow = 'auto';
-
-	var value = graph.getModel().getValue(cell);
-	var typeString = (cell.style.split(';')[0]);
-
-	// Converts the value to an XML node
-	if (!mxUtils.isNode(value))
-	{
-		var doc = mxUtils.createXmlDocument();
-		var obj = doc.createElement('object');
-		obj.setAttribute('label', value || '');
-
-    // Inject the metadata property for each type of template needed
-    // "Source" or "Action"
-    if (typeString === 'shape=process' || typeString === 'shape=source') {
-      obj.setAttribute('type', 'delay');
-			obj.setAttribute('delayType', 'constant');
-			obj.setAttribute('val', 0);
-    }
-
-		value = obj;
-	}
-
-	// Creates the dialog contents
-	var form = new mxForm('properties');
-	form.table.style.width = '100%';
-	form.table.style.paddingRight = '20px';
-
-	var attrs = value.attributes;
-	var names = [];
-	var texts = [];
-	var count = 0;
-
-	// FIXME: Fix remove button for quirks mode
-	var addRemoveButton = function(text, name)
-	{
-		text.parentNode.style.marginRight = '12px';
-
-		var removeAttr = document.createElement('a');
-		var img = mxUtils.createImage(Dialog.prototype.closeImage);
-		img.style.height = '9px';
-		img.style.fontSize = '9px';
-		img.style.marginBottom = '7px';
-
-		removeAttr.className = 'geButton';
-		removeAttr.setAttribute('title', mxResources.get('delete'));
-		removeAttr.style.margin = '0px';
-		removeAttr.style.width = '14px';
-		removeAttr.style.height = '14px';
-		removeAttr.style.fontSize = '14px';
-		removeAttr.style.cursor = 'pointer';
-		removeAttr.style.marginLeft = '6px';
-		removeAttr.appendChild(img);
-
-		var removeAttrFn = (function(name)
-		{
-			return function()
-			{
-				var count = 0;
-
-				for (var j = 0; j < names.length; j++)
-				{
-					if (names[j] == name)
-					{
-						texts[j] = null;
-						form.table.deleteRow(count);
-
-						break;
-					}
-
-					if (texts[j] != null)
-					{
-						count++;
-					}
-				}
-			};
-		})(name);
-
-		mxEvent.addListener(removeAttr, 'click', removeAttrFn);
-
-		text.parentNode.style.whiteSpace = 'nowrap';
-		text.parentNode.appendChild(removeAttr);
-	};
-
-	var addTextArea = function(index, name, value)
-	{
-		names[index] = name;
-		texts[index] = form.addTextarea(names[count] + ':', value, 2);
-		texts[index].style.width = '100%';
-
-		addRemoveButton(texts[index], name);
-	};
-
-	for (var i = 0; i < attrs.length; i++)
-	{
-		if (attrs[i].nodeName != 'label' && attrs[i].nodeName != 'placeholders')
-		{
-			addTextArea(count, attrs[i].nodeName, attrs[i].nodeValue);
-			count++;
-		}
-	}
-
-	div.appendChild(form.table);
-
-	var newProp = document.createElement('div');
-	newProp.style.whiteSpace = 'nowrap';
-	newProp.style.marginTop = '6px';
-
-	var nameInput = document.createElement('input');
-	nameInput.setAttribute('placeholder', mxResources.get('enterPropertyName'));
-	nameInput.setAttribute('type', 'text');
-	nameInput.setAttribute('size', (mxClient.IS_QUIRKS) ? '18' : '22');
-	nameInput.style.marginLeft = '2px';
-
-	newProp.appendChild(nameInput);
-	div.appendChild(newProp);
-
-	var addBtn = mxUtils.button(mxResources.get('addProperty'), function()
-	{
-		if (nameInput.value.length > 0)
-		{
-			var name = nameInput.value;
-
-			if (name != null && name.length > 0 && name != 'label' && name != 'placeholders')
-			{
-				try
-				{
-					var idx = mxUtils.indexOf(names, name);
-
-					if (idx >= 0 && texts[idx] != null)
-					{
-						texts[idx].focus();
-					}
-					else
-					{
-						// Checks if the name is valid
-						var clone = value.cloneNode(false);
-						clone.setAttribute(name, '');
-
-						if (idx >= 0)
-						{
-							names.splice(idx, 1);
-							texts.splice(idx, 1);
-						}
-
-						names.push(name);
-						var text = form.addTextarea(name + ':', '', 2);
-						text.style.width = '100%';
-						texts.push(text);
-						addRemoveButton(text, name);
-
-						text.focus();
-					}
-
-					nameInput.value = '';
-				}
-				catch (e)
-				{
-					mxUtils.alert(e);
-				}
-			}
-		}
-		else
-		{
-			mxUtils.alert(mxResources.get('invalidName'));
-		}
-	});
-
-	this.init = function()
-	{
-		if (texts.length > 0)
-		{
-			texts[0].focus();
-		}
-		else
-		{
-			nameInput.focus();
-		}
-	};
-
-	addBtn.setAttribute('disabled', 'disabled');
-	addBtn.style.marginLeft = '10px';
-	addBtn.style.width = '144px';
-	newProp.appendChild(addBtn);
-
-	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
-	{
-		ui.hideDialog.apply(ui, arguments);
-	});
-	cancelBtn.className = 'geBtn';
-
-	var applyBtn = mxUtils.button(mxResources.get('apply'), function()
-	{
-		try
-		{
-			ui.hideDialog.apply(ui, arguments);
-
-			// Clones and updates the value
-			value = value.cloneNode(true);
-
-			for (var i = 0; i < names.length; i++)
-			{
-				if (texts[i] == null)
-				{
-					value.removeAttribute(names[i]);
-				}
-				else
-				{
-					value.setAttribute(names[i], texts[i].value);
-				}
-			}
-
-			// Updates the value of the cell (undoable)
-			graph.getModel().setValue(cell, value);
-		}
-		catch (e)
-		{
-			mxUtils.alert(e);
-		}
-	});
-	applyBtn.className = 'geBtn gePrimaryBtn';
-
-	function updateAddBtn()
-	{
-		if (nameInput.value.length > 0)
-		{
-			addBtn.removeAttribute('disabled');
-		}
-		else
-		{
-			addBtn.setAttribute('disabled', 'disabled');
-		}
-	};
-
-	mxEvent.addListener(nameInput, 'keyup', updateAddBtn);
-
-	// Catches all changes that don't fire a keyup (such as paste via mouse)
-	mxEvent.addListener(nameInput, 'change', updateAddBtn);
-
-	var buttons = document.createElement('div');
-	buttons.style.marginTop = '18px';
-	buttons.style.textAlign = 'right';
-
-	// if (ui.editor.graph.getModel().isVertex(cell) || ui.editor.graph.getModel().isEdge(cell))
-	// {
-	// 	var replace = document.createElement('span');
-	// 	replace.style.marginRight = '10px';
-		// var input = document.createElement('input');
-		// input.setAttribute('type', 'checkbox');
-		// input.style.marginRight = '6px';
-    //
-		// if (value.getAttribute('placeholders') == '1')
-		// {
-		// 	input.setAttribute('checked', 'checked');
-		// 	input.defaultChecked = true;
-		// }
-
-		// mxEvent.addListener(input, 'click', function()
-		// {
-		// 	if (value.getAttribute('placeholders') == '1')
-		// 	{
-		// 		value.removeAttribute('placeholders');
-		// 	}
-		// 	else
-		// 	{
-		// 		value.setAttribute('placeholders', '1');
-		// 	}
-		// });
-    //
-		// replace.appendChild(input);
-		// mxUtils.write(replace, mxResources.get('placeholders'));
-
-	// 	if (EditDataDialog.placeholderHelpLink != null)
-	// 	{
-	// 		var link = document.createElement('a');
-	// 		link.setAttribute('href', EditDataDialog.placeholderHelpLink);
-	// 		link.setAttribute('title', mxResources.get('help'));
-	// 		link.setAttribute('target', '_blank');
-	// 		link.style.marginLeft = '10px';
-	// 		link.style.cursor = 'help';
-  //
-	// 		var icon = document.createElement('img');
-	// 		icon.setAttribute('border', '0');
-	// 		icon.setAttribute('valign', 'middle');
-	// 		icon.style.marginTop = '-4px';
-	// 		icon.setAttribute('src', Editor.helpImage);
-	// 		link.appendChild(icon);
-  //
-	// 		replace.appendChild(link);
-	// 	}
-  //
-	// 	buttons.appendChild(replace);
-	// }
-	// Define Nodes
-
-	if (typeString === 'shape=process' || typeString === 'shape=source' || typeString === 'shape=decision' || typeString==='shape=modify') {
-		var div = document.createElement('div');
-		var form = new mxForm('properties');
-		var applyBtn = mxUtils.button('Apply', function() {
-			graph.getModel().setValue(cell, value);
-		  ui.hideDialog();
-		});
-		applyBtn.className = 'geBtn gePrimaryBtn';
-
-		// Decision Node
-		var decisionHandler = function(e) {
-			value.setAttribute("decision", e.target.value);
-		}
-		var decisionNode = document.createElement('tr');
-		decisionNode.innerHTML = `<td>If</td>
-		<td><input type="text"/></td>
-		<td>Enter a probability for sources to flow to the top</td>
-		<td>Else the source will flow to the bottom node</td>`;
-		decisionNode.childNodes[2].childNodes[0].addEventListener("change", decisionHandler);
-
-    var tagHandler = function(e) {
-			value.setAttribute("tag", e.target.value);
-		}
-		var modifyNode = document.createElement('tr');
-	  modifyNode.innerHTML = `<td>tag</td>
-		<td><input type="text"/></td>`;
-		modifyNode.childNodes[2].childNodes[0].addEventListener("change", tagHandler);
-
-		// Nodes to be added or removed
-		var activeNodes = {
-			type: true,
-			delayType: false,
-			resource: false,
-			val: false,
-			tri: false,
-			uni: false,
-		};
-
-		var resourceHandler = function(e) {
-			value.setAttribute('resource', e.target.value);
-		};
-		var resourceNode = document.createElement('tr');
-		resourceNode.innerHTML = `<td>Resource</td>
-		<td><select onchange="resourceHandler(event)">
-		<option value="Constant">Constant</option>
-		<option value="Uniform">Uniform</option>
-		<option value="Triangular">Triangular</option>
-		<option value="Exponential">Exponential</option>
-		</select>
-		</td>`;
-
-		function typeHandler(e) {
-			value.setAttribute('type', e.target.value);
-			if (e.target.value !== 'delay') {
-				// TODO render resource
-			}
-		};
-
-		// process type
-
-		var dType = value.getAttribute('type') || 'delay';
-		var typeNode = document.createElement('tr');
-		typeNode.innerHTML = `<td>Type</td>
-		<td>
-		<select id="type">
-		<option value="delay">Delay</option>
-		<option value="siezeDelay">Sieze Delay</option>
-		<option value="sieze">Sieze</option>
-		<option value="siezeDelayRelease">Sieze Delay Release</option>
-		</select>
-		</td>`;
-		var typeSelector = typeNode.childNodes[2].childNodes[1];
-		var defaultTypes = {
-			delay: 1,
-			siezeDelay: 3,
-			sieze: 5,
-			siezeDelayRelease: 7
-		};
-		var toBeSelected = typeSelector.childNodes[defaultTypes[dType]];
-		toBeSelected.setAttribute('selected', 'selected');
-		typeSelector.addEventListener("change", typeHandler);
-
-
-		// Delay Type
-
-		var delayTypeHandler = function(e) {
-			value.setAttribute('delayType', e.target.value);
-			renderDelays(e.target.value);
-		}
-		var dDelay = value.getAttribute('delayType') || 'constant';
-		var delayTypeNode = document.createElement('tr');
-		delayTypeNode.innerHTML = `<td>Delay Type</td>
-		<td><select>
-		<option value="constant">Constant</option>
-		<option value="uniform">Uniform</option>
-		<option value="triangular">Triangular</option>
-		<option value="exponential">Exponential</option>
-		</select>
-		</td>`;
-		var defaultDelays = {
-			constant: 1,
-			uniform: 3,
-			triangular: 5,
-			exponential: 7
-		}
-		var dTypeSelector = delayTypeNode.childNodes[2].childNodes[0];
-
-		var toBeSelected = dTypeSelector.childNodes[defaultDelays[dDelay]];
-		toBeSelected.setAttribute('selected', 'selected');
-		dTypeSelector.addEventListener("change", delayTypeHandler);
-
-		// Delay Values
-
-		var minHandler = function(e) {
-			value.setAttribute('min', e.target.value);
-		}
-		var valHandler = function(e) {
-			value.setAttribute('val', e.target.value);
-		}
-		var maxHandler = function(e) {
-			value.setAttribute('max', e.target.value);
-		}
-		var midHandler = function(e) {
-			value.setAttribute('mid', e.target.value);
-		}
-
-
-		var valNode = document.createElement('tr');
-		valNode.innerHTML = `<td>Value</td>
-		<td><input type="number"/></td>`;
-		valNode.childNodes[2].childNodes[0].addEventListener("change", valHandler);
-
-		var triNode = document.createElement('tr');
-		triNode.innerHTML = `<td>Min</td>
-		<td><input type="number"/></td>
-		<td>Mid</td>
-		<td><input type="number"/></td>
-		<td>Max</td>
-		<td><input type="number"/></td>`;
-		triNode.childNodes[2].childNodes[0].addEventListener("change", minHandler);
-		triNode.childNodes[6].childNodes[0].addEventListener("change", midHandler);
-		triNode.childNodes[10].childNodes[0].addEventListener("change", maxHandler);
-
-		var uniNode = document.createElement('tr');
-		uniNode.innerHTML = `<td>Min</td>
-		<td><input type="number"/></td>
-		<td>Max</td>
-		<td><input type="number"/></td>`;
-		uniNode.childNodes[2].childNodes[0].addEventListener("change", minHandler);
-		uniNode.childNodes[6].childNodes[0].addEventListener("change", maxHandler);
-
-		function renderDelays(type) {
-			if (!activeNodes.delayType) {
-				form.table.appendChild(delayTypeNode);
-				activeNodes.delayType = true;
-			}
-
-			if (type === 'constant' || type === 'exponential') {
-				if (activeNodes.uni) { form.table.removeChild(uniNode); }
-				if (activeNodes.tri) { form.table.removeChild(triNode); }
-				activeNodes.uni = false;
-				activeNodes.tri = false;
-				if (!activeNodes.val) { form.table.appendChild(valNode); }
-				valNode.childNodes[2].childNodes[0].value = value.getAttribute('val') || 0;
-				activeNodes.val = true;
-			} else if (type === 'uniform') {
-				if (activeNodes.val) { form.table.removeChild(valNode); }
-				if (activeNodes.tri) { form.table.removeChild(triNode); }
-				activeNodes.tri = false;
-				activeNodes.val = false;
-				if (!activeNodes.uni) { form.table.appendChild(uniNode); }
-				uniNode.childNodes[2].childNodes[0].value = value.getAttribute('min') || 0;
-				uniNode.childNodes[6].childNodes[0].value = value.getAttribute('max') || 0;
-				activeNodes.uni = true;
-			} else if (type === 'triangular') {
-				if (activeNodes.uni) { form.table.removeChild(uniNode); }
-				if (activeNodes.val) { form.table.removeChild(valNode); }
-				activeNodes.uni = false;
-				activeNodes.val = false;
-				if (!activeNodes.tri) { form.table.appendChild(triNode); }
-				triNode.childNodes[2].childNodes[0].value = value.getAttribute('mid') || 0;
-				triNode.childNodes[6].childNodes[0].value = value.getAttribute('min') || 0;
-				triNode.childNodes[10].childNodes[0].value = value.getAttribute('max') || 0;
-				activeNodes.tri = true;
-			}
-		}
-
-		if (typeString === 'shape=process') {
-			form.table.appendChild(typeNode)
-			activeNodes.type = true;
-			if (dType !== 'sieze') {
-				renderDelays(dDelay);
-			}
-		} else if (typeString === 'shape=source'){
-			renderDelays(dDelay);
-		} else if (typeString === 'shape=decision') {
-			form.table.appendChild(decisionNode);
-			decisionNode.childNodes[2].childNodes[0].value = value.getAttribute("decision") || "";
-		} else if (typeString === 'shape=modify') {
-      form.table.appendChild(modifyNode)
-      modifyNode.childNodes[2].childNodes[0].value = value.getAttribute("tag") || "";
-    }
-
-		div.appendChild(form.table);
-		buttons.appendChild(cancelBtn);
-		buttons.appendChild(applyBtn);
-		div.appendChild(buttons);
-		updateAddBtn();
-		this.container = div;
-		return;
-	}
-
-if (ui.editor.cancelFirst)
-  {
-    buttons.appendChild(cancelBtn);
-    buttons.appendChild(applyBtn);
-  }
-  else
-  {
-    buttons.appendChild(applyBtn);
-    buttons.appendChild(cancelBtn);
+var EditDataDialog = function(ui, cell) {
+  var div = document.createElement('div');
+  var graph = ui.editor.graph;
+
+  div.style.height = '310px';
+  div.style.overflow = 'auto';
+
+  var value = graph.getModel().getValue(cell);
+  var matches = cell.style.match(/shape=([^;]+);/);
+  var validNodeTypes = [
+    'source',
+    'process',
+    'exit',
+    'decision',
+    'modify',
+    'record',
+    'separate',
+    'batch',
+    'resource',
+  ]
+  var nodeType = null;
+  if (validNodeTypes.includes(matches[1])) {
+    nodeType = matches[1];
   }
 
-    div.appendChild(buttons);
-    this.container = div;
+  var attributeTypes = {};
+  var addDialogField = function (obj, name, type, placeholder) {
+    if (obj.hasAttribute(name)) {
+      console.error('Attribute re-assignment in Dialog generation!', name, 'is already defined.');
+    } else {
+      placeholder = placeholder || '';
+      obj.setAttribute(name, placeholder);
+      attributeTypes[name] = type;
+    }
+  };
+
+  var fieldTypes = {
+    number: 'number',
+    text: 'text',
+    textArea: 'textarea',
+  };
+
+  // Converts the value to an XML node
+  if (mxUtils.isNode(value)) {
+    attributeTypes = JSON.parse(value.getAttribute('attributeTypes'));
+  } else {
+    var doc = mxUtils.createXmlDocument();
+    var obj = doc.createElement('object');
+    obj.setAttribute('label', value || '');
+
+
+    // Build custom menus for each type of node.
+    if (nodeType) {
+      // Add the nodeType as an attribute on the XML so we can identify the type
+      // of node we're interacting with without relying on the label which can
+      // be changed arbitrarily
+      obj.setAttribute('nodeType', nodeType);
+
+      // Add node-specific fields
+      if (nodeType === 'source') {
+        obj.setAttribute('type', 'delay');
+        obj.setAttribute('delayType', 'constant');
+        obj.setAttribute('val', 0);
+
+      } else if (nodeType === 'process') {
+        obj.setAttribute('type', 'delay');
+        obj.setAttribute('delayType', 'constant');
+        obj.setAttribute('val', 0);
+
+      } else if (nodeType === 'resource') {
+        obj.setAttribute('resourceId', resourceCount);
+        resourceCount += 1;
+
+        addDialogField(obj, 'Name', fieldTypes.text, '');
+        addDialogField(obj, 'Count', fieldTypes.number, 0);
+      }
+    }
+
+    obj.setAttribute('attributeTypes', JSON.stringify(attributeTypes));
+    value = obj;
+  }
+
+  // Creates the dialog contents
+  var form = new mxForm('properties');
+  form.table.style.width = '100%';
+  form.table.style.paddingRight = '20px';
+
+  var attrs = value.attributes;
+  var names = [];
+  var texts = [];
+  var count = 0;
+
+  /*
+   * Saved for later.
+   *
+   * This code adds features we're not making use at the moment. I've commented
+   * it out to simplify the function. We'll need to re-enable it once we extend
+   * the application such that simulation designers can customize the entities
+   * moving through their simulations.
+   *
+  // FIXME: Fix remove button for quirks mode
+  var addRemoveButton = function(text, name)
+  {
+    text.parentNode.style.marginRight = '12px';
+
+    var removeAttr = document.createElement('a');
+    var img = mxUtils.createImage(Dialog.prototype.closeImage);
+    img.style.height = '9px';
+    img.style.fontSize = '9px';
+    img.style.marginBottom = '7px';
+
+    removeAttr.className = 'geButton';
+    removeAttr.setAttribute('title', mxResources.get('delete'));
+    removeAttr.style.margin = '0px';
+    removeAttr.style.width = '14px';
+    removeAttr.style.height = '14px';
+    removeAttr.style.fontSize = '14px';
+    removeAttr.style.cursor = 'pointer';
+    removeAttr.style.marginLeft = '6px';
+    removeAttr.appendChild(img);
+
+    var removeAttrFn = (function(name)
+    {
+      return function()
+      {
+        var count = 0;
+
+        for (var j = 0; j < names.length; j++)
+        {
+          if (names[j] == name)
+          {
+            texts[j] = null;
+            form.table.deleteRow(count);
+
+            break;
+          }
+
+          if (texts[j] != null)
+          {
+            count++;
+          }
+        }
+      };
+    })(name);
+
+    mxEvent.addListener(removeAttr, 'click', removeAttrFn);
+
+    text.parentNode.style.whiteSpace = 'nowrap';
+    text.parentNode.appendChild(removeAttr);
+  };
+  */
+
+  var addTextArea = function(index, name, value) {
+    names[index] = name;
+    texts[index] = form.addTextarea(names[count] + ':', value, 2);
+    texts[index].style.width = '100%';
+
+    // addRemoveButton(texts[index], name);
+  };
+
+  var addNumber = function(index, name, value) {
+    names[index] = name;
+    texts[index] = form.addNumber(names[count] + ':', value);
+    texts[index].style.width = '100%';
+
+    // addRemoveButton(texts[index], name);
+  };
+
+  var addText = function(index, name, value) {
+    names[index] = name;
+    texts[index] = form.addText(names[count] + ':', value);
+    texts[index].style.width = '100%';
+
+    // addRemoveButton(texts[index], name);
+  };
+
+  var keysToIgnore = [
+    'label',
+    'placeholders',
+    'nodeType',
+    'resourceId',
+  ];
+
+  for (var i = 0; i < attrs.length; i++) {
+    if (!keysToIgnore.includes(attrs[i].nodeName)) {
+      var attributeType = attributeTypes[attrs[i].nodeName];
+      if (attributeType === 'text') {
+        addText(count, attrs[i].nodeName, attrs[i].nodeValue);
+      } else if (attributeType === 'textarea') {
+        addTextArea(count, attrs[i].nodeName, attrs[i].nodeValue);
+      } else if (attributeType === 'number') {
+        addNumber(count, attrs[i].nodeName, attrs[i].nodeValue);
+      }
+      count++;
+    }
+  }
+
+  // div.appendChild(form.table);
+
+  /*
+   * Saved for later.
+   *
+   * This code adds features we're not making use at the moment. I've commented
+   * it out to simplify the function. We'll need to re-enable it once we extend
+   * the application such that simulation designers can customize the entities
+   * moving through their simulations.
+   *
+  var newProp = document.createElement('div');
+  newProp.style.whiteSpace = 'nowrap';
+  newProp.style.marginTop = '6px';
+
+  var nameInput = document.createElement('input');
+  nameInput.setAttribute('placeholder', mxResources.get('enterPropertyName'));
+  nameInput.setAttribute('type', 'text');
+  nameInput.setAttribute('size', (mxClient.IS_QUIRKS) ? '18' : '22');
+  nameInput.style.marginLeft = '2px';
+
+  newProp.appendChild(nameInput);
+  div.appendChild(newProp);
+
+  var addBtn = mxUtils.button(mxResources.get('addProperty'), function()
+  {
+    if (nameInput.value.length > 0)
+    {
+      var name = nameInput.value;
+
+      if (name != null && name.length > 0 && name != 'label' && name != 'placeholders')
+      {
+        try
+        {
+          var idx = mxUtils.indexOf(names, name);
+
+          if (idx >= 0 && texts[idx] != null)
+          {
+            texts[idx].focus();
+          }
+          else
+          {
+            // Checks if the name is valid
+            var clone = value.cloneNode(false);
+            clone.setAttribute(name, '');
+
+            if (idx >= 0)
+            {
+              names.splice(idx, 1);
+              texts.splice(idx, 1);
+            }
+
+            names.push(name);
+            var text = form.addTextarea(name + ':', '', 2);
+            text.style.width = '100%';
+            texts.push(text);
+            addRemoveButton(text, name);
+
+            text.focus();
+          }
+
+          nameInput.value = '';
+        }
+        catch (e)
+        {
+          mxUtils.alert(e);
+        }
+      }
+    }
+    else
+    {
+      mxUtils.alert(mxResources.get('invalidName'));
+    }
+  });
+
+  addBtn.setAttribute('disabled', 'disabled');
+  addBtn.style.marginLeft = '10px';
+  addBtn.style.width = '144px';
+  newProp.appendChild(addBtn);
+  */
+
+  this.init = function() {
+    if (texts.length > 0) {
+      texts[0].focus();
+    } else {
+      // nameInput.focus();
+    }
+  };
+
+  var cancelBtn = mxUtils.button(mxResources.get('cancel'), function() {
+    ui.hideDialog.apply(ui, arguments);
+  });
+  cancelBtn.className = 'geBtn';
+
+  var applyBtn = mxUtils.button(mxResources.get('apply'), function() {
+    try {
+      ui.hideDialog.apply(ui, arguments);
+
+      // Clones and updates the value
+      value = value.cloneNode(true);
+      nodeType = value.getAttribute('nodeType');
+
+      if (nodeType) {
+        if (nodeType === 'resource') {
+          var resourceId = value.getAttribute('resourceId');
+          // Create the object if it doesn't already exist
+          if (!window.parent.parent.boardData.resources) {
+            window.parent.parent.boardData.resources = {};
+          }
+
+          // Add the resource if it doesn't already exist
+          if (!window.parent.parent.boardData.resources.resourceId) {
+            window.parent.parent.boardData.resources[resourceId] = {};
+          }
+        }
+      }
+
+      for (var i = 0; i < names.length; i++) {
+        if (texts[i] == null) {
+          value.removeAttribute(names[i]);
+        } else {
+          value.setAttribute(names[i], texts[i].value);
+
+          if (nodeType) {
+            if (nodeType === 'resource') {
+              var resourceId = value.getAttribute('resourceId');
+              window.parent.parent.boardData.resources[resourceId][names[i]] = texts[i].value;
+            }
+          }
+        }
+      }
+
+      // Updates the value of the cell (undoable)
+      graph.getModel().setValue(cell, value);
+    } catch (e) {
+      mxUtils.alert(e);
+    }
+  });
+  applyBtn.className = 'geBtn gePrimaryBtn';
+
+  var buttons = document.createElement('div');
+  buttons.style.marginTop = '18px';
+  buttons.style.textAlign = 'right';
+
+
+
+  /*
+   * Saved for later.
+   *
+   * This code adds features we're not making use at the moment. I've commented
+   * it out to simplify the function. We'll need to re-enable it once we extend
+   * the application such that simulation designers can customize the entities
+   * moving through their simulations.
+   *
+  function updateAddBtn() {
+    if (nameInput.value.length > 0) {
+      addBtn.removeAttribute('disabled');
+    } else {
+      addBtn.setAttribute('disabled', 'disabled');
+    }
+  };
+
+  mxEvent.addListener(nameInput, 'keyup', updateAddBtn);
+
+  // Catches all changes that don't fire a keyup (such as paste via mouse)
+  mxEvent.addListener(nameInput, 'change', updateAddBtn);
+
+  // if (ui.editor.graph.getModel().isVertex(cell) || ui.editor.graph.getModel().isEdge(cell))
+  // {
+  //   var replace = document.createElement('span');
+  //   replace.style.marginRight = '10px';
+    // var input = document.createElement('input');
+    // input.setAttribute('type', 'checkbox');
+    // input.style.marginRight = '6px';
+    //
+    // if (value.getAttribute('placeholders') == '1')
+    // {
+    //   input.setAttribute('checked', 'checked');
+    //   input.defaultChecked = true;
+    // }
+
+    // mxEvent.addListener(input, 'click', function()
+    // {
+    //   if (value.getAttribute('placeholders') == '1')
+    //   {
+    //     value.removeAttribute('placeholders');
+    //   }
+    //   else
+    //   {
+    //     value.setAttribute('placeholders', '1');
+    //   }
+    // });
+    //
+    // replace.appendChild(input);
+    // mxUtils.write(replace, mxResources.get('placeholders'));
+
+  //   if (EditDataDialog.placeholderHelpLink != null)
+  //   {
+  //     var link = document.createElement('a');
+  //     link.setAttribute('href', EditDataDialog.placeholderHelpLink);
+  //     link.setAttribute('title', mxResources.get('help'));
+  //     link.setAttribute('target', '_blank');
+  //     link.style.marginLeft = '10px';
+  //     link.style.cursor = 'help';
+  //
+  //     var icon = document.createElement('img');
+  //     icon.setAttribute('border', '0');
+  //     icon.setAttribute('valign', 'middle');
+  //     icon.style.marginTop = '-4px';
+  //     icon.setAttribute('src', Editor.helpImage);
+  //     link.appendChild(icon);
+  //
+  //     replace.appendChild(link);
+  //   }
+  //
+  //   buttons.appendChild(replace);
+  // }
+  */
+
+  // Define Nodes
+  if (nodeType === 'process' || nodeType === 'source' || nodeType === 'decision') {
+    var applyBtn = mxUtils.button('Apply', function() {
+      graph.getModel().setValue(cell, value);
+      ui.hideDialog();
+    });
+    applyBtn.className = 'geBtn gePrimaryBtn';
+
+    // Decision Node
+    var decisionHandler = function(e) {
+      value.setAttribute("decision", e.target.value);
+      console.log("decision ", e.target.value);
+    }
+    var decisionNode = document.createElement('tr');
+    decisionNode.innerHTML = `<td>If</td>
+    <td><input type="text"/></td>
+    <td>Enter a probability for sources to flow to the top</td>
+    <td>Else the source will flow to the bottom node</td>`;
+    decisionNode.childNodes[2].childNodes[0].addEventListener("change", decisionHandler);
+
+    // Nodes to be added or removed
+    var activeNodes = {
+      type: true,
+      delayType: false,
+      resource: false,
+      val: false,
+      tri: false,
+      uni: false,
+    };
+
+    var resourceHandler = function(e) {
+      value.setAttribute('resource', e.target.value);
+    };
+    var resourceNode = document.createElement('tr');
+    resourceNode.innerHTML = `<td>Resource</td>
+    <td><select onchange="resourceHandler(event)">
+    <option value="Constant">Constant</option>
+    <option value="Uniform">Uniform</option>
+    <option value="Triangular">Triangular</option>
+    <option value="Exponential">Exponential</option>
+    </select>
+    </td>`;
+
+    function typeHandler(e) {
+      value.setAttribute('type', e.target.value);
+      if (e.target.value !== 'delay') {
+        // TODO render resource
+      }
+    };
+
+    // process type
+
+    var dType = value.getAttribute('type') || 'delay';
+    var typeNode = document.createElement('tr');
+    typeNode.innerHTML = `<td>Type</td>
+    <td>
+    <select id="type">
+    <option value="delay">Delay</option>
+    <option value="siezeDelay">Sieze Delay</option>
+    <option value="sieze">Sieze</option>
+    <option value="siezeDelayRelease">Sieze Delay Release</option>
+    </select>
+    </td>`;
+    var typeSelector = typeNode.childNodes[2].childNodes[1];
+    var defaultTypes = {
+      delay: 1,
+      siezeDelay: 3,
+      sieze: 5,
+      siezeDelayRelease: 7
+    };
+    var toBeSelected = typeSelector.childNodes[defaultTypes[dType]];
+    toBeSelected.setAttribute('selected', 'selected');
+    typeSelector.addEventListener("change", typeHandler);
+
+
+    // Delay Type
+
+    var delayTypeHandler = function(e) {
+      value.setAttribute('delayType', e.target.value);
+      renderDelays(e.target.value);
+    }
+    var dDelay = value.getAttribute('delayType') || 'constant';
+    var delayTypeNode = document.createElement('tr');
+    delayTypeNode.innerHTML = `<td>Delay Type</td>
+    <td><select>
+    <option value="constant">Constant</option>
+    <option value="uniform">Uniform</option>
+    <option value="triangular">Triangular</option>
+    <option value="exponential">Exponential</option>
+    </select>
+    </td>`;
+    var defaultDelays = {
+      constant: 1,
+      uniform: 3,
+      triangular: 5,
+      exponential: 7
+    }
+    var dTypeSelector = delayTypeNode.childNodes[2].childNodes[0];
+
+    var toBeSelected = dTypeSelector.childNodes[defaultDelays[dDelay]];
+    toBeSelected.setAttribute('selected', 'selected');
+    dTypeSelector.addEventListener("change", delayTypeHandler);
+
+    // Delay Values
+
+    var minHandler = function(e) {
+      value.setAttribute('min', e.target.value);
+    }
+    var valHandler = function(e) {
+      value.setAttribute('val', e.target.value);
+    }
+    var maxHandler = function(e) {
+      value.setAttribute('max', e.target.value);
+    }
+    var midHandler = function(e) {
+      value.setAttribute('mid', e.target.value);
+    }
+
+
+    var valNode = document.createElement('tr');
+    valNode.innerHTML = `<td>Value</td>
+    <td><input type="number"/></td>`;
+    valNode.childNodes[2].childNodes[0].addEventListener("change", valHandler);
+
+    var triNode = document.createElement('tr');
+    triNode.innerHTML = `<td>Min</td>
+    <td><input type="number"/></td>
+    <td>Mid</td>
+    <td><input type="number"/></td>
+    <td>Max</td>
+    <td><input type="number"/></td>`;
+    triNode.childNodes[2].childNodes[0].addEventListener("change", minHandler);
+    triNode.childNodes[6].childNodes[0].addEventListener("change", midHandler);
+    triNode.childNodes[10].childNodes[0].addEventListener("change", maxHandler);
+
+    var uniNode = document.createElement('tr');
+    uniNode.innerHTML = `<td>Min</td>
+    <td><input type="number"/></td>
+    <td>Max</td>
+    <td><input type="number"/></td>`;
+    uniNode.childNodes[2].childNodes[0].addEventListener("change", minHandler);
+    uniNode.childNodes[6].childNodes[0].addEventListener("change", maxHandler);
+
+    function renderDelays(type) {
+      if (!activeNodes.delayType) {
+        form.table.appendChild(delayTypeNode);
+        activeNodes.delayType = true;
+      }
+
+      if (type === 'constant' || type === 'exponential') {
+        if (activeNodes.uni) { form.table.removeChild(uniNode); }
+        if (activeNodes.tri) { form.table.removeChild(triNode); }
+        activeNodes.uni = false;
+        activeNodes.tri = false;
+        if (!activeNodes.val) { form.table.appendChild(valNode); }
+        valNode.childNodes[2].childNodes[0].value = value.getAttribute('val') || 0;
+        activeNodes.val = true;
+      } else if (type === 'uniform') {
+        if (activeNodes.val) { form.table.removeChild(valNode); }
+        if (activeNodes.tri) { form.table.removeChild(triNode); }
+        activeNodes.tri = false;
+        activeNodes.val = false;
+        if (!activeNodes.uni) { form.table.appendChild(uniNode); }
+        uniNode.childNodes[2].childNodes[0].value = value.getAttribute('min') || 0;
+        uniNode.childNodes[6].childNodes[0].value = value.getAttribute('max') || 0;
+        activeNodes.uni = true;
+      } else if (type === 'triangular') {
+        if (activeNodes.uni) { form.table.removeChild(uniNode); }
+        if (activeNodes.val) { form.table.removeChild(valNode); }
+        activeNodes.uni = false;
+        activeNodes.val = false;
+        if (!activeNodes.tri) { form.table.appendChild(triNode); }
+        triNode.childNodes[2].childNodes[0].value = value.getAttribute('mid') || 0;
+        triNode.childNodes[6].childNodes[0].value = value.getAttribute('min') || 0;
+        triNode.childNodes[10].childNodes[0].value = value.getAttribute('max') || 0;
+        activeNodes.tri = true;
+      }
+    }
+
+    if (nodeType === 'process') {
+      form.table.appendChild(typeNode)
+      activeNodes.type = true;
+      if (dType !== 'sieze') {
+        renderDelays(dDelay);
+      }
+    } else if (nodeType === 'source'){
+      renderDelays(dDelay);
+    } else if (nodeType === 'decision') {
+      form.table.appendChild(decisionNode);
+      decisionNode.childNodes[2].childNodes[0].value = value.getAttribute("decision") || "";
+    }
+  }
+
+  div.appendChild(form.table);
+
+  if (ui.editor.cancelFirst) {
+    buttons.appendChild(cancelBtn);
+    buttons.appendChild(applyBtn);
+  } else {
+    buttons.appendChild(applyBtn);
+    buttons.appendChild(cancelBtn);
+  }
+  div.appendChild(buttons);
+
+  console.log('div', div);
+
+  // updateAddBtn();
+
+  this.container = div;
 };
 
 /**

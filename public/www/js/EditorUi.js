@@ -2004,7 +2004,7 @@ EditorUi.prototype.open = function(xml, filename)
 
 	try
 	{
-		if (window.parent.boardData != null)
+		if (window.parent.boardData != null && Object.keys(window.parent.boardData).length !== 0)
 		{
 			// window.opener.openFile.setConsumer(mxUtils.bind(this, function(xml, filename)
 			// {
