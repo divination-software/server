@@ -2213,18 +2213,19 @@ var EditDataDialog = function(ui, cell) {
   for (var i = 0; i < attrs.length; i++) {
     if (!keysToIgnore.includes(attrs[i].nodeName)) {
       var attributeType = attributeTypes[attrs[i].nodeName];
+
       if (attributeType === 'text') {
         addText(count, attrs[i].nodeName, attrs[i].nodeValue);
+
       } else if (attributeType === 'textarea') {
         addTextArea(count, attrs[i].nodeName, attrs[i].nodeValue);
+
       } else if (attributeType === 'number') {
         addNumber(count, attrs[i].nodeName, attrs[i].nodeValue);
       }
       count++;
     }
   }
-
-  // div.appendChild(form.table);
 
   /*
    * Saved for later.
@@ -2443,7 +2444,7 @@ var EditDataDialog = function(ui, cell) {
   */
 
   // Define Nodes
-  if (nodeType === 'process' || nodeType === 'source' || nodeType === 'decision') {
+  if (['process', 'source', 'decision', 'modify'].includes(nodeType)) {
     var applyBtn = mxUtils.button('Apply', function() {
       graph.getModel().setValue(cell, value);
       ui.hideDialog();
@@ -2453,7 +2454,6 @@ var EditDataDialog = function(ui, cell) {
     // Decision Node
     var decisionHandler = function(e) {
       value.setAttribute("decision", e.target.value);
-      console.log("decision ", e.target.value);
     }
     var decisionNode = document.createElement('tr');
     decisionNode.innerHTML = `<td>If</td>
@@ -2461,6 +2461,14 @@ var EditDataDialog = function(ui, cell) {
     <td>Enter a probability for sources to flow to the top</td>
     <td>Else the source will flow to the bottom node</td>`;
     decisionNode.childNodes[2].childNodes[0].addEventListener("change", decisionHandler);
+
+    var tagHandler = function(e) {
+      value.setAttribute("tag", e.target.value);
+    }
+    var modifyNode = document.createElement('tr');
+    modifyNode.innerHTML = `<td>tag</td>
+    <td><input type="text"/></td>`;
+    modifyNode.childNodes[2].childNodes[0].addEventListener("change", tagHandler);
 
     // Nodes to be added or removed
     var activeNodes = {
@@ -2627,11 +2635,17 @@ var EditDataDialog = function(ui, cell) {
       if (dType !== 'sieze') {
         renderDelays(dDelay);
       }
+
     } else if (nodeType === 'source'){
       renderDelays(dDelay);
+
     } else if (nodeType === 'decision') {
       form.table.appendChild(decisionNode);
       decisionNode.childNodes[2].childNodes[0].value = value.getAttribute("decision") || "";
+
+    } else if (nodeType === 'modify') {
+      form.table.appendChild(modifyNode)
+      modifyNode.childNodes[2].childNodes[0].value = value.getAttribute("tag") || "";
     }
   }
 
