@@ -130,6 +130,7 @@
           <td colspan="1" style="font-family:arial;color:grey;font-size:9pt;vertical-align:top;text-align:left;"> ${board.name}</td>
           <td colspan="1" style="font-family:arial;color:grey;font-size:9pt;vertical-align:top;text-align:left;"> ${date} </td>
           </tr>`;
+          console.log(boardHtml)
           html = html + boardHtml;
         })
         document.getElementById('table').insertAdjacentHTML('afterbegin', html );

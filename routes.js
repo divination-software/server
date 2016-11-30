@@ -16,7 +16,8 @@ module.exports = function (app, express) {
   app.post('/api/board/run', boardController.run);
   app.get('/api/board', boardController.getBoards);
   // Handle Sim Data
-  app.post('/api/data/results', dataController.handleResults)
+  app.post('/api/data/results', dataController.handleResults);
+  app.get('/api/data/data', dataController.getData);
   // Simualtion routes
   app.post('/api/simulation/save', simController.save);
   app.get('/api/simulation/:simId', simController.getSim);

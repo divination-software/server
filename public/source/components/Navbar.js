@@ -15,7 +15,8 @@ export default class Navbar extends React.Component {
     if (window.SIGNEDIN) {
       return <li><this.props.Link to="/data">Data</this.props.Link></li>
     } else {
-      return <li><this.props.Link onClick={e => this.props.login()}>Login</this.props.Link></li>
+      return <li><this.props.Link className="pointer"
+      onClick={e => this.props.login()}>Login</this.props.Link></li>
     }
   }
   render() {

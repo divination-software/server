@@ -59,7 +59,9 @@ function mapStateToProps(state) {
     counter: state.counter,
     user: state.user,
     newData: state.newData,
-    auth: state.auth
+    auth: state.auth,
+    dataShow: state.dataShow,
+    data: state.data
   };
 }
 
@@ -68,7 +70,7 @@ function mapDispatchToProps(dispatch) {
     counterActions: bindActionCreators(CounterActions, dispatch),
     loginActions: bindActionCreators(LoginActions, dispatch),
     connectActions: bindActionCreators(ConnectActions, dispatch),
-    newDataActions: bindActionCreators(NewDataActions, dispatch)
+    newDataActions: bindActionCreators(NewDataActions, dispatch),
   };
 }
 

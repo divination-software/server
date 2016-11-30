@@ -13,16 +13,18 @@ export default class SignUp extends React.Component {
     }
   }
   render() {
-    const { signUp } = this.props;
+    const { signUp, swap } = this.props;
     return (
       <form>
+          <h2>Sign Up</h2>
           <input type='text' placeholder='First name...' ref='firstName'/>
           <input type='text' placeholder='Last name...' ref='lastName'/>
           <input type='text' placeholder='Email...' ref='email'/>
 					<input type='password' placeholder='Enter Password...' ref='password'/>
 					<input type='password' placeholder='Confirm Password...' ref='passConfirm'/>
           {this.getMessage()}
-					<button onClick={e => this.signUp()} type='submit'>Log In</button>
+					<button onClick={e => this.signUp()} type='submit'>SignUp</button>
+          <p onClick={swap}>Log in...</p>
 			</form>
     )
   }

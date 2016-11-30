@@ -8,7 +8,7 @@ import thunk from 'redux-thunk';
 import App from './containers/App';
 import Board from './containers/Board';
 import Docs from './components/Docs';
-import Data from './components/Data';
+import Data from './containers/Data';
 import Landing from './components/Landing';
 import reducers from './reducers/index';
 import NotFoundView from './components/NotFoundView';

@@ -20,7 +20,9 @@ body {
 .App {
   text-align: center;
 }
-
+.pointer {
+  cursor: pointer;
+}
 .loading {
   animation: loading infinite 1.2s linear;
   font-size: 60px !important;
