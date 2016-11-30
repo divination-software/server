@@ -7,6 +7,8 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import App from './containers/App';
 import Board from './containers/Board';
+import Docs from './components/Docs';
+import Data from './components/Data';
 import Landing from './components/Landing';
 import reducers from './reducers/index';
 import NotFoundView from './components/NotFoundView';
@@ -33,6 +35,9 @@ ReactDOM.render(
       <Route path="/" component={App}>
         <IndexRoute component={Landing} />
         <Route path="/board" component={Board} />
+        <Route path="/data" component={Data} />
+        <Route path="/docs" component={Docs} />
+        <Route path="/gettingStarted" component={Docs} />
         <Route path="*" component={NotFoundView} />
         <Route path="/404" component={NotFoundView} />
       </Route>

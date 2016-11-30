@@ -2000,7 +2000,7 @@ EditorUi.prototype.open = function(xml, filename)
 	// Cross-domain window access is not allowed in FF, so if we
 	// were opened from another domain then this will fail.
 
-	console.log(window.parent.boardData)
+
 
 	try
 	{
@@ -3151,6 +3151,12 @@ EditorUi.prototype.saveFile = function(forceDialog)
  */
 EditorUi.prototype.save = function(name)
 {
+
+	if (!window.parent.SIGNEDIN) {
+		window.parent.LOGIN();
+		return;
+	}
+
 	if (name != null)
 	{
 		if (this.editor.graph.isEditing())

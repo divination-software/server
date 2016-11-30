@@ -9,7 +9,7 @@ const Landing = (props) => {
           <h3>Make Decisions With Confidence</h3>
         </div>
       </div>
-      <button onClick={e => props.loginActions.login() }>Login</button>
+      <button onClick={e => props.loginActions.openLogin() }>Login</button>
     </div>
   );
 }

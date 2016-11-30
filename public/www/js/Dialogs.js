@@ -1876,6 +1876,7 @@ var ExportDialog = function(editorUi)
 
         if (xml.length < MAX_REQUEST_SIZE)
         {
+
           editorUi.hideDialog();
           ExportDialog.saveLocalFile(xml, name, format);
         }
@@ -2482,21 +2483,45 @@ var EditDataDialog = function(ui, cell) {
 
     var resourceHandler = function(e) {
       value.setAttribute('resource', e.target.value);
+      console.log(e.target.value);
     };
+    var myResources = window.parent.parent.boardData.resources;
+    var resourceOptions = '';
+    var currentResource = value.getAttribute('resource') || '';
+    var selected = ''
+    for (var i in myResources) {
+      if (myResources[i].Name === currentResource) {
+        selected = 'selected'
+      } else {
+        selected = '';
+      }
+      resourceOptions = resourceOptions + `<option ${selected} value="${myResources[i].Name}">${myResources[i].Name}</option>`
+    }
     var resourceNode = document.createElement('tr');
     resourceNode.innerHTML = `<td>Resource</td>
-    <td><select onchange="resourceHandler(event)">
-    <option value="Constant">Constant</option>
-    <option value="Uniform">Uniform</option>
-    <option value="Triangular">Triangular</option>
-    <option value="Exponential">Exponential</option>
+    <td><select>
+    ${resourceOptions}
     </select>
     </td>`;
+    resourceNode.childNodes[2].childNodes[0].addEventListener("change", resourceHandler);
 
     function typeHandler(e) {
       value.setAttribute('type', e.target.value);
+      if (e.target.value === 'sieze') {
+        removeDelays();
+      } else {
+        renderDelays(value.getAttribute("delayType"));
+      }
       if (e.target.value !== 'delay') {
-        // TODO render resource
+        if (!activeNodes.resource) {
+          typeNode.parentNode.insertBefore(resourceNode, typeNode.nextSibling);
+          activeNodes.resource = true;
+        }
+      } else {
+        if (activeNodes.resource) {
+          form.table.removeChild(resourceNode);
+          activeNodes.resource = false;
+        }
       }
     };
 
@@ -2593,6 +2618,25 @@ var EditDataDialog = function(ui, cell) {
     uniNode.childNodes[2].childNodes[0].addEventListener("change", minHandler);
     uniNode.childNodes[6].childNodes[0].addEventListener("change", maxHandler);
 
+    function removeDelays() {
+      if (activeNodes.delayType) {
+        form.table.removeChild(delayTypeNode);
+        activeNodes.delayType = false;
+      }
+      if (activeNodes.val) {
+        form.table.removeChild(valNode);
+        activeNodes.val = false;
+      }
+      if (activeNodes.uni) {
+        form.table.removeChild(uniNode);
+        activeNodes.uni = false;
+      }
+      if (activeNodes.tri) {
+        form.table.removeChild(triNode);
+        activeNodes.tri = false;
+      }
+    }
+
     function renderDelays(type) {
       if (!activeNodes.delayType) {
         form.table.appendChild(delayTypeNode);
@@ -2635,7 +2679,10 @@ var EditDataDialog = function(ui, cell) {
       if (dType !== 'sieze') {
         renderDelays(dDelay);
       }
-
+      if (dType !== 'delay') {
+        typeNode.parentNode.insertBefore(resourceNode, typeNode.nextSibling);
+        activeNodes.resource = true;
+      }
     } else if (nodeType === 'source'){
       renderDelays(dDelay);
 
@@ -2660,7 +2707,7 @@ var EditDataDialog = function(ui, cell) {
   }
   div.appendChild(buttons);
 
-  console.log('div', div);
+
 
   // updateAddBtn();
 

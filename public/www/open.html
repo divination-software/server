@@ -117,6 +117,10 @@
 
 	function main()
 	{
+    if (!window.parent.parent.SIGNEDIN) {
+  		window.parent.parent.LOGIN();
+  	  hideWindow(true);
+  	}
       axios.get('/api/board')
       .then(function(response) {
         var html = '';

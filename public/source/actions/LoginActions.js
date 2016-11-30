@@ -1,5 +1,16 @@
 import axios from 'axios';
-import { LOGIN_SUCCESS, LOGIN_FAIL } from '../constants/ActionTypes';
+import { LOGIN_SUCCESS, LOGIN_FAIL, SIGNUP_SUCCESS, SIGNUP_FAIL, OPEN_LOGIN, CLOSE_LOGIN } from '../constants/ActionTypes';
+
+export function openLogin(user) {
+  return {
+    type: OPEN_LOGIN,
+  };
+}
+export function closeLogin(user) {
+  return {
+    type: CLOSE_LOGIN,
+  };
+}
 
 export function loginSuccess(user) {
   return {
@@ -15,6 +26,20 @@ export function loginFailed(message) {
   };
 }
 
+export function signUpSuccess(user) {
+  return {
+    type: SIGNUP_SUCCESS,
+    user: user,
+  };
+}
+
+export function signUpFailed(message) {
+  return {
+    type: SIGNUP_FAIL,
+    message: message,
+  };
+}
+
 export function checkLogin() {
   return (dispatch, getState) => {
     const { user } = getState();
@@ -25,6 +50,19 @@ export function checkLogin() {
 
     dispatch(loginFailed('Please log in'));
   };
+}
+export function signup(email, password, firstName, lastName) {
+  return (dispatch) => {
+    axios.post('/api/users/signup', {
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName
+    })
+    .then( response => {
+      console.log(response);
+    })
+  }
 }
 
 export function login(email, password) {
@@ -41,7 +79,9 @@ export function login(email, password) {
         dispatch(loginFailed('Password is incorrect'));
       } else {
         socket.emit('loggedIn', response.data._id);
+        window.SIGNEDIN = true;
         dispatch(loginSuccess(response.data));
+        dispatch(closeLogin())
       }
     })
   };
