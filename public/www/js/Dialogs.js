@@ -2483,12 +2483,16 @@ var EditDataDialog = function(ui, cell) {
 
     var resourceHandler = function(e) {
       value.setAttribute('resource', e.target.value);
-      console.log(e.target.value);
     };
     var myResources = window.parent.parent.boardData.resources;
     var resourceOptions = '';
     var currentResource = value.getAttribute('resource') || '';
-    var selected = ''
+    if (currentResource === '') {
+      resourceOptions = '<option selected>Select One</option>';
+    } else {
+      resourceOptions = '<option>Select One</option>';
+    }
+    var selected = '';
     for (var i in myResources) {
       if (myResources[i].Name === currentResource) {
         selected = 'selected'

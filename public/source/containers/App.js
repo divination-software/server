@@ -24,6 +24,7 @@ class App extends Component {
     axios.get('/api/users/auth')
     .then( response => {
       window.SIGNEDIN = true;
+      this.props.loginActions.loginSuccess(response.data);
     })
     .catch( response => {} );
   }
@@ -34,7 +35,7 @@ class App extends Component {
       <div className="main-app-container">
         <DataComponent newData={newData} newDataActions={newDataActions} />
         <Auth auth={auth} user={user} loginActions={loginActions} />
-        <Navbar Link={Link} />
+        <Navbar Link={Link} login={loginActions.openLogin}/>
           {React.Children.map(children, child =>
             React.cloneElement(child, { user, loginActions }),
           )}

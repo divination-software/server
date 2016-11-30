@@ -106,3 +106,7 @@ iframe[seamless] {
   border-radius: 4px;
   background: white;
 }
+
+Link:hover {
+  cursor:pointer;
+}

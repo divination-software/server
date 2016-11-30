@@ -1,12 +1,14 @@
 import axios from 'axios';
 import { LOGIN_SUCCESS, LOGIN_FAIL, SIGNUP_SUCCESS, SIGNUP_FAIL, OPEN_LOGIN, CLOSE_LOGIN } from '../constants/ActionTypes';
 
-export function openLogin(user) {
+export function openLogin(auth) {
+  var auth = auth || 'login'
   return {
     type: OPEN_LOGIN,
+    auth: auth
   };
 }
-export function closeLogin(user) {
+export function closeLogin() {
   return {
     type: CLOSE_LOGIN,
   };
