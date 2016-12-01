@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom';
 
 export default class Login extends React.Component {
   login(e) {
-    this.props.login()
+    var loginInfo = {
+		  email: ReactDOM.findDOMNode(this.refs.email).value,
+		  password: ReactDOM.findDOMNode(this.refs.password).value,
+		}
+    this.props.login(loginInfo)
     e.preventDefault();
   }
   getMessage() {
     if (this.props.user.message) {
-      return (<p style={{color:red}}>{this.props.user.message}</p>);
+      return (<p style={{color:'red'}}>{this.props.user.message}</p>);
     } else {
       return <div/>
     }

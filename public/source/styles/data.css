@@ -32,9 +32,9 @@
   height: calc(100vh - 60px);
   float:left;
   z-index:80;
-  -webkit-box-shadow: 2px 0px 11px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 2px 0px 11px 0px rgba(0,0,0,0.75);
-  box-shadow: 2px 0px 11px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 2px 0px 11px 0px rgba(100,100,100,0.75);
+  -moz-box-shadow: 2px 0px 11px 0px rgba(100,100,100,0.75);
+  box-shadow: 2px 0px 11px 0px rgba(100,100,100,0.75);
 }
 
 .data-sidebar-title {

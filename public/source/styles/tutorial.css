@@ -1,0 +1,15 @@
+.tutorial {
+  position: absolute;
+  height: calc(100vh - 24px);
+  width:25%;
+  background-color:white;
+  right:0;
+  -webkit-box-shadow: 0px 0px 11px 0px rgba(100,100,100,0.75);
+  -moz-box-shadow: 0px 0px 11px 0px rgba(100,100,100,0.75);
+  box-shadow: 0px 0px 11px 0px rgba(100,100,100,0.75);
+  padding:10px;
+}
+
+.tutorial-main-title {
+  letter-spacing: 4px;
+}

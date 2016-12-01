@@ -15,7 +15,6 @@ module.exports = {
           simulation: sim._id,
           name: name,
           userId: userId,
-          resources: resources,
           date: Date.now()
         },
         {upsert: true, new: true}

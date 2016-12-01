@@ -27,7 +27,7 @@ export default class Auth extends React.Component {
       return (
         <div className='overlay' onClick={e => this.handleClick(e)}>
           <div className='content'>
-            <SignUp user={user} swap={e => loginActions.openLogin('login')} signup={loginActions.signUp}/>
+            <SignUp user={user} swap={e => loginActions.openLogin('login')} fail={loginActions.loginFailed} signup={loginActions.signup}/>
             </div>
         </div>)
     }

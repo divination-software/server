@@ -22,3 +22,7 @@ export const DATA_CLOSE = 'DATA_CLOSE';
 export const GET_DATA = 'GET_DATA';
 export const OPEN_DATA = 'OPEN_DATA';
 export const CLOSE_DATA = 'CLOSE_DATA';
+
+export const TOGGLE_TUTORIAL = 'TOGGLE_TUTORIAL';
+export const TUTORIAL_PREV = 'TUTORIAL_PREV';
+export const TUTORIAL_NEXT = 'TUTORIAL_NEXT';
