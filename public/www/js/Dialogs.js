@@ -2448,8 +2448,18 @@ var EditDataDialog = function(ui, cell) {
   // Define Nodes
   if (['process', 'source', 'decision', 'modify'].includes(nodeType)) {
     var applyBtn = mxUtils.button('Apply', function() {
-      graph.getModel().setValue(cell, value);
-      ui.hideDialog();
+      var selectedResource = value.getAttribute('resource');
+      var delayType = value.getAttribute('type');
+      if (delayType && delayType === 'delay' && selectedResource) {
+        value.setAttribute('resource', '');
+      }
+      if (delayType !== 'delay' &&
+        (selectedResource === null || selectedResource === 'Select One' || selectedResource === '')) {
+        alert('Please select a resource');
+      } else {
+        graph.getModel().setValue(cell, value);
+        ui.hideDialog();
+      }
     });
     applyBtn.className = 'geBtn gePrimaryBtn';
 
