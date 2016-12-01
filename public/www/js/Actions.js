@@ -747,6 +747,10 @@ Actions.prototype.init = function()
 	});
 	action = this.addAction('run', function()
 	{
+		if (!window.parent.SIGNEDIN) {
+			window.parent.LOGIN();
+			return;
+		}
 		var data = mxUtils.getXml(editor.getGraphXml());
 		axios.post('/api/board/run', {simulation: data});
 		alert('The simulation has been started');
