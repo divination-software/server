@@ -885,8 +885,8 @@ Sidebar.prototype.addModulePalette = function(expand)
     this.createVertexTemplateEntry('shape=decision;whiteSpace=wrap,html=1;', 80, 80, 'Decision', 'Decision'),
     this.createVertexTemplateEntry('shape=modify;whiteSpace=wrap,html=1;', 120, 80, 'Modify', 'Modify'),
     this.createVertexTemplateEntry('shape=record;whiteSpace=wrap,html=1;', 120, 80, 'Record', 'Record'),
-    this.createVertexTemplateEntry('shape=separate;whiteSpace=wrap,html=1;', 120, 80, 'Separate', 'Separate'),
-    this.createVertexTemplateEntry('shape=batch;whiteSpace=wrap,html=1;', 120, 80, 'Batch', 'Batch'),
+    // this.createVertexTemplateEntry('shape=separate;whiteSpace=wrap,html=1;', 120, 80, 'Separate', 'Separate'),
+    // this.createVertexTemplateEntry('shape=batch;whiteSpace=wrap,html=1;', 120, 80, 'Batch', 'Batch'),
 
     // this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),
     // this.createVertexTemplateEntry('ellipse;whiteSpace=wrap;html=1;', 120, 80, '', 'Ellipse', null, null, 'circle oval ellipse state'),
