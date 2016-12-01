@@ -15,5 +15,17 @@ module.exports = {
     } else {
       res.sendStatus(201);
     }
+  },
+  getData: function(req, res) {
+    const userId = req.user._id;
+    dataModel.getData(userId)
+    .then( simData => {
+      res.status(200).send(simData);
+    })
+    .catch( err => {
+      console.log(err)
+      res.sendStatus(400);
+    })
   }
+
 }

@@ -9,5 +9,9 @@ module.exports = {
     }
     const toSave = new Data(newData);
     return toSave.save();
+  },
+  getData: (userId) => {
+    console.log('we got something')
+    return Data.find({userId: userId}).exec()
   }
 }

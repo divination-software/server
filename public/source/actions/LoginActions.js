@@ -53,27 +53,23 @@ export function checkLogin() {
     dispatch(loginFailed('Please log in'));
   };
 }
-export function signup(email, password, firstName, lastName) {
+export function signup(signupInfo) {
   return (dispatch) => {
-    axios.post('/api/users/signup', {
-      email: email,
-      password: password,
-      firstName: firstName,
-      lastName: lastName
-    })
+    axios.post('/api/users/signup',signupInfo)
     .then( response => {
-      console.log(response);
+      dispatch(loginFailed('Sign Up Success! Please Login'))
+      dispatch(openLogin())
+    })
+    .catch( err => {
+      dispatch(loginFailed('Error Occured'))
     })
   }
 }
 
-export function login(email, password) {
+export function login(loginInfo) {
   return (dispatch, getState) => {
     const { socket } = getState()
-    axios.post('/api/users/login', {
-      email: 'test@gmail.com',
-      password: 'test'
-    })
+    axios.post('/api/users/login', loginInfo)
     .then( response => {
       if (response.status === 500) {
         dispatch(loginFailed('Email is not registered'));
@@ -85,6 +81,9 @@ export function login(email, password) {
         dispatch(loginSuccess(response.data));
         dispatch(closeLogin())
       }
+    })
+    .catch( response =>  {
+      dispatch(loginFailed('Email or password is incorrect'))
     })
   };
 }

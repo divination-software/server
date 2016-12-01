@@ -19,6 +19,7 @@ export default class Board extends Component {
         </div>
       )
     }
-    return (<iframe className='board' onLoad={e => this.handleLoad()} src="/www/index.html"></iframe>)
+    return (
+      <iframe className='board' onLoad={e => this.handleLoad()} src="/www/index.html"></iframe>)
   }
 }

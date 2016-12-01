@@ -2484,7 +2484,10 @@ var EditDataDialog = function(ui, cell) {
     var resourceHandler = function(e) {
       value.setAttribute('resource', e.target.value);
     };
-    var myResources = window.parent.parent.boardData.resources;
+    if (!window.parent.parent.boardData) {
+      window.parent.parent.boardData = {};
+    }
+    var myResources = window.parent.parent.boardData.resources
     var resourceOptions = '';
     var currentResource = value.getAttribute('resource') || '';
     if (currentResource === '') {
