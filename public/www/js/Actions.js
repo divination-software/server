@@ -745,6 +745,12 @@ Actions.prototype.init = function()
 		graph.connectionHandler.setCreateTarget(!graph.connectionHandler.isCreateTarget());
 		ui.fireEvent(new mxEventObject('copyConnectChanged'));
 	});
+	action = this.addAction('run', function()
+	{
+		var data = mxUtils.getXml(editor.getGraphXml());
+		axios.post('/api/board/run', {simulation: data});
+		alert('The simulation has been started');
+	});
 	action.setToggleAction(true);
 	action.setSelectedCallback(function() { return graph.connectionHandler.isCreateTarget(); });
 	action.isEnabled = isGraphEnabled;
