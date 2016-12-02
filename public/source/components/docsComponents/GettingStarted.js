@@ -3,7 +3,7 @@ import React from 'react';
 const GettingStarted = (props) => (
   <div>
     <h2 className='doc-title'>Getting Started</h2>
-    <img src="http://i.imgur.com/DsvCjeG.png" />
+    <img className='doc-image' src="http://i.imgur.com/542YUlc.png" />
     <p>Divination is an analytic tool that simulates processes and provides insight into the efficiency of those processes. Simulations are built by chaining different nodes together. Each of these nodes affects the simulation in specific, and customizable, ways.</p>
     <table>
       <thead>

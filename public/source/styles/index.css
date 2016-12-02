@@ -26,6 +26,10 @@ body {
   width:100%;
 }
 
+.italic {
+  font-style: italic;
+}
+
 .App {
   text-align: center;
 }
@@ -87,6 +91,7 @@ iframe[seamless] {
   position: fixed;
   border: 1px solid gray;
   bottom: 0;
+  border-radius: 2px;
   transition: all 2s;
   right: 0;
 }
@@ -115,7 +120,7 @@ iframe[seamless] {
   color: black;
   box-shadow: 2px 2px 6px rgba(0, 0, 0, .6);
   border:none;
-  border-radius: 4px;
+  border-radius: 2px;
   background: white;
 }
 

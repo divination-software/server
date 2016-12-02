@@ -1,6 +1,7 @@
 import React from 'react';
 import Login from './authComponents/Login';
 import SignUp from './authComponents/SignUp';
+import '../styles/auth.css';
 
 export default class Auth extends React.Component {
   constructor(props) {

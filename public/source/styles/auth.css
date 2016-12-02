@@ -1,0 +1,45 @@
+.auth-title {
+  margin-top: 0px;
+}
+
+.auth-form button {
+  border: 2px solid black;
+  background-color: rgba(0,0,0,0);
+  border-radius:1.5px;
+  font-size: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  outline: none;
+  color: black;
+}
+
+.auth-form button:hover {
+  cursor: pointer;
+  outline: none;
+}
+
+.auth-form button:active {
+  outline: none;
+  transform: scale(.95)
+}
+
+.auth-form input {
+  outline: none;
+  font-size: 16px;
+  border: none;
+  margin-bottom: 10px;
+  border-bottom: 1px solid black;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: rgb(25,25,25);
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: rgb(25,25,25);
+}
+:-ms-input-placeholder { /* IE 125+ */
+  color: rgb(25,25,25);
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: rgb(25,25,25);
+}
