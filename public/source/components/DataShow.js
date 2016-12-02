@@ -7,7 +7,7 @@ const DataShow = (props) => {
 			<div onClick={e => close()} className='overlay'> </div>
 			<div className='content'>
         <h1>{data.name}</h1>
-				<p>{data.data}</p>
+				<p>{JSON.stringify(data.data)}</p>
 			</div>
 		</div>
     );
