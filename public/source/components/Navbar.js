@@ -8,6 +8,16 @@ export default class Navbar extends React.Component {
       open: false
     }
   }
+  getStyle() {
+    if (window.location.pathname === '/') {
+      return {
+        position:'absolute',
+        backgroundColor: 'rgba(0,0,0,0)',
+      }
+    } else {
+      return {};
+    }
+  }
   toggleMenu(tutorial) {
     this.setState({open: !this.state.open})
     if (this.props.tutorial.open && tutorial === false) {
@@ -49,7 +59,7 @@ export default class Navbar extends React.Component {
       }
     }
     return (
-      <div className="nav br">
+      <div style={this.getStyle()}className="nav br">
         <h1 className="nav-title"> Divination
           <span className="nav-title-span">Simulation Software </span>
         </h1>

@@ -6,7 +6,7 @@ module.exports = {
   run: function(req, res) {
     const userId = req.user._id;
     const simulation = req.body.simulation;
-    const boardName = 'BoardyMcBoardName'
+    const boardName = req.body.boardName || null;
     const postData = {
       user_id: userId,
       board_name: boardName,
