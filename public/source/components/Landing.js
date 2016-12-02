@@ -15,7 +15,7 @@ const Landing = (props) => {
             <h3>MAKE</h3>
             <h3>CONFIDENT</h3>
             <h3>DECISIONS</h3>
-            <div className='landing-image-text'>This is supposed to be some spacy text or someshit where we decribe what this simulation software does. Its actually pretty cool tbh but I really dont know how im gonna explain it to anyyyonneee.</div>
+            <div className='landing-image-text'>Divination is an analytic tool that simulates processes and provides insight into the efficiency of those processes. Simulations are built by chaining different nodes together in specific, and customizable ways.</div>
             <Link onClick={e => props.tutorialActions.toggleTutorial()}to='/board'><div className='landing-image-button pointer'>Try It Out Now!</div></Link>
           </div>
         </div>
@@ -25,13 +25,13 @@ const Landing = (props) => {
         <div className="what">
           <div className="landing-cover"></div>
           <h4>What it does</h4>
-          <p>I really don't know how to expalin what this simulation software does, but other software costs a metric fuck ton of money and this is straight up cheap so thats cool. do all this for cheap yeah yeah boiii</p>
+          <p>Simulations use weighted statistical generations to recreate a business day thousands of times to ensure you find any possible bottlenecks or optimizations.</p>
           <Link to='/docs'><div className='landing-button pointer'>Getting Started</div></Link>
         </div>
         <div className="how">
           <div className="landing-cover"></div>
           <h4>How you do it</h4>
-          <p>You do it real easy ayyyyyyyyyyy. seriously you could follow our tutorial over here CLICK ME IM A TUTORIAL or you could like sign up or whatever or do anything idkkkkk i just need some filler text to get this deisng down</p>
+          <p>Simulations are built by chaining different nodes together. Each of these nodes affects the simulation in specific, and customizable, ways. Simply drag and drop nodes, to create simulations.</p>
           <Link onClick={e => props.loginActions.openLogin('signup')}><div className='landing-button pointer'>Sign Up</div></Link>
         </div>
       </div>
@@ -42,17 +42,17 @@ const Landing = (props) => {
           <div className="solution">
             <h4>Identify Bottlenecks</h4>
             <i className="material-icons">search</i>
-            <p>Blah blah blah blah blah blah blah. Blah blah blah blah blah blah blah. Blah blah blah blah blah blah blah.</p>
+            <p>Simulation software allows you to find pressure points in your business, giving you the exact process holding you back.</p>
           </div>
           <div className="solution">
             <h4>Optimize Processes</h4>
             <i className="material-icons">tune</i>
-            <p>Blah blah blah blah blah blah blah. Blah blah blah blah blah blah blah. Blah blah blah blah blah blah blah.</p>
+            <p>Simulations allow optimizations of every process for any occassion. Never lose out on a single dollar.</p>
           </div>
           <div className="solution">
             <h4>Rapid Solutions</h4>
             <i className="material-icons">trending_up</i>
-            <p>Blah blah blah blah blah blah blah. Blah blah blah blah blah blah blah. Blah blah blah blah blah blah blah.</p>
+            <p>Aquiring resources can be expensive. Rapidly test new ventures through simulation without the risk of capital.</p>
           </div>
           <div className="landing-footer">
             <div className="solution">
