@@ -1867,7 +1867,7 @@ var ExportDialog = function(editorUi)
 
           if (format == 'xml')
         {
-        editorUi.hideDialog();
+            editorUi.hideDialog();
             ExportDialog.saveLocalFile(getXml(), name, format);
         }
           else if (format == 'svg')
@@ -1985,7 +1985,7 @@ ExportDialog.showGifOption = true;
 /**
  * Global switches for the export dialog.
  */
-ExportDialog.showXmlOption = true;
+ExportDialog.showXmlOption = false;
 
 /**
  * Hook for getting the export format. Returns null for the default
@@ -1995,7 +1995,8 @@ ExportDialog.showXmlOption = true;
  */
 ExportDialog.saveLocalFile = function(data, filename, format)
 {
-  axios.post('/api/board/run', {simulation: data})
+  alert('This feature is disabled');
+  // axios.post('/api/board/run', {simulation: data})
   // new mxXmlRequest(SAVE_URL, 'xml=' + encodeURIComponent(data) + '&filename=' +
   //   encodeURIComponent(filename) + '&format=' + format).simulate(document, '_blank');
 };
@@ -2447,8 +2448,18 @@ var EditDataDialog = function(ui, cell) {
   // Define Nodes
   if (['process', 'source', 'decision', 'modify'].includes(nodeType)) {
     var applyBtn = mxUtils.button('Apply', function() {
-      graph.getModel().setValue(cell, value);
-      ui.hideDialog();
+      var selectedResource = value.getAttribute('resource');
+      var delayType = value.getAttribute('type');
+      if (delayType && delayType === 'delay' && selectedResource) {
+        value.setAttribute('resource', '');
+      }
+      if (delayType !== 'delay' &&
+        (selectedResource === null || selectedResource === 'Select One' || selectedResource === '')) {
+        alert('Please select a resource');
+      } else {
+        graph.getModel().setValue(cell, value);
+        ui.hideDialog();
+      }
     });
     applyBtn.className = 'geBtn gePrimaryBtn';
 

@@ -3183,6 +3183,9 @@ EditorUi.prototype.save = function(name)
 			{
 				if (xml.length < MAX_REQUEST_SIZE)
 				{
+					if (!window.parent.boardData) {
+						window.parent.boardData = {}
+					}
 					var resources = window.parent.boardData.resources || {};
 					axios.post('/api/simulation/save', {
 						name: name,

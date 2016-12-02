@@ -28,7 +28,7 @@ Menus.prototype.defaultFontSize = '12';
 /**
  * Sets the default font size.
  */
-Menus.prototype.defaultMenuItems = ['file', 'edit', 'view', 'arrange', 'extras'];
+Menus.prototype.defaultMenuItems = ['file', 'edit', 'view', 'arrange', 'extras', 'simulation'];
 
 /**
  * Adds the label menu items to the given menu and parent.
@@ -48,7 +48,7 @@ Menus.prototype.init = function() {
 
   this.put('metadataProp1_Options', new Menu(mxUtils.bind(this, function(menu, parent) {
 
-		menu.addItem('Option1');
+	menu.addItem('Option1');
     menu.addItem('Option2');
     menu.addItem('Option3');
 	})));
@@ -412,7 +412,7 @@ Menus.prototype.init = function() {
 	})));
 	this.put('file', new Menu(mxUtils.bind(this, function(menu, parent)
 	{
-		this.addMenuItems(menu, ['new', 'open', '-', 'save', 'saveAs', '-', 'import', 'export', '-', 'pageSetup', 'print'], parent);
+		this.addMenuItems(menu, ['new', 'open', '-', 'save', 'saveAs', '-', 'pageSetup', 'print'], parent);
 	})));
 	this.put('edit', new Menu(mxUtils.bind(this, function(menu, parent)
 	{
@@ -423,6 +423,10 @@ Menus.prototype.init = function() {
 	this.put('extras', new Menu(mxUtils.bind(this, function(menu, parent)
 	{
 		this.addMenuItems(menu, ['copyConnect', 'collapseExpand', '-', 'editDiagram']);
+	})));
+	this.put('simulation', new Menu(mxUtils.bind(this, function(menu, parent)
+	{
+		this.addMenuItems(menu, ['run']);
 	})));
 	this.put('help', new Menu(mxUtils.bind(this, function(menu, parent)
 	{
