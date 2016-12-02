@@ -106,22 +106,27 @@ iframe[seamless] {
     z-index:99;
   }
 .content {
-  position                   : fixed;
-  text-align: center;
-  display: block;
-  box-sizing: border-box;
+}
+
+.popup {
   width: 50%;
   margin-top: 200px;
   margin-left: 25%;
-  overflow                   : auto;
-  outline                    : none;
-  padding                    : 20px;
+  position: fixed;
+  text-align: center;
+  display: block;
+  box-sizing: border-box;
+  overflow: auto;
+  outline: none;
+  padding: 20px;
   z-index: 100;
   color: black;
   box-shadow: 2px 2px 6px rgba(0, 0, 0, .6);
   border:none;
   border-radius: 2px;
   background: white;
+
+
 }
 
 Link:hover {

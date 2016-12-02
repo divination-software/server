@@ -9,7 +9,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.min.js"></script>
 	<script type="text/javascript">
 
-  // window.parent.boardData = {};
+    if (window.parent.boardData === undefined) {
+      window.parent.boardData = {};
+    }
 		// Parses URL parameters. Supported parameters are:
 		// - lang=xy: Specifies the language of the user interface.
 		// - touch=1: Enables a touch-style user interface.

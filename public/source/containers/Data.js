@@ -2,6 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as DataActions from '../actions/DataActions';
+import DataShow from './../components/DataShow';
 import '../styles/data.css'
 
 class Data extends React.Component {
@@ -31,6 +32,7 @@ class Data extends React.Component {
   }
   getOpenData() {
     if (!this.props.dataShow[0]) {
+      // If there's no data to show
       return (
         <div className="data-show">
           <div className="data-tab">{this.state.open}</div>
@@ -39,31 +41,84 @@ class Data extends React.Component {
           </div>
         </div>
       )
-    }
-    if (this.props.dataShow[1]) {
-      return (
-        <div className="data-show">
-          <div onClick={e=>this.setState({index:0})} className="data-tab">{this.props.dataShow[0].boardName}</div>
-          <div style={{marginLeft:'40%'}} onClick={e=>this.setState({index:1})} className="data-tab">{this.props.dataShow[1].boardName}</div>
-          <div onClick={e=>this.setState({index:0})} className="data-article">
-            {JSON.stringify(this.props.dataShow[0])}
-          </div>
-          <div onClick={e=>this.setState({index:1})} className="data-article">
-            {JSON.stringify(this.props.dataShow[1])}
-          </div>
-        </div>
-      )
     } else {
-      return (
-        <div className="data-show">
-          <div onClick={e=>this.setState({index:0})} className="data-tab">{this.props.dataShow[0].boardName}</div>
-          <div onClick={e=>this.setState({index:1})} style={{
-              marginLeft:'40%', height:'33px'}} className="data-tab pointer">{this.state.compare}</div>
-          <div onClick={e=>this.setState({index:0})} style={{width: '100%'}} className="data-article">
-            {JSON.stringify(this.props.dataShow[0])}
+      const primaryData = {
+        name: this.props.dataShow[0].boardName,
+        data: JSON.parse(this.props.dataShow[0].data),
+      };
+
+      if (!this.props.dataShow[1]) {
+        // If there's only one data to show
+        console.log(this.props);
+        return (
+          <div className="data-show">
+            <div
+              onClick={e=>this.setState({index:0})}
+              className="data-tab"
+            >
+              {this.props.dataShow[0].boardName}
+            </div>
+            <div
+              onClick={e=>this.setState({index:1})}
+              style={{ marginLeft:'40%', height:'33px'}}
+              className="data-tab pointer"
+            >
+              {this.state.compare}
+            </div>
+            <div
+              onClick={e=>this.setState({index:0})}
+              style={{width: '100%'}}
+              className="data-article"
+            >
+              <DataShow
+                data={primaryData}
+                close={() => {console.log('closing')}}
+              />
+            </div>
           </div>
-        </div>
-      )
+        )
+      } else {
+        // If we're comparing two datas
+        const secondaryData = {
+          name: this.props.dataShow[1].boardName,
+          data: JSON.parse(this.props.dataShow[1].data),
+        };
+        return (
+          <div className="data-show">
+            <div
+              onClick={e=>this.setState({index:0})}
+              className="data-tab"
+            >
+              {this.props.dataShow[0].boardName}
+            </div>
+            <div
+              style={{marginLeft:'40%'}}
+              onClick={e=>this.setState({index:1})}
+              className="data-tab"
+            >
+              {this.props.dataShow[1].boardName}
+            </div>
+            <div
+              onClick={e=>this.setState({index:0})}
+              className="data-article"
+            >
+              <DataShow
+                data={primaryData}
+                close={() => {console.log('closing')}}
+              />
+            </div>
+            <div
+              onClick={e=>this.setState({index:1})}
+              className="data-article"
+            >
+              <DataShow
+                data={secondaryData}
+                close={() => {console.log('closing')}}
+              />
+            </div>
+          </div>
+        )
+      }
     }
 
   }

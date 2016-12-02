@@ -20,14 +20,14 @@ export default class Auth extends React.Component {
     } else if (this.props.auth === 'login') {
       return (
         <div className='overlay' onClick={e => this.handleClick(e)}>
-          <div className='content'>
+          <div className='content popup'>
             <Login user={user} swap={e => loginActions.openLogin('signup')} login={loginActions.login}/>
             </div>
         </div>)
     } else  {
       return (
         <div className='overlay' onClick={e => this.handleClick(e)}>
-          <div className='content'>
+          <div className='content popup'>
             <SignUp user={user} swap={e => loginActions.openLogin('login')} fail={loginActions.loginFailed} signup={loginActions.signup}/>
             </div>
         </div>)
