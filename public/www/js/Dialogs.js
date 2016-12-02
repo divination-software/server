@@ -2545,14 +2545,16 @@ var EditDataDialog = function(ui, cell) {
 
     // process type
 
+    debugger;
     var dType = value.getAttribute('type') || 'delay';
     var typeNode = document.createElement('tr');
     typeNode.innerHTML = `<td>Type</td>
     <td>
     <select id="type">
     <option value="delay">Delay</option>
-    <option value="siezeDelay">Sieze Delay</option>
     <option value="sieze">Sieze</option>
+    <option value="release">Release</option>
+    <option value="siezeDelay">Sieze Delay</option>
     <option value="siezeDelayRelease">Sieze Delay Release</option>
     </select>
     </td>`;
