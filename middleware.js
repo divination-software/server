@@ -1,8 +1,10 @@
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const compression = require('compression');
 
 module.exports = function (app, express) {
   // Serve static assets
+  app.use(compression());
   app.use(express.static(__dirname + '/public'));
 
   // Parse Post Bodys
