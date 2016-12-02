@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Decision from './docsComponents/Decision';
 import Exit from './docsComponents/Exit';
 import GettingStarted from './docsComponents/GettingStarted';
-import Modify from './docsComponents/Modify';
+import Delays from './docsComponents/Delays';
 import Process from './docsComponents/Process';
 import Resource from './docsComponents/Resource';
 import Source from './docsComponents/Source';
@@ -20,7 +20,7 @@ export default class Docs extends Component {
       process: (<Process/>),
       resource: (<Resource/>),
       decision: (<Decision/>),
-      modify: (<Modify/>),
+      delays: (<Delays/>),
       exit: (<Exit/>),
     }
   }
@@ -41,7 +41,7 @@ export default class Docs extends Component {
             <li onClick={e => this.setActive('process')} className="docs-nav-li">Process</li>
             <li onClick={e => this.setActive('resource')} className="docs-nav-li">Resource</li>
             <li onClick={e => this.setActive('decision')} className="docs-nav-li">Decision</li>
-            <li onClick={e => this.setActive('modify')} className="docs-nav-li">Modify</li>
+            <li onClick={e => this.setActive('delays')} className="docs-nav-li">Delays</li>
             <li onClick={e => this.setActive('exit')} className="docs-nav-li">Exit</li>
           </ul>
         </div>

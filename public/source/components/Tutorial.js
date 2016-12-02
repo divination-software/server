@@ -41,8 +41,8 @@ const Tutorial = (props) => {
   }
   return (
     <div className="tutorial">
-      <h1 className="tutorial-main-title">TUTORIAL</h1>
-      {Pages[props.tutorial.page]}
+        <h1 className="tutorial-main-title">TUTORIAL</h1>
+        {Pages[props.tutorial.page]}
       <div className="tutorial-buttons">
         <button className="tutorial-button" onClick={e=>prev()}>Prev</button>
         <button className="tutorial-button" onClick={e=>next()}>Next</button>

@@ -26,21 +26,19 @@ const Landing = (props) => {
           <div className="landing-cover"></div>
           <h4>What it does</h4>
           <p>I really don't know how to expalin what this simulation software does, but other software costs a metric fuck ton of money and this is straight up cheap so thats cool. do all this for cheap yeah yeah boiii</p>
-          <div className='landing-button pointer'>Getting Started</div>
+          <Link to='/docs'><div className='landing-button pointer'>Getting Started</div></Link>
         </div>
         <div className="how">
           <div className="landing-cover"></div>
           <h4>How you do it</h4>
           <p>You do it real easy ayyyyyyyyyyy. seriously you could follow our tutorial over here CLICK ME IM A TUTORIAL or you could like sign up or whatever or do anything idkkkkk i just need some filler text to get this deisng down</p>
-          <div className='landing-button pointer'>Sign Up</div>
+          <Link onClick={e => props.loginActions.openLogin('signup')}><div className='landing-button pointer'>Sign Up</div></Link>
         </div>
-      </div>
-      <div className="landing-article-break">
-        <h3>Simulation Solves the Unsolvable</h3>
       </div>
       <div className="landing-article landing-bottom">
         <div className="landing-bottom-cover"></div>
-        <h3 className="landing-bottom-header">Divination Software Solutions</h3>
+        <h3 className="landing-bottom-break">Simulation Solves the Unsolvable</h3>
+        <h3 className="landing-bottom-header"></h3>
           <div className="solution">
             <h4>Identify Bottlenecks</h4>
             <i className="material-icons">search</i>
@@ -58,20 +56,24 @@ const Landing = (props) => {
           </div>
           <div className="landing-footer">
             <div className="solution">
-              <p>&copy; Divination Software 2016</p>
+                <ul>
+                  <li></li>
+                  <li></li>
+                  <li>&copy; Divination Software 2016</li>
+                </ul>
             </div>
             <div className="solution">
               <ul>
-                <li><Link to='/docs'>Docs</Link></li>
-                <li><Link to='/board'>Simulation</Link></li>
-                <li><Link to='/board'>Tutorial</Link></li>
+                <li></li>
+                <li></li>
+                <li>Email us at divinationsoftware@gmail.com</li>
               </ul>
             </div>
             <div className="solution">
               <ul>
-                <li><Link >Login</Link></li>
-                <li><Link >Sign Up</Link></li>
-                <li><Link >Contact</Link></li>
+                <li></li>
+                <li></li>
+                <li>github.com/divination-software</li>
               </ul>
             </div>
           </div>
