@@ -2545,7 +2545,6 @@ var EditDataDialog = function(ui, cell) {
 
     // process type
 
-    debugger;
     var dType = value.getAttribute('type') || 'delay';
     var typeNode = document.createElement('tr');
     typeNode.innerHTML = `<td>Type</td>
