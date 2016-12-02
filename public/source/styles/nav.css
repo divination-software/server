@@ -90,3 +90,11 @@
 .nav ul li a:visited {
   color: inherit;
 }
+
+.nav a {
+  text-decoration: none;
+}
+
+.nav a:visited {
+  color: inherit;
+}

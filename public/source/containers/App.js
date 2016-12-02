@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import smoothscrollPolyfill from 'smoothscroll-polyfill';
 import axios from 'axios';
 import * as CounterActions from '../actions/CounterActions';
 import * as LoginActions from '../actions/LoginActions';
@@ -12,6 +13,7 @@ import Tutorial from '../components/Tutorial';
 import Navbar from '../components/Navbar';
 import DataComponent from '../components/DataComponent';
 import Auth from '../components/Auth';
+smoothscrollPolyfill.polyfill()
 
 /**
  * It is common practice to have a 'Root' container/component require our main App (this one).
@@ -47,7 +49,7 @@ class App extends Component {
         <Auth auth={auth} user={user} loginActions={loginActions} />
         <Navbar tutorial={tutorial} tutorialActions={tutorialActions} Link={Link} login={loginActions.openLogin}/>
           {React.Children.map(children, child =>
-            React.cloneElement(child, { user, loginActions }),
+            React.cloneElement(child, { user, loginActions, tutorialActions }),
           )}
       </div>
     );

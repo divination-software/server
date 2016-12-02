@@ -13,6 +13,7 @@ export default class Navbar extends React.Component {
       return {
         position:'absolute',
         backgroundColor: 'rgba(0,0,0,0)',
+        boxShadow: 'inset 0px 35px 100px -30px rgba(0,0,0,0.75)',
       }
     } else {
       return {};
@@ -60,9 +61,9 @@ export default class Navbar extends React.Component {
     }
     return (
       <div style={this.getStyle()}className="nav br">
-        <h1 className="nav-title"> Divination
+        <Link to='/'><h1 className="nav-title"> Divination
           <span className="nav-title-span">Simulation Software </span>
-        </h1>
+        </h1></Link>
         <ul>
           <li><Link to="/docs">Docs</Link></li>
           <li><Link to="/board">Board</Link></li>

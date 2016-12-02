@@ -57,11 +57,11 @@ class Data extends React.Component {
       return (
         <div className="data-show">
           <div onClick={e=>this.setState({index:0})} className="data-tab">{this.props.dataShow[0].boardName}</div>
+          <div onClick={e=>this.setState({index:1})} style={{
+              marginLeft:'40%', height:'33px'}} className="data-tab pointer">{this.state.compare}</div>
           <div onClick={e=>this.setState({index:0})} style={{width: '100%'}} className="data-article">
             {JSON.stringify(this.props.dataShow[0])}
           </div>
-          <div onClick={e=>this.setState({index:1})} style={{
-            marginLeft:'-50%', height:'33px'}} className="data-tab pointer">{this.state.compare}</div>
         </div>
       )
     }
