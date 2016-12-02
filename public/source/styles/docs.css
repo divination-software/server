@@ -21,6 +21,7 @@ p {
 
 .docs-article img {
   margin: 15px auto 30px;
+  max-width: 80%;
   display: block;
   box-shadow: 3px 3px 3px 0 rgba(0, 0, 0, 0.2);
 }
@@ -40,9 +41,6 @@ p {
   box-shadow: 2px 5px 6px -5px rgba(100,100,100,0.75);
 }
 
-.doc-image {
-  max-width: 100%;
-}
 .docs-nav {
   background-color:white;
   float:left;
