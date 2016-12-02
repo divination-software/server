@@ -1,10 +1,14 @@
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const compression = require('compression');
+var enforce = require('express-sslify');
 
 module.exports = function (app, express) {
-  // Serve static assets
+  // use compression
   app.use(compression());
+  // Enforce ssl
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+  // Serve static assets
   app.use(express.static(__dirname + '/public'));
 
   // Parse Post Bodys
