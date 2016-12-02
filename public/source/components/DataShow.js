@@ -11,30 +11,34 @@ const DataShow = (props) => {
     `${snakeCaseString.split('_').map(word => `${word.charAt(0).toUpperCase()}${word.slice(1)}`).join(' ')}`
   );
 
-  console.log('nodeStats', nodeStats);
-  console.log('entityStats', entityStats);
-
+  const entityCount = entityStats.lifespans.length;
+  const entitiesToShow = 100;
+  let entitiesShown = 0;
+  const entityShowRate = Math.floor(entityCount / entitiesToShow)
   const entityData = {
     lifespan: {
       name: 'Lifespan',
       values: entityStats.lifespans.map(({ created_at, departed_at }, index) => {
-        const open = created_at;
-        // The entity is not shown in D3 if open === close. Make the close
-        // slightly older than the open to work around this.
-        const close = (departed_at === created_at) ? created_at + 1 : departed_at;
-        console.log(open, close, index);
-        return {
-          x: [index],
-          open,
-          close,
-          low: open,
-          high: close,
-        };
-      }),
+        // Only show a maximum of `entitiesToShow` entities in this chart.
+        //if (index % entitiesToShow !== 0) {
+        if (entityCount < entitiesToShow || index % entityShowRate === 0) {
+          const open = created_at;
+          // The entity is not shown in D3 if open === close. Make the close
+          // slightly older than the open to work around this.
+          const close = (departed_at === created_at) ? created_at + 1 : departed_at;
+          entitiesShown += 1;
+
+          return {
+            x: [entitiesShown],
+            open,
+            close,
+            low: open,
+            high: close,
+          };
+        }
+      }).filter(candlestick => candlestick !== undefined),
     }
   };
-
-  console.log(entityData);
 
   return (
     <div>
@@ -49,7 +53,8 @@ const DataShow = (props) => {
             width={1000}
             height={400}
             xAxisTickInterval={{unit: 'second', interval: 10}}
-            yAxisOffset={0}
+            xAxisOffset={25}
+            yAxisOffset={25}
             title="Lifespans"
           />
         </div>
