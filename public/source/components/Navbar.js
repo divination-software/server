@@ -34,7 +34,7 @@ export default class Navbar extends React.Component {
         return <div className='nav-absolute' onClick={e => this.toggleMenu(true)}><i className="material-icons">menu</i></div>
       } else {
         return (
-          <div onClick={e => this.handleOverlay(e)} className="overlay">
+          <div style={{backgroundColor: 'rgba(0,0,0,0)'}} onClick={e => this.handleOverlay(e)} className="overlay">
             <div className='nav-abs-menu'>
               <div className='nav-absolute' onClick={e => this.toggleMenu(true)}><i className="material-icons">menu</i></div>
               <ul>

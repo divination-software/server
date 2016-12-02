@@ -12,4 +12,40 @@
 
 .tutorial-main-title {
   letter-spacing: 4px;
+  margin-top:3px;
+  margin-bottom:3px;
+}
+
+.tutorial-header {
+  margin-top:3px;
+  margin-bottom: 3px;
+}
+
+.tutorial-title {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.tutorial-buttons {
+  box-sizing: border-box;
+  position:absolute;
+  height:30px;
+  width: 95%;
+  bottom: 10px;
+}
+.tutorial-button {
+  box-sizing: border-box;
+  position:relative;
+  height:30px;
+  width: 50%;
+}
+
+.tutorial-description {
+  margin-top:0px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.tutorial-image {
+ max-width:100%;
 }

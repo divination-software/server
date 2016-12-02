@@ -20,7 +20,7 @@
           name: boardName,
           resources: response.data.resources
         }
-        
+
         window.parent.openFile.setData(e.target.result, boardName)
         window.parent.document.location.reload();
         // window.parent.document.location.href = window.parent.location.href;
@@ -126,7 +126,7 @@
       .then(function(response) {
         var html = '';
         response.data.forEach(board => {
-          var date = moment(date).format("MMM Do YY, h:mm a")
+          var date = moment(board.date).format("MMM Do YY, h:mm a")
           var boardHtml = `<tr onclick="fileChanged('${board.simulation+','+board.name}')">
           <td colspan="1" style="font-family:arial;color:grey;font-size:9pt;vertical-align:top;text-align:left;"> ${board.name}</td>
           <td colspan="1" style="font-family:arial;color:grey;font-size:9pt;vertical-align:top;text-align:left;"> ${date} </td>
