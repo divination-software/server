@@ -78,6 +78,23 @@
   padding: 0;
 }
 
+.nav a {
+  color: white;
+}
+
+.nav a:active {
+  color: white;
+}
+
+.landing-headers a {
+  color: white;
+  text-decoration: none;
+}
+
+.landing-headers a:active {
+  color: white;
+}
+
 .nav ul li {
   display: inline;
   line-height:60px;
