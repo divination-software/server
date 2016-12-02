@@ -16,8 +16,8 @@
 
 .docs-nav-title {
   text-align: center;
-  letter-spacing: 4px;
-  font-size:36px;
+  letter-spacing: -.3px;
+  font-size:40px;
   padding-bottom:5px;
   -webkit-box-shadow: 2px 0px 6px -3px rgba(100,100,100,0.75);
   -moz-box-shadow: 2px 0px 6px -3px rgba(100,100,100,0.75);
@@ -25,6 +25,7 @@
 }
 
 .docs-nav {
+  background-color:white;
   float:left;
   box-sizing:border-box;
   width:20%;
@@ -51,7 +52,11 @@
 
 .docs-nav-li:hover {
   cursor:pointer;
-  -webkit-box-shadow: inset -5px 0px 0px 0px rgba(77,71,188,1);
-  -moz-box-shadow: inset -5px 0px 0px 0px rgba(77,71,188,1);
-  box-shadow: inset -5px 0px 0px 0px rgba(77,71,188,1);
+  -webkit-box-shadow: inset -5px 0px 0px 0px rgba(0,0,80,.65);
+  -moz-box-shadow: inset -5px 0px 0px 0px rgba(0,0,80,.65);
+  box-shadow: inset -5px 0px 0px 0px rgba(0,0,80,.65);
+}
+
+.docs-nav-li:active {
+  transform: scale(.98);
 }

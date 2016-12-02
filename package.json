@@ -55,6 +55,7 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "request": "^2.79.0",
+    "smoothscroll-polyfill": "^0.3.4",
     "socket.io": "^1.5.1",
     "socket.io-client": "^1.5.1"
   }

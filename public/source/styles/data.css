@@ -9,7 +9,7 @@
   position:absolute;
   padding-left:5px;
   border: 1px solid rgba(0,0,0,0.3);
-  background-color:white;
+  background-color: rgb(238,238,238);
   z-index:21;
   height:45px;
   line-height: 40px;
@@ -25,6 +25,7 @@
 }
 
 .data-sidebar {
+  background-color:white;
   position:relative;
   margin-top:60px;
   box-sizing: border-box;
@@ -32,11 +33,16 @@
   height: calc(100vh - 60px);
   float:left;
   z-index:80;
-  -webkit-box-shadow: 2px 0px 11px 0px rgba(100,100,100,0.75);
-  -moz-box-shadow: 2px 0px 11px 0px rgba(100,100,100,0.75);
-  box-shadow: 2px 0px 11px 0px rgba(100,100,100,0.75);
+  -webkit-box-shadow: 0px 0px 11px 0px rgba(100,100,100,0.75);
+  -moz-box-shadow: 0px 0px 11px 0px rgba(100,100,100,0.75);
+  box-shadow: 0px 0px 11px 0px rgba(100,100,100,0.75);
 }
 
+.data-sidebar input {
+  width: 80%;
+  margin-right:auto;
+  margin-left:10%;
+}
 .data-sidebar-title {
   text-align: center;
 }
@@ -49,8 +55,9 @@
 .data-article {
   box-sizing:border-box;
   position:relative;
-  background-color: white;
+  background-color: rgb(238,238,238);
   float:left;
+  padding: 10px;
   margin-top:1px;
   height:calc(100% - 1px);
   width:50%;
@@ -62,6 +69,7 @@
   position:relative;
   box-sizing: border-box;
   border: 1px solid rgba(0,0,0,0.3);
+  background-color: rgba(100,100,100,.75);
   height:40px;
   width:100%;
   margin-top:60px;
@@ -87,11 +95,16 @@
   padding-left:10px;
   margin:0;
 }
+
 .data-datum:hover {
   cursor:pointer;
-  -webkit-box-shadow: inset -5px 0px 0px 0px rgba(77,71,188,1);
-  -moz-box-shadow: inset -5px 0px 0px 0px rgba(77,71,188,1);
-  box-shadow: inset -5px 0px 0px 0px rgba(77,71,188,1);
+  -webkit-box-shadow: inset -5px 0px 0px 0px rgba(0,0,80,.65);
+  -moz-box-shadow: inset -5px 0px 0px 0px rgba(0,0,80,.65);
+  box-shadow: inset -5px 0px 0px 0px rgba(0,0,80,.65);
+}
+
+.data-datum:active {
+  transform: scale(.98);
 }
 
 .data-tab i {
