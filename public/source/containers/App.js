@@ -23,9 +23,13 @@ class App extends Component {
     super(props);
   }
   componentDidMount() {
+    const context = this;
     this.props.connectActions.connect();
     this.props.newDataActions.listenForData();
-    window.LOGIN = this.props.loginActions.openLogin.bind(this);
+    window.LOGIN = function() {
+      context.props.loginActions.loginFailed('Please Login or Sign Up First!');
+      context.props.loginActions.openLogin();
+    }
     axios.get('/api/users/auth')
     .then( response => {
       window.SIGNEDIN = true;

@@ -16,7 +16,7 @@ export default function newData(state = defaultState, action) {
       }
       return Object.assign({},state);
     case TUTORIAL_NEXT:
-      if (state.page !== 6) {
+      if (state.page !== 15) {
         state.page = state.page + 1;
       }
       return Object.assign({},state);
