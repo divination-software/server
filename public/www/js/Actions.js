@@ -751,8 +751,16 @@ Actions.prototype.init = function()
 			window.parent.LOGIN();
 			return;
 		}
-		var data = mxUtils.getXml(editor.getGraphXml());
-		axios.post('/api/board/run', {simulation: data});
+    var postedData;
+    var data = mxUtils.getXml(editor.getGraphXml());
+    
+		if (window.parent.boardData && window.parent.boardData.name) {
+      postedData = {simulation: data, boardName: window.parent.boardData.name};
+		} else {
+      postedData = {simulation: data};
+    }
+
+		axios.post('/api/board/run', postedData);
 		alert('The simulation has been started');
 	});
 	action.setToggleAction(true);

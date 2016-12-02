@@ -2453,7 +2453,7 @@ var EditDataDialog = function(ui, cell) {
       if (delayType && delayType === 'delay' && selectedResource) {
         value.setAttribute('resource', '');
       }
-      if (delayType !== 'delay' &&
+      if (delayType && delayType !== 'delay' &&
         (selectedResource === null || selectedResource === 'Select One' || selectedResource === '')) {
         alert('Please select a resource');
       } else {
