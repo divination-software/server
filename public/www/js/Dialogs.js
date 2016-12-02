@@ -2560,9 +2560,10 @@ var EditDataDialog = function(ui, cell) {
     var typeSelector = typeNode.childNodes[2].childNodes[1];
     var defaultTypes = {
       delay: 1,
-      siezeDelay: 3,
-      sieze: 5,
-      siezeDelayRelease: 7
+      sieze: 3,
+      release: 5,
+      siezeDelay: 7,
+      siezeDelayRelease: 9
     };
     var toBeSelected = typeSelector.childNodes[defaultTypes[dType]];
     toBeSelected.setAttribute('selected', 'selected');
