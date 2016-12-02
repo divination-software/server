@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DataShow = (props) => {
+const DataAlert = (props) => {
     const { click } = props;
     return (
       <div className='notification' onClick={e => click() }>
@@ -8,4 +8,4 @@ const DataShow = (props) => {
       </div>);
 };
 
-export default DataShow;
+export default DataAlert;

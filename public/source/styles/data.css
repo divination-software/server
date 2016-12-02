@@ -1,6 +1,7 @@
 .data-container {
   box-sizing:border-box;
-  width:80%;
+  width: calc(100% - 200px);
+  margin-left: 200px;
   height:100vh;
   float:left;
 }
@@ -29,7 +30,9 @@
   position:relative;
   margin-top:60px;
   box-sizing: border-box;
-  width:20%;
+  width: 200px;
+  position: fixed;
+  overflow-y: scroll;
   height: calc(100vh - 60px);
   float:left;
   z-index:80;

@@ -1,5 +1,5 @@
 import React from 'react';
-import DataShow from './DataShow';
+import DataAlert from './DataAlert';
 import Notification from './Notification';
 
 const DataComponent = (props) => {
@@ -7,7 +7,7 @@ const DataComponent = (props) => {
   if (newData.checked === false && newData.data) {
     return <Notification click={newDataActions.dataCheck}/>
   } else if (newData.checked === true) {
-    return <DataShow data={newData.data} close={newDataActions.dataClose}/>
+    return <DataAlert close={newDataActions.dataClose} name={newData.data.name}/>
   } else {
     return <div></div>
   }
