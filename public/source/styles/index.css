@@ -85,6 +85,7 @@ iframe[seamless] {
 }
 
 .notification {
+  z-index: 200;
   background-color:white;
   width: 350px;
   height: 60px;
@@ -94,6 +95,8 @@ iframe[seamless] {
   border-radius: 2px;
   transition: all 2s;
   right: 0;
+  cursor:pointer;
+  padding-left: 20px;
 }
 
 .overlay {
