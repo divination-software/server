@@ -2,7 +2,7 @@ import React from 'react';
 import DataAlert from './DataAlert';
 import Notification from './Notification';
 
-const DataComponent = ({ newData, newDataActions }) => {
+const DataComponent = (props) => {
   const { newData, newDataActions } = props;
   if (newData.checked === false && newData.data) {
     return <Notification click={newDataActions.dataCheck}/>
